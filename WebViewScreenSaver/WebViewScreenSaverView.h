@@ -32,27 +32,38 @@
   NSWindow *sheet_;
   NSTableView *urlList_;
   NSTextField *urlsURLField_;
+  NSButton *fetchURLCheckbox_;
+  
   // Options Data
   NSString *urlsURL_;  
   NSMutableArray *urls_;
   NSInteger currentIndex_;
+  BOOL shouldFetchURLs_;
   
   // Fetching URLs
   NSMutableData *receivedData_;
   NSURLConnection *connection_;
+  BOOL isPreview_;
+  
+  // Timer
+  NSTimer *timer_;
 }
 
 @property (nonatomic, retain) IBOutlet NSWindow *sheet;
 @property (nonatomic, retain) IBOutlet NSTableView *urlList;
 @property (nonatomic, retain) IBOutlet NSTextField *urlsURLField;
+@property (nonatomic, retain) IBOutlet NSButton *fetchURLCheckbox;
+
 @property (nonatomic, retain) NSMutableData *receivedData;
 @property (nonatomic, retain) NSMutableArray *urls;
 @property (nonatomic, copy) NSString *urlsURL;
 @property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, assign) BOOL shouldFetchURLs;
 
 
 - (IBAction)dismissConfigSheet:(id)sender;
 - (IBAction)addRow:(id)sender;
 - (IBAction)removeRow:(id)sender;
+- (IBAction)toggleFetchingURLs:(id)sender;
 
 @end

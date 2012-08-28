@@ -24,6 +24,7 @@
 // ScreenSaverDefaults module name.
 static NSString * const kScreenSaverName = @"WebViewScreenSaver";
 // ScreenSaverDefault Keys
+static NSString * const kScreenSaverFetchURLsKey = @"kScreenSaverFetchURLs";  // BOOL
 static NSString * const kScreenSaverURLsURLKey = @"kScreenSaverURLsURL";  // NSString (URL)
 static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSArray of NSDictionary
 // Keys for the dictionaries in kScreenSaverURLList.
@@ -36,6 +37,8 @@ static NSString * const kScreenSaverDefaultURL = @"http://www.google.com/";
 // Configuration sheet columns.
 static NSString * const kTableColumnURL = @"url";
 static NSString * const kTableColumnTime = @"time";
+
+static NSString * const kURLTableRow = @"kURLTableRow";
 
 @interface WebViewScreenSaverView ()
 // Timer callback that loads the next URL in the URL list.
@@ -57,8 +60,10 @@ static NSString * const kTableColumnTime = @"time";
 @implementation WebViewScreenSaverView
 
 @synthesize connection = connection_;
+@synthesize fetchURLCheckbox = fetchURLCheckbox_;
 @synthesize receivedData = receivedData_;
 @synthesize sheet = sheet_;
+@synthesize shouldFetchURLs = shouldFetchURLs_;
 @synthesize urls = urls_;
 @synthesize urlList = urlList_;
 @synthesize urlsURL = urlsURL_;
@@ -72,6 +77,7 @@ static NSString * const kTableColumnTime = @"time";
   self = [super initWithFrame:frame isPreview:isPreview];
   if (self) {
     currentIndex_ = 0;
+    isPreview_ = isPreview;
     
     // Create the webview for the screensaver.
     webView_ = [[WebView alloc] initWithFrame:[self bounds]];
@@ -91,6 +97,7 @@ static NSString * const kTableColumnTime = @"time";
     ScreenSaverDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
     self.urls = [[[prefs arrayForKey:kScreenSaverURLListKey] mutableCopy] autorelease];
     self.urlsURL = [prefs stringForKey:kScreenSaverURLsURLKey];
+    self.shouldFetchURLs = [prefs boolForKey:kScreenSaverFetchURLsKey];
     
     // If there are no URLs set, add a single default URL entry and save it.
     if (![self.urls count] || ![[self.urls objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
@@ -103,14 +110,8 @@ static NSString * const kTableColumnTime = @"time";
     // Fetch URLs if we're using the URLsURL.
     [self fetchURLs];
     
-    if (currentIndex_ < [urls_ count]) {
-      [webView_ setMainFrameURL:[self urlForIndex:currentIndex_]];
-      NSTimeInterval nextRefresh = [self timeIntervalForIndex:currentIndex_];
-      [NSTimer scheduledTimerWithTimeInterval:nextRefresh
-                                       target:self
-                                     selector:@selector(loadNext:)
-                                     userInfo:nil
-                                      repeats:NO];
+    if (!isPreview_ && currentIndex_ < [self.urls count]) {
+      [self loadFromStart];
     }
 
     [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
@@ -128,6 +129,7 @@ static NSString * const kTableColumnTime = @"time";
   [webView_ setEditingDelegate:nil];
   [webView_ close];
   [webView_ release];
+  self.fetchURLCheckbox = nil;
   self.urlsURL = nil;
   self.urls = nil;
   self.urlsURLField = nil;
@@ -156,11 +158,36 @@ static NSString * const kTableColumnTime = @"time";
     } else {
       self.urlsURLField.stringValue = @"";
     }
+
+    // URLs
+    [self.urlList setDraggingSourceOperationMask:NSDragOperationMove  forLocal:YES];
+    [self.urlList registerForDraggedTypes:[NSArray arrayWithObject:kURLTableRow]];
+    
+    [self.fetchURLCheckbox setIntegerValue:self.shouldFetchURLs];
+    [self.urlsURLField setEnabled:self.shouldFetchURLs];
   }
   return sheet_;
 }
 
 #pragma mark Loading URLs
+
+- (void)loadFromStart {
+  NSTimeInterval duration = kDefaultDuration;
+  NSString *url = kScreenSaverDefaultURL;
+  currentIndex_ = 0;
+  
+  if ([self.urls count] > 0) {
+    duration = [self timeIntervalForIndex:currentIndex_];
+    url = [self urlForIndex:currentIndex_];
+  }
+  [webView_ setMainFrameURL:url];  
+  [timer_ invalidate];
+  timer_ = [NSTimer scheduledTimerWithTimeInterval:duration
+                                            target:self
+                                          selector:@selector(loadNext:)
+                                          userInfo:nil
+                                           repeats:NO];
+}
 
 - (void)loadNext:(NSTimer *)timer {
   NSTimeInterval duration = kDefaultDuration;
@@ -168,22 +195,23 @@ static NSString * const kTableColumnTime = @"time";
   NSInteger nextIndex = currentIndex_;
   
   // Last element, fetchURLs if they exist.
-//  if (currentIndex_ == [urls_ count] - 1) {
-//    [self fetchURLs];
-//  }
+  if (currentIndex_ == [self.urls count] - 1) {
+    [self fetchURLs];
+  }
 
   // Progress the URL counter.
-  if ([urls_ count] > 0) {
-    nextIndex = (currentIndex_ + 1) % [urls_ count];
+  if ([self.urls count] > 0) {
+    nextIndex = (currentIndex_ + 1) % [self.urls count];
     duration = [self timeIntervalForIndex:nextIndex];
     url = [self urlForIndex:nextIndex];
   }
   [webView_ setMainFrameURL:url];
-  [NSTimer scheduledTimerWithTimeInterval:duration
-                                   target:self
-                                 selector:@selector(loadNext:)
-                                 userInfo:nil
-                                  repeats:NO];
+  [timer_ invalidate];
+  timer_ = [NSTimer scheduledTimerWithTimeInterval:duration
+                                            target:self
+                                          selector:@selector(loadNext:)
+                                          userInfo:nil
+                                           repeats:NO];
   currentIndex_ = nextIndex;
 }
 
@@ -196,8 +224,8 @@ static NSString * const kTableColumnTime = @"time";
 }
 
 - (NSTimeInterval)timeIntervalForIndex:(NSInteger)index {
-  if (index < [urls_ count]) {
-    NSDictionary *urlObject = [urls_ objectAtIndex:index];
+  if (index < [self.urls count]) {
+    NSDictionary *urlObject = [self.urls objectAtIndex:index];
     NSNumber *seconds = [urlObject objectForKey:kScreenSaverTimeKey];
     return [seconds floatValue];
   }
@@ -205,28 +233,30 @@ static NSString * const kTableColumnTime = @"time";
 }
 
 - (void)setURL:(NSString *)url forIndex:(NSInteger)index {
-  if (index < [urls_ count]) {
-    NSMutableDictionary *urlObject = [[urls_ objectAtIndex:index] mutableCopy];
+  if (index < [self.urls count]) {
+    NSMutableDictionary *urlObject = [[self.urls objectAtIndex:index] mutableCopy];
     [urlObject setObject:url forKey:kScreenSaverURLKey];
-    [urls_ replaceObjectAtIndex:index withObject:urlObject];
+    [self.urls replaceObjectAtIndex:index withObject:urlObject];
     [urlObject release];
   }
 }
 
 - (void)setTimeInterval:(NSTimeInterval)timeInterval forIndex:(NSInteger)index {
-  if (index < [urls_ count]) {
-    NSMutableDictionary *urlObject = [[urls_ objectAtIndex:index] mutableCopy];
+  if (index < [self.urls count]) {
+    NSMutableDictionary *urlObject = [[self.urls objectAtIndex:index] mutableCopy];
     [urlObject setObject:[NSNumber numberWithFloat:timeInterval]
                   forKey:kScreenSaverTimeKey];
-    [urls_ replaceObjectAtIndex:index withObject:urlObject];
+    [self.urls replaceObjectAtIndex:index withObject:urlObject];
     [urlObject release];    
   }
 }
 
 - (void)fetchURLs {
-  NSLog(@"fetching URLs");
+  if (!self.shouldFetchURLs) return;
   if (!self.urlsURL.length) return;
   if (!([self.urlsURL hasPrefix:@"http://"] || [self.urlsURL hasPrefix:@"https://"])) return;
+
+  NSLog(@"fetching URLs");
 
   NSURL *url = [NSURL URLWithString:self.urlsURL];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -284,7 +314,7 @@ static NSString * const kTableColumnTime = @"time";
     return [self urlForIndex:rowIndex];
   } else if ([[aTableColumn identifier] isEqual:kTableColumnTime]) {
     NSTimeInterval seconds = [self timeIntervalForIndex:rowIndex];
-    return [NSNumber numberWithInt:(seconds / kOneMinute)];
+    return [NSNumber numberWithInt:seconds];
   }
   return nil;
 }  
@@ -293,21 +323,74 @@ static NSString * const kTableColumnTime = @"time";
    setObjectValue:anObject
    forTableColumn:(NSTableColumn *)aTableColumn
               row:(NSInteger)rowIndex {
-  if (rowIndex < [urls_ count]) {
+  if (rowIndex < [self.urls count]) {
     if ([[aTableColumn identifier] isEqual:kTableColumnURL] &&
         [anObject isKindOfClass:[NSString class]]) {
       [self setURL:anObject forIndex:rowIndex];
     } else if ([[aTableColumn identifier] isEqual:kTableColumnTime] &&
                [anObject isKindOfClass:[NSString class]]) {
-      NSInteger minutes = [anObject intValue];
-      [self setTimeInterval:(minutes * kOneMinute) forIndex:rowIndex];
+      NSInteger seconds = [anObject intValue];
+      [self setTimeInterval:seconds  forIndex:rowIndex];
     }
   }
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
-  return [urls_ count];
+  return [self.urls count];
 }
+
+- (BOOL)canDragRowsWithIndexes:(NSIndexSet *)rowIndexes atPoint:(NSPoint)mouseDownPoint {
+  return YES;
+}
+
+- (BOOL)tableView:(NSTableView *)tv
+writeRowsWithIndexes:(NSIndexSet *)rowIndexes
+     toPasteboard:(NSPasteboard*)pboard {
+  // Copy the row numbers to the pasteboard.
+  NSData *serializedIndexes = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+  [pboard declareTypes:[NSArray arrayWithObject:kURLTableRow]
+                 owner:self];
+  [pboard setData:serializedIndexes forType:kURLTableRow];
+  return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView*)tv
+                validateDrop:(id )info
+                 proposedRow:(NSInteger)row
+       proposedDropOperation:(NSTableViewDropOperation)op {
+  // Add code here to validate the drop
+  return NSDragOperationEvery;
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView
+       acceptDrop:(id )info
+              row:(NSInteger)row
+    dropOperation:(NSTableViewDropOperation)operation {
+  
+  NSPasteboard* pboard = [info draggingPasteboard];
+  NSData* rowData = [pboard dataForType:kURLTableRow];
+  NSIndexSet* rowIndexes =
+      [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+  NSInteger dragRow = [rowIndexes firstIndex];
+  
+  id draggedObject = [[[self.urls objectAtIndex:dragRow] retain] autorelease];
+  NSLog(@"draggedObject: %@", draggedObject);
+  if (dragRow < row) {
+    [self.urls insertObject:draggedObject atIndex:row];
+    [self.urls removeObjectAtIndex:dragRow];
+    //[self.urlList noteNumberOfRowsChanged];
+    [self.urlList reloadData];
+  } else {
+    [self.urls removeObjectAtIndex:dragRow];
+    [self.urls insertObject:draggedObject atIndex:row];
+    //[self.urlList noteNumberOfRowsChanged];
+    [self.urlList reloadData];
+  }
+  return YES;
+}
+
+
+#pragma mark -
 
 - (IBAction)addRow:(id)sender {
   NSDictionary *urlSetting = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -323,9 +406,16 @@ static NSString * const kTableColumnTime = @"time";
 - (IBAction)removeRow:(id)sender {
   NSInteger row = [urlList_ selectedRow];
   if (row != NSNotFound) {
-    [urls_ removeObjectAtIndex:row];
+    [self.urls removeObjectAtIndex:row];
     [urlList_ reloadData];
   }
+}
+
+- (IBAction)toggleFetchingURLs:(id)sender {
+  BOOL currentValue = self.shouldFetchURLs;
+  self.shouldFetchURLs = !currentValue;
+  [self.fetchURLCheckbox setIntegerValue:self.shouldFetchURLs];
+  [self.urlsURLField setEnabled:self.shouldFetchURLs];
 }
 
 #pragma mark Focus Overrides
@@ -359,6 +449,7 @@ static NSString * const kTableColumnTime = @"time";
   // Save preferences.
   ScreenSaverDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
   [prefs setObject:self.urls forKey:kScreenSaverURLListKey];
+  [prefs setBool:self.shouldFetchURLs forKey:kScreenSaverFetchURLsKey];
   
   self.urlsURL = self.urlsURLField.stringValue;
   if (self.urlsURL.length) {
@@ -370,10 +461,7 @@ static NSString * const kTableColumnTime = @"time";
   
   [prefs synchronize];
 
-  if ([self.urls count]) {
-    [webView_ setMainFrameURL:[self urlForIndex:0]];
-  }
-  
+  [self loadFromStart];
   [[NSApplication sharedApplication] endSheet:sheet_];
 }
 
