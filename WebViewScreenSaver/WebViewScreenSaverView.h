@@ -19,6 +19,7 @@
 //  limitations under the License.
 //
 
+#import <Foundation/Foundation.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <WebKit/WebKit.h>
 
@@ -30,13 +31,25 @@
   // Options UI
   NSWindow *sheet_;
   NSTableView *urlList_;
+  NSTextField *urlsURLField_;
   // Options Data
+  NSString *urlsURL_;  
   NSMutableArray *urls_;
   NSInteger currentIndex_;
+  
+  // Fetching URLs
+  NSMutableData *receivedData_;
+  NSURLConnection *connection_;
 }
 
 @property (nonatomic, retain) IBOutlet NSWindow *sheet;
 @property (nonatomic, retain) IBOutlet NSTableView *urlList;
+@property (nonatomic, retain) IBOutlet NSTextField *urlsURLField;
+@property (nonatomic, retain) NSMutableData *receivedData;
+@property (nonatomic, retain) NSMutableArray *urls;
+@property (nonatomic, copy) NSString *urlsURL;
+@property (nonatomic, retain) NSURLConnection *connection;
+
 
 - (IBAction)dismissConfigSheet:(id)sender;
 - (IBAction)addRow:(id)sender;

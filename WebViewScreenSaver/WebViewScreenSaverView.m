@@ -24,6 +24,7 @@
 // ScreenSaverDefaults module name.
 static NSString * const kScreenSaverName = @"WebViewScreenSaver";
 // ScreenSaverDefault Keys
+static NSString * const kScreenSaverURLsURLKey = @"kScreenSaverURLsURL";  // NSString (URL)
 static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSArray of NSDictionary
 // Keys for the dictionaries in kScreenSaverURLList.
 static NSString * const kScreenSaverURLKey = @"kScreenSaverURL";
@@ -47,18 +48,32 @@ static NSString * const kTableColumnTime = @"time";
 - (void)setURL:(NSString *)url forIndex:(NSInteger)index;
 // Sets the time interval in the preferences at the index.
 - (void)setTimeInterval:(NSTimeInterval)timeInterval forIndex:(NSInteger)index;
+
+// Fetches URLs from the URLsURL
+- (void)fetchURLs;
 @end
 
 
 @implementation WebViewScreenSaverView
 
+@synthesize connection = connection_;
+@synthesize receivedData = receivedData_;
 @synthesize sheet = sheet_;
+@synthesize urls = urls_;
 @synthesize urlList = urlList_;
+@synthesize urlsURL = urlsURL_;
+@synthesize urlsURLField = urlsURLField_;
+
++ (BOOL)performGammaFade {
+  return YES;
+}
 
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
   self = [super initWithFrame:frame isPreview:isPreview];
   if (self) {
     currentIndex_ = 0;
+    
+    // Create the webview for the screensaver.
     webView_ = [[WebView alloc] initWithFrame:[self bounds]];
     [webView_ setFrameLoadDelegate:self];
     [webView_ setShouldUpdateWhileOffscreen:YES];
@@ -67,15 +82,26 @@ static NSString * const kTableColumnTime = @"time";
     [webView_ setEditingDelegate:self];
     [webView_ setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [webView_ setAutoresizesSubviews:YES];
+    [webView_ setDrawsBackground:NO];
     
+    NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
+    [[webView_ layer] setBackgroundColor:color.CGColor];
+    
+    // Load state from the preferences.
     ScreenSaverDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
-    urls_ = [[prefs arrayForKey:kScreenSaverURLListKey] retain];
-    if (![urls_ count] || ![[urls_ objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
-      urls_ = [[NSMutableArray alloc] init];
+    self.urls = [[[prefs arrayForKey:kScreenSaverURLListKey] mutableCopy] autorelease];
+    self.urlsURL = [prefs stringForKey:kScreenSaverURLsURLKey];
+    
+    // If there are no URLs set, add a single default URL entry and save it.
+    if (![self.urls count] || ![[self.urls objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
+      self.urls = [[[NSMutableArray alloc] init] autorelease];
       [self addRow:nil];
-      [prefs setObject:urls_ forKey:kScreenSaverURLListKey];
+      [prefs setObject:self.urls forKey:kScreenSaverURLListKey];
       [prefs synchronize];      
     }
+    
+    // Fetch URLs if we're using the URLsURL.
+    [self fetchURLs];
     
     if (currentIndex_ < [urls_ count]) {
       [webView_ setMainFrameURL:[self urlForIndex:currentIndex_]];
@@ -95,10 +121,18 @@ static NSString * const kTableColumnTime = @"time";
 }
 
 - (void)dealloc {
+  NSLog(@"dealloc");
   [sheet_ release];
+  [webView_ setPolicyDelegate:nil];
+  [webView_ setUIDelegate:nil];
+  [webView_ setEditingDelegate:nil];
+  [webView_ close];
   [webView_ release];
-  [urlList_ release];
-  [urls_ release];
+  self.urlsURL = nil;
+  self.urls = nil;
+  self.urlsURLField = nil;
+  self.urlList = nil;
+  self.receivedData = nil;
   [super dealloc];
 }
 
@@ -106,14 +140,21 @@ static NSString * const kTableColumnTime = @"time";
   return YES;
 }
 
-- (void)setFrame:(NSRect)frameRect {
-  [super setFrame:frameRect];
-}
+//- (void)setFrame:(NSRect)frameRect {
+//  [super setFrame:frameRect];
+//}
 
 - (NSWindow *)configureSheet {
   if (!sheet_) {
     if (![NSBundle loadNibNamed:@"ConfigureSheet" owner:self]) {
       NSLog(@"Unable to load configuration sheet");
+    }
+    
+    // If there is a urlListURL.
+    if (self.urlsURL.length) {
+      self.urlsURLField.stringValue = self.urlsURL;
+    } else {
+      self.urlsURLField.stringValue = @"";
     }
   }
   return sheet_;
@@ -125,6 +166,13 @@ static NSString * const kTableColumnTime = @"time";
   NSTimeInterval duration = kDefaultDuration;
   NSString *url = kScreenSaverDefaultURL;
   NSInteger nextIndex = currentIndex_;
+  
+  // Last element, fetchURLs if they exist.
+//  if (currentIndex_ == [urls_ count] - 1) {
+//    [self fetchURLs];
+//  }
+
+  // Progress the URL counter.
   if ([urls_ count] > 0) {
     nextIndex = (currentIndex_ + 1) % [urls_ count];
     duration = [self timeIntervalForIndex:nextIndex];
@@ -140,8 +188,8 @@ static NSString * const kTableColumnTime = @"time";
 }
 
 - (NSString *)urlForIndex:(NSInteger)index {
-  if (index < [urls_ count]) {
-    NSDictionary *urlObject = [urls_ objectAtIndex:index];
+  if (index < [self.urls count]) {
+    NSDictionary *urlObject = [self.urls objectAtIndex:index];
     return [urlObject objectForKey:kScreenSaverURLKey];
   }
   return nil;
@@ -174,6 +222,57 @@ static NSString * const kTableColumnTime = @"time";
     [urlObject release];    
   }
 }
+
+- (void)fetchURLs {
+  NSLog(@"fetching URLs");
+  if (!self.urlsURL.length) return;
+  if (!([self.urlsURL hasPrefix:@"http://"] || [self.urlsURL hasPrefix:@"https://"])) return;
+
+  NSURL *url = [NSURL URLWithString:self.urlsURL];
+  NSURLRequest *request = [NSURLRequest requestWithURL:url];
+  [self.connection cancel];
+  self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
+  [self.connection start];
+  NSLog(@"fetching URLs started");
+}
+
+#pragma mark NSURLConnection
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+  NSLog(@"Unable to fetch URLs: %@", error);
+  self.connection = nil;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+  self.receivedData = [NSMutableData data];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+  [self.receivedData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+  NSError *jsonError = nil;
+  id response = [NSJSONSerialization JSONObjectWithData:self.receivedData
+                                                options:NSJSONReadingMutableContainers
+                                                  error:&jsonError];
+  if (jsonError) {
+    NSLog(@"Unable to read connection data: %@", jsonError);
+    self.connection = nil;
+    return;
+  }
+  
+  if ([response isKindOfClass:[NSArray class]]) {
+    self.urls = [[response mutableCopy] autorelease];
+    [self.urlList reloadData];
+    
+    currentIndex_ = -1;
+    [self loadNext:nil];
+  }
+  self.connection = nil;
+  NSLog(@"fetching URLS finished");
+}
+
 
 
 #pragma mark NSTableView
@@ -217,8 +316,8 @@ static NSString * const kTableColumnTime = @"time";
                               [NSNumber numberWithFloat:kDefaultDuration],
                               kScreenSaverTimeKey,
                               nil];
-  [urls_ addObject:urlSetting];
-  [urlList_ reloadData];
+  [self.urls addObject:urlSetting];
+  [self.urlList reloadData];
 }
 
 - (IBAction)removeRow:(id)sender {
@@ -259,10 +358,19 @@ static NSString * const kTableColumnTime = @"time";
 - (IBAction)dismissConfigSheet:(id)sender {
   // Save preferences.
   ScreenSaverDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
-  [prefs setObject:urls_ forKey:kScreenSaverURLListKey];
+  [prefs setObject:self.urls forKey:kScreenSaverURLListKey];
+  
+  self.urlsURL = self.urlsURLField.stringValue;
+  if (self.urlsURL.length) {
+    [prefs setObject:self.urlsURL forKey:kScreenSaverURLsURLKey];
+    [self fetchURLs];
+  } else {
+    [prefs removeObjectForKey:kScreenSaverURLsURLKey];
+  }
+  
   [prefs synchronize];
 
-  if ([urls_ count]) {
+  if ([self.urls count]) {
     [webView_ setMainFrameURL:[self urlForIndex:0]];
   }
   
@@ -278,11 +386,12 @@ static NSString * const kTableColumnTime = @"time";
     decisionListener:(id < WebPolicyDecisionListener >)listener {
   // Don't open new windows.
   [listener ignore];
-}  
+}
      
 - (void)webView:(WebView *)webView didFinishLoadForFrame:(WebFrame *)frame {
   [webView resignFirstResponder];
   [[[webView mainFrame] frameView] setAllowsScrolling:NO];
+  //[webView setDrawsBackground:YES];
 }
        
 #pragma mark WebUIDelegate
