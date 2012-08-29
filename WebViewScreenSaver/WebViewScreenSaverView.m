@@ -76,22 +76,11 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
   self = [super initWithFrame:frame isPreview:isPreview];
   if (self) {
+    [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    [self setAutoresizesSubviews:YES];
+    
     currentIndex_ = 0;
     isPreview_ = isPreview;
-    
-    // Create the webview for the screensaver.
-    webView_ = [[WebView alloc] initWithFrame:[self bounds]];
-    [webView_ setFrameLoadDelegate:self];
-    [webView_ setShouldUpdateWhileOffscreen:YES];
-    [webView_ setPolicyDelegate:self];
-    [webView_ setUIDelegate:self];
-    [webView_ setEditingDelegate:self];
-    [webView_ setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    [webView_ setAutoresizesSubviews:YES];
-    [webView_ setDrawsBackground:NO];
-    
-    NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
-    [[webView_ layer] setBackgroundColor:color.CGColor];
     
     // Load state from the preferences.
     ScreenSaverDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
@@ -109,26 +98,19 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     
     // Fetch URLs if we're using the URLsURL.
     [self fetchURLs];
-    
-    if (!isPreview_ && currentIndex_ < [self.urls count]) {
-      [self loadFromStart];
-    }
-
-    [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    [self setAutoresizesSubviews:YES];
-    [self addSubview:webView_];
   }
   return self;
 }
 
 - (void)dealloc {
-  NSLog(@"dealloc");
   [sheet_ release];
+  [webView_ setFrameLoadDelegate:nil];
   [webView_ setPolicyDelegate:nil];
   [webView_ setUIDelegate:nil];
   [webView_ setEditingDelegate:nil];
   [webView_ close];
   [webView_ release];
+  [timer_ invalidate];
   self.fetchURLCheckbox = nil;
   self.urlsURL = nil;
   self.urls = nil;
@@ -167,6 +149,41 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     [self.urlsURLField setEnabled:self.shouldFetchURLs];
   }
   return sheet_;
+}
+
+#pragma mark ScreenSaverView
+
+- (void)startAnimation {
+  [super startAnimation];
+  
+  [webView_ release];
+  // Create the webview for the screensaver.
+  webView_ = [[WebView alloc] initWithFrame:[self bounds]];
+  [webView_ setFrameLoadDelegate:self];
+  [webView_ setShouldUpdateWhileOffscreen:YES];
+  [webView_ setPolicyDelegate:self];
+  [webView_ setUIDelegate:self];
+  [webView_ setEditingDelegate:self];
+  [webView_ setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+  [webView_ setAutoresizesSubviews:YES];
+  [webView_ setDrawsBackground:NO];
+  [self addSubview:webView_];
+  
+  NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
+  [[webView_ layer] setBackgroundColor:color.CGColor];
+  
+  if (!isPreview_ && currentIndex_ < [self.urls count]) {
+    [self loadFromStart];
+  }
+}
+
+- (void)stopAnimation {
+  [super stopAnimation];
+  [timer_ invalidate];
+  timer_ = nil;
+  [webView_ removeFromSuperview];
+  [webView_ close];
+  webView_ = nil;
 }
 
 #pragma mark Loading URLs
@@ -227,7 +244,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
   if (index < [self.urls count]) {
     NSDictionary *urlObject = [self.urls objectAtIndex:index];
     NSNumber *seconds = [urlObject objectForKey:kScreenSaverTimeKey];
-    return [seconds floatValue];
+    return [seconds doubleValue];
   }
   return kOneMinute;
 }
@@ -481,7 +498,11 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   [[[webView mainFrame] frameView] setAllowsScrolling:NO];
   //[webView setDrawsBackground:YES];
 }
-       
+
+- (void)webView:(WebView *)webView unableToImplementPolicyWithError:(NSError *)error frame:(WebFrame *)frame {
+  NSLog(@"unableToImplement: %@", error);
+}
+
 #pragma mark WebUIDelegate
 
 - (NSResponder *)webViewFirstResponder:(WebView *)sender {
@@ -491,5 +512,26 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
 - (void)webViewClose:(WebView *)sender {
   return;
 }
+
+- (BOOL)webViewIsResizable:(WebView *)sender {
+  return NO;
+}
+
+- (BOOL)webViewIsStatusBarVisible:(WebView *)sender {
+  return NO;
+}
+
+- (void)webViewRunModal:(WebView *)sender {
+  return;
+}
+
+- (void)webViewShow:(WebView *)sender {
+  return;
+}
+
+- (void)webViewUnfocus:(WebView *)sender {
+  return;
+}
+
 
 @end
