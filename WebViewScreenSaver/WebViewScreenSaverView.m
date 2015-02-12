@@ -197,7 +197,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     duration = [self timeIntervalForIndex:currentIndex_];
     url = [self urlForIndex:currentIndex_];
   }
-  [webView_ setMainFrameURL:url];  
+  [self loadURLThing:url];
   [timer_ invalidate];
   timer_ = [NSTimer scheduledTimerWithTimeInterval:duration
                                             target:self
@@ -222,7 +222,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     duration = [self timeIntervalForIndex:nextIndex];
     url = [self urlForIndex:nextIndex];
   }
-  [webView_ setMainFrameURL:url];
+  [self loadURLThing:url];
   [timer_ invalidate];
   timer_ = [NSTimer scheduledTimerWithTimeInterval:duration
                                             target:self
@@ -230,6 +230,15 @@ static NSString * const kURLTableRow = @"kURLTableRow";
                                           userInfo:nil
                                            repeats:NO];
   currentIndex_ = nextIndex;
+}
+
+- (void)loadURLThing:(NSString*)url {
+  NSString *javascriptPrefix = @"javascript:";
+  if([url hasPrefix:javascriptPrefix]) {
+    [webView_ stringByEvaluatingJavaScriptFromString:url];
+  } else {
+    [webView_ setMainFrameURL:url];
+  }
 }
 
 - (NSString *)urlForIndex:(NSInteger)index {
