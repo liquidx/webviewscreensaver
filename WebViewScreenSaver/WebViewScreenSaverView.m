@@ -57,17 +57,13 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 @end
 
 
-@implementation WebViewScreenSaverView
+@implementation WebViewScreenSaverView {
+  NSTimer *_timer;
+  WebView *_webView;
+  NSInteger _currentIndex;
+  BOOL _isPreview;
 
-@synthesize connection = connection_;
-@synthesize fetchURLCheckbox = fetchURLCheckbox_;
-@synthesize receivedData = receivedData_;
-@synthesize sheet = sheet_;
-@synthesize shouldFetchURLs = shouldFetchURLs_;
-@synthesize urls = urls_;
-@synthesize urlList = urlList_;
-@synthesize urlsURL = urlsURL_;
-@synthesize urlsURLField = urlsURLField_;
+}
 
 + (BOOL)performGammaFade {
   return YES;
@@ -79,18 +75,18 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [self setAutoresizesSubviews:YES];
     
-    currentIndex_ = 0;
-    isPreview_ = isPreview;
+    _currentIndex = 0;
+    _isPreview = isPreview;
     
     // Load state from the preferences.
     ScreenSaverDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
-    self.urls = [[[prefs arrayForKey:kScreenSaverURLListKey] mutableCopy] autorelease];
+    self.urls = [[prefs arrayForKey:kScreenSaverURLListKey] mutableCopy];
     self.urlsURL = [prefs stringForKey:kScreenSaverURLsURLKey];
     self.shouldFetchURLs = [prefs boolForKey:kScreenSaverFetchURLsKey];
     
     // If there are no URLs set, add a single default URL entry and save it.
     if (![self.urls count] || ![[self.urls objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
-      self.urls = [[[NSMutableArray alloc] init] autorelease];
+      self.urls = [[NSMutableArray alloc] init];
       [self addRow:nil];
       [prefs setObject:self.urls forKey:kScreenSaverURLListKey];
       [prefs synchronize];      
@@ -103,21 +99,14 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 }
 
 - (void)dealloc {
-  [sheet_ release];
-  [webView_ setFrameLoadDelegate:nil];
-  [webView_ setPolicyDelegate:nil];
-  [webView_ setUIDelegate:nil];
-  [webView_ setEditingDelegate:nil];
-  [webView_ close];
-  [webView_ release];
-  [timer_ invalidate];
-  self.fetchURLCheckbox = nil;
-  self.urlsURL = nil;
-  self.urls = nil;
-  self.urlsURLField = nil;
-  self.urlList = nil;
-  self.receivedData = nil;
-  [super dealloc];
+  _sheet = nil;
+  [_webView setFrameLoadDelegate:nil];
+  [_webView setPolicyDelegate:nil];
+  [_webView setUIDelegate:nil];
+  [_webView setEditingDelegate:nil];
+  [_webView close];
+  [_timer invalidate];
+  _timer = nil;
 }
 
 - (BOOL)hasConfigureSheet {
@@ -129,7 +118,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 //}
 
 - (NSWindow *)configureSheet {
-  if (!sheet_) {
+  if (!self.sheet) {
     if (![NSBundle loadNibNamed:@"ConfigureSheet" owner:self]) {
       NSLog(@"Unable to load configuration sheet");
     }
@@ -148,7 +137,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     [self.fetchURLCheckbox setIntegerValue:self.shouldFetchURLs];
     [self.urlsURLField setEnabled:self.shouldFetchURLs];
   }
-  return sheet_;
+  return self.sheet;
 }
 
 #pragma mark ScreenSaverView
@@ -156,34 +145,33 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 - (void)startAnimation {
   [super startAnimation];
   
-  [webView_ release];
   // Create the webview for the screensaver.
-  webView_ = [[WebView alloc] initWithFrame:[self bounds]];
-  [webView_ setFrameLoadDelegate:self];
-  [webView_ setShouldUpdateWhileOffscreen:YES];
-  [webView_ setPolicyDelegate:self];
-  [webView_ setUIDelegate:self];
-  [webView_ setEditingDelegate:self];
-  [webView_ setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-  [webView_ setAutoresizesSubviews:YES];
-  [webView_ setDrawsBackground:NO];
-  [self addSubview:webView_];
+  _webView = [[WebView alloc] initWithFrame:[self bounds]];
+  [_webView setFrameLoadDelegate:self];
+  [_webView setShouldUpdateWhileOffscreen:YES];
+  [_webView setPolicyDelegate:self];
+  [_webView setUIDelegate:self];
+  [_webView setEditingDelegate:self];
+  [_webView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+  [_webView setAutoresizesSubviews:YES];
+  [_webView setDrawsBackground:NO];
+  [self addSubview:_webView];
   
   NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
-  [[webView_ layer] setBackgroundColor:color.CGColor];
+  [[_webView layer] setBackgroundColor:color.CGColor];
   
-  if (!isPreview_ && currentIndex_ < [self.urls count]) {
+  if (!_isPreview && _currentIndex < [self.urls count]) {
     [self loadFromStart];
   }
 }
 
 - (void)stopAnimation {
   [super stopAnimation];
-  [timer_ invalidate];
-  timer_ = nil;
-  [webView_ removeFromSuperview];
-  [webView_ close];
-  webView_ = nil;
+  [_timer invalidate];
+  _timer = nil;
+  [_webView removeFromSuperview];
+  [_webView close];
+  _webView = nil;
 }
 
 #pragma mark Loading URLs
@@ -191,15 +179,15 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 - (void)loadFromStart {
   NSTimeInterval duration = kDefaultDuration;
   NSString *url = kScreenSaverDefaultURL;
-  currentIndex_ = 0;
+  _currentIndex = 0;
   
   if ([self.urls count] > 0) {
-    duration = [self timeIntervalForIndex:currentIndex_];
-    url = [self urlForIndex:currentIndex_];
+    duration = [self timeIntervalForIndex:_currentIndex];
+    url = [self urlForIndex:_currentIndex];
   }
   [self loadURLThing:url];
-  [timer_ invalidate];
-  timer_ = [NSTimer scheduledTimerWithTimeInterval:duration
+  [_timer invalidate];
+  _timer = [NSTimer scheduledTimerWithTimeInterval:duration
                                             target:self
                                           selector:@selector(loadNext:)
                                           userInfo:nil
@@ -209,35 +197,35 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 - (void)loadNext:(NSTimer *)timer {
   NSTimeInterval duration = kDefaultDuration;
   NSString *url = kScreenSaverDefaultURL;
-  NSInteger nextIndex = currentIndex_;
+  NSInteger nextIndex = _currentIndex;
   
   // Last element, fetchURLs if they exist.
-  if (currentIndex_ == [self.urls count] - 1) {
+  if (_currentIndex == [self.urls count] - 1) {
     [self fetchURLs];
   }
 
   // Progress the URL counter.
   if ([self.urls count] > 0) {
-    nextIndex = (currentIndex_ + 1) % [self.urls count];
+    nextIndex = (_currentIndex + 1) % [self.urls count];
     duration = [self timeIntervalForIndex:nextIndex];
     url = [self urlForIndex:nextIndex];
   }
   [self loadURLThing:url];
-  [timer_ invalidate];
-  timer_ = [NSTimer scheduledTimerWithTimeInterval:duration
+  [_timer invalidate];
+  _timer = [NSTimer scheduledTimerWithTimeInterval:duration
                                             target:self
                                           selector:@selector(loadNext:)
                                           userInfo:nil
                                            repeats:NO];
-  currentIndex_ = nextIndex;
+  _currentIndex = nextIndex;
 }
 
 - (void)loadURLThing:(NSString*)url {
   NSString *javascriptPrefix = @"javascript:";
   if([url hasPrefix:javascriptPrefix]) {
-    [webView_ stringByEvaluatingJavaScriptFromString:url];
+    [_webView stringByEvaluatingJavaScriptFromString:url];
   } else {
-    [webView_ setMainFrameURL:url];
+    [_webView setMainFrameURL:url];
   }
 }
 
@@ -263,7 +251,6 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     NSMutableDictionary *urlObject = [[self.urls objectAtIndex:index] mutableCopy];
     [urlObject setObject:url forKey:kScreenSaverURLKey];
     [self.urls replaceObjectAtIndex:index withObject:urlObject];
-    [urlObject release];
   }
 }
 
@@ -273,7 +260,6 @@ static NSString * const kURLTableRow = @"kURLTableRow";
     [urlObject setObject:[NSNumber numberWithFloat:timeInterval]
                   forKey:kScreenSaverTimeKey];
     [self.urls replaceObjectAtIndex:index withObject:urlObject];
-    [urlObject release];    
   }
 }
 
@@ -319,10 +305,10 @@ static NSString * const kURLTableRow = @"kURLTableRow";
   }
   
   if ([response isKindOfClass:[NSArray class]]) {
-    self.urls = [[response mutableCopy] autorelease];
+    self.urls = [response mutableCopy];
     [self.urlList reloadData];
     
-    currentIndex_ = -1;
+    _currentIndex = -1;
     [self loadNext:nil];
   }
   self.connection = nil;
@@ -399,7 +385,7 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
       [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
   NSInteger dragRow = [rowIndexes firstIndex];
   
-  id draggedObject = [[[self.urls objectAtIndex:dragRow] retain] autorelease];
+  id draggedObject = [self.urls objectAtIndex:dragRow];
   NSLog(@"draggedObject: %@", draggedObject);
   if (dragRow < row) {
     [self.urls insertObject:draggedObject atIndex:row];
@@ -430,10 +416,10 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
 }
 
 - (IBAction)removeRow:(id)sender {
-  NSInteger row = [urlList_ selectedRow];
+  NSInteger row = [self.urlList selectedRow];
   if (row != NSNotFound) {
     [self.urls removeObjectAtIndex:row];
-    [urlList_ reloadData];
+    [self.urlList reloadData];
   }
 }
 
@@ -488,7 +474,7 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   [prefs synchronize];
 
   [self loadFromStart];
-  [[NSApplication sharedApplication] endSheet:sheet_];
+  [[NSApplication sharedApplication] endSheet:self.sheet];
 }
 
 #pragma mark WebPolicyDelegate

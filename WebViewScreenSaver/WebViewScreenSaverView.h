@@ -25,39 +25,17 @@
 
 // A simple screen saver that is a configurable webview driven from a list
 // of URLs.
-@interface WebViewScreenSaverView : ScreenSaverView  {
- @private
-  WebView *webView_;
-  // Options UI
-  NSWindow *sheet_;
-  NSTableView *urlList_;
-  NSTextField *urlsURLField_;
-  NSButton *fetchURLCheckbox_;
-  
-  // Options Data
-  NSString *urlsURL_;  
-  NSMutableArray *urls_;
-  NSInteger currentIndex_;
-  BOOL shouldFetchURLs_;
-  
-  // Fetching URLs
-  NSMutableData *receivedData_;
-  NSURLConnection *connection_;
-  BOOL isPreview_;
-  
-  // Timer
-  NSTimer *timer_;
-}
+@interface WebViewScreenSaverView : ScreenSaverView
 
-@property (nonatomic, retain) IBOutlet NSWindow *sheet;
-@property (nonatomic, retain) IBOutlet NSTableView *urlList;
-@property (nonatomic, retain) IBOutlet NSTextField *urlsURLField;
-@property (nonatomic, retain) IBOutlet NSButton *fetchURLCheckbox;
+@property (nonatomic, strong) IBOutlet NSWindow *sheet;
+@property (nonatomic, strong) IBOutlet NSTableView *urlList;
+@property (nonatomic, strong) IBOutlet NSTextField *urlsURLField;
+@property (nonatomic, strong) IBOutlet NSButton *fetchURLCheckbox;
 
-@property (nonatomic, retain) NSMutableData *receivedData;
-@property (nonatomic, retain) NSMutableArray *urls;
+@property (nonatomic, strong) NSMutableData *receivedData;
+@property (nonatomic, strong) NSMutableArray *urls;
 @property (nonatomic, copy) NSString *urlsURL;
-@property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, assign) BOOL shouldFetchURLs;
 
 
