@@ -236,7 +236,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebViewScreenSaver_Prefix.pch;
@@ -244,7 +243,6 @@
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				PRODUCT_NAME = WebViewScreenSaver;
 				WRAPPER_EXTENSION = saver;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -253,7 +251,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebViewScreenSaver_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
