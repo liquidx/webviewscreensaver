@@ -1,9 +1,9 @@
 WebViewScreenSaver
 ==================
 
-Author: Alastair Tse <alastair@liquidx.net>
-URL: http://github.com/liquidx/webviewscreensaver
-Twitter: @liquidx
+ - Author: Alastair Tse <alastair@liquidx.net>
+ - URL: http://github.com/liquidx/webviewscreensaver
+ - Twitter: @liquidx
 
 Introduction
 ------------
@@ -30,13 +30,13 @@ Example URLs
 
 Websites that look good as screensavers:
 
-http://www.flickr.com/photos/pineapplebun/show/
-http://visibletweets.com/#query=liquidx&animation=2
-http://www.flickr.com/explore/panda
-http://www.uniqlo.jp/uniqlock/
-http://www.uniqlo.com/calendar/
-http://twistori.com/#i_love
-http://www.youtube.com/leanback
-http://www.flickr.com/explore/clock/
-http://www.flickr.com/explore/interesting/7days/show/
-http://randomstreetview.com/#slideshow 
+ - http://www.flickr.com/photos/pineapplebun/show/
+ - http://visibletweets.com/#query=liquidx&animation=2
+ - http://www.flickr.com/explore/panda
+ - http://www.uniqlo.jp/uniqlock/
+ - http://www.uniqlo.com/calendar/
+ - http://twistori.com/#i_love
+ - http://www.youtube.com/leanback
+ - http://www.flickr.com/explore/clock/
+ - http://www.flickr.com/explore/interesting/7days/show/
+ - http://randomstreetview.com/#slideshow
