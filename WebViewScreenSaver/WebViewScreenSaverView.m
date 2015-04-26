@@ -88,6 +88,10 @@ NS_ENUM(NSInteger, WVSSColumn) {
     self.urls = [[prefs arrayForKey:kScreenSaverURLListKey] mutableCopy];
     self.urlsURL = [prefs stringForKey:kScreenSaverURLsURLKey];
     self.shouldFetchURLs = [prefs boolForKey:kScreenSaverFetchURLsKey];
+
+    // Scan bundle directory for any HTML files we can add to the URL list.
+    // TODO: Temporarily disable this.
+    //self.bundleHTMLURLs = [self bundleHTML];
     
     // If there are no URLs set, add a single default URL entry and save it.
     if (![self.urls count] || ![[self.urls objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
@@ -96,7 +100,7 @@ NS_ENUM(NSInteger, WVSSColumn) {
       [prefs setObject:self.urls forKey:kScreenSaverURLListKey];
       [prefs synchronize];      
     }
-    
+
     // Fetch URLs if we're using the URLsURL.
     [self fetchURLs];
   }
@@ -113,6 +117,27 @@ NS_ENUM(NSInteger, WVSSColumn) {
   [_timer invalidate];
   _timer = nil;
 }
+
+#pragma mark Bundle
+
+- (NSArray *)bundleHTML {
+  NSString *resourcePath = [[NSBundle bundleForClass:[WebViewScreenSaverView class]] resourcePath];
+  NSError *error = nil;
+  NSArray *bundleResourceContents =
+      [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcePath error:&error];
+
+  NSMutableArray *bundleURLs = [NSMutableArray array];
+  for (NSString *filename in bundleResourceContents) {
+    if ([[filename pathExtension] isEqual:@"html"]) {
+      NSString *path = [resourcePath stringByAppendingPathComponent:filename];
+      NSURL *urlForPath = [NSURL fileURLWithPath:path];
+      [bundleURLs addObject:@{kScreenSaverURLKey:[urlForPath absoluteString], kScreenSaverTimeKey:@180}];
+    }
+  }
+  return [bundleURLs count] ? bundleURLs : nil;
+}
+
+#pragma mark - Configure Sheet
 
 - (BOOL)hasConfigureSheet {
   return YES;

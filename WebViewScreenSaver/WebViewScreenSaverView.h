@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, strong) NSMutableArray *urls;
 @property (nonatomic, copy) NSString *urlsURL;
+@property (nonatomic, strong) NSArray *bundleHTMLURLs;
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, assign) BOOL shouldFetchURLs;
 
