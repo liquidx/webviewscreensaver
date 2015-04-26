@@ -38,10 +38,10 @@
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, assign) BOOL shouldFetchURLs;
 
-
 - (IBAction)dismissConfigSheet:(id)sender;
 - (IBAction)addRow:(id)sender;
 - (IBAction)removeRow:(id)sender;
 - (IBAction)toggleFetchingURLs:(id)sender;
+- (IBAction)tableViewCellDidEdit:(id)sender;
 
 @end

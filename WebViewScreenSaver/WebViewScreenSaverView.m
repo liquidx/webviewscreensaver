@@ -40,6 +40,11 @@ static NSString * const kTableColumnTime = @"time";
 
 static NSString * const kURLTableRow = @"kURLTableRow";
 
+NS_ENUM(NSInteger, WVSSColumn) {
+  kWVSSColumnURL = 0,
+  kWVSSColumnDuration = 1
+};
+
 @interface WebViewScreenSaverView ()
 // Timer callback that loads the next URL in the URL list.
 - (void)loadNext:(NSTimer *)timer;
@@ -160,7 +165,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
   NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
   [[_webView layer] setBackgroundColor:color.CGColor];
   
-  if (!_isPreview && _currentIndex < [self.urls count]) {
+  if (!_isPreview && _currentIndex < [[self selectedURLs] count]) {
     [self loadFromStart];
   }
 }
@@ -180,11 +185,12 @@ static NSString * const kURLTableRow = @"kURLTableRow";
   NSTimeInterval duration = kDefaultDuration;
   NSString *url = kScreenSaverDefaultURL;
   _currentIndex = 0;
-  
-  if ([self.urls count] > 0) {
+
+  if ([[self selectedURLs] count]) {
     duration = [self timeIntervalForIndex:_currentIndex];
     url = [self urlForIndex:_currentIndex];
   }
+
   [self loadURLThing:url];
   [_timer invalidate];
   _timer = [NSTimer scheduledTimerWithTimeInterval:duration
@@ -200,13 +206,13 @@ static NSString * const kURLTableRow = @"kURLTableRow";
   NSInteger nextIndex = _currentIndex;
   
   // Last element, fetchURLs if they exist.
-  if (_currentIndex == [self.urls count] - 1) {
+  if (_currentIndex == [[self selectedURLs] count] - 1) {
     [self fetchURLs];
   }
 
   // Progress the URL counter.
-  if ([self.urls count] > 0) {
-    nextIndex = (_currentIndex + 1) % [self.urls count];
+  if ([[self selectedURLs] count] > 0) {
+    nextIndex = (_currentIndex + 1) % [[self selectedURLs] count];
     duration = [self timeIntervalForIndex:nextIndex];
     url = [self urlForIndex:nextIndex];
   }
@@ -220,8 +226,13 @@ static NSString * const kURLTableRow = @"kURLTableRow";
   _currentIndex = nextIndex;
 }
 
-- (void)loadURLThing:(NSString*)url {
+- (void)loadURLThing:(NSString *)url {
   NSString *javascriptPrefix = @"javascript:";
+
+  if ([url isKindOfClass:[NSURL class]]) {
+    url = [(NSURL *)url absoluteString];
+  }
+
   if([url hasPrefix:javascriptPrefix]) {
     [_webView stringByEvaluatingJavaScriptFromString:url];
   } else {
@@ -229,17 +240,22 @@ static NSString * const kURLTableRow = @"kURLTableRow";
   }
 }
 
+- (NSArray *)selectedURLs {
+  return self.urls;
+}
+
+
 - (NSString *)urlForIndex:(NSInteger)index {
-  if (index < [self.urls count]) {
-    NSDictionary *urlObject = [self.urls objectAtIndex:index];
+  if (index < [[self selectedURLs] count]) {
+    NSDictionary *urlObject = [[self selectedURLs] objectAtIndex:index];
     return [urlObject objectForKey:kScreenSaverURLKey];
   }
   return nil;
 }
 
 - (NSTimeInterval)timeIntervalForIndex:(NSInteger)index {
-  if (index < [self.urls count]) {
-    NSDictionary *urlObject = [self.urls objectAtIndex:index];
+  if (index < [[self selectedURLs] count]) {
+    NSDictionary *urlObject = [[self selectedURLs] objectAtIndex:index];
     NSNumber *seconds = [urlObject objectForKey:kScreenSaverTimeKey];
     return [seconds doubleValue];
   }
@@ -247,7 +263,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 }
 
 - (void)setURL:(NSString *)url forIndex:(NSInteger)index {
-  if (index < [self.urls count]) {
+  if (index < [[self selectedURLs] count]) {
     NSMutableDictionary *urlObject = [[self.urls objectAtIndex:index] mutableCopy];
     [urlObject setObject:url forKey:kScreenSaverURLKey];
     [self.urls replaceObjectAtIndex:index withObject:urlObject];
@@ -255,7 +271,7 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 }
 
 - (void)setTimeInterval:(NSTimeInterval)timeInterval forIndex:(NSInteger)index {
-  if (index < [self.urls count]) {
+  if (index < [[self selectedURLs] count]) {
     NSMutableDictionary *urlObject = [[self.urls objectAtIndex:index] mutableCopy];
     [urlObject setObject:[NSNumber numberWithFloat:timeInterval]
                   forKey:kScreenSaverTimeKey];
@@ -319,41 +335,36 @@ static NSString * const kURLTableRow = @"kURLTableRow";
 
 #pragma mark NSTableView
 
-- (id)tableView:(NSTableView *)aTableView
-      objectValueForTableColumn:(NSTableColumn *)aTableColumn
-      row:(NSInteger)rowIndex {
-  if ([[aTableColumn identifier] isEqual:kTableColumnURL]) {
-    return [self urlForIndex:rowIndex];
-  } else if ([[aTableColumn identifier] isEqual:kTableColumnTime]) {
-    NSTimeInterval seconds = [self timeIntervalForIndex:rowIndex];
-    return [NSNumber numberWithInt:seconds];
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+  // In IB the tableColumn has the identifier set to the same string as the keys in our dictionary
+  NSString *identifier = [tableColumn identifier];
+
+  if ([identifier isEqual:kTableColumnURL]) {
+    NSString *value = [self urlForIndex:row];
+
+    NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
+    cellView.textField.stringValue = value;
+    return cellView;
+  } else if ([identifier isEqual:kTableColumnTime]) {
+    NSTimeInterval seconds = [self timeIntervalForIndex:row];
+
+    NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
+    cellView.textField.stringValue = [[NSNumber numberWithInt:seconds] stringValue];
+    return cellView;
+  } else {
+    NSAssert1(NO, @"Unhandled table column identifier %@", identifier);
   }
   return nil;
-}  
-
-- (void)tableView:(NSTableView *)aTableView
-   setObjectValue:anObject
-   forTableColumn:(NSTableColumn *)aTableColumn
-              row:(NSInteger)rowIndex {
-  if (rowIndex < [self.urls count]) {
-    if ([[aTableColumn identifier] isEqual:kTableColumnURL] &&
-        [anObject isKindOfClass:[NSString class]]) {
-      [self setURL:anObject forIndex:rowIndex];
-    } else if ([[aTableColumn identifier] isEqual:kTableColumnTime] &&
-               [anObject isKindOfClass:[NSString class]]) {
-      NSInteger seconds = [anObject intValue];
-      [self setTimeInterval:seconds  forIndex:rowIndex];
-    }
-  }
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
-  return [self.urls count];
+  return [[self selectedURLs] count];
 }
 
 - (BOOL)canDragRowsWithIndexes:(NSIndexSet *)rowIndexes atPoint:(NSPoint)mouseDownPoint {
   return YES;
 }
+
 
 - (BOOL)tableView:(NSTableView *)tv
 writeRowsWithIndexes:(NSIndexSet *)rowIndexes
@@ -401,8 +412,19 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   return YES;
 }
 
-
 #pragma mark -
+
+- (IBAction)tableViewCellDidEdit:(NSTextField *)textField {
+  NSInteger col = [self.urlList columnForView:textField];
+  NSInteger row = [self.urlList selectedRow];
+
+  if (col == kWVSSColumnURL) {
+    [self setURL:textField.stringValue forIndex:row];
+  } else if (col == kWVSSColumnDuration) {
+    NSInteger seconds = [textField.stringValue intValue];
+    [self setTimeInterval:seconds  forIndex:row];
+  }
+}
 
 - (IBAction)addRow:(id)sender {
   NSDictionary *urlSetting = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -466,7 +488,6 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   self.urlsURL = self.urlsURLField.stringValue;
   if (self.urlsURL.length) {
     [prefs setObject:self.urlsURL forKey:kScreenSaverURLsURLKey];
-    [self fetchURLs];
   } else {
     [prefs removeObjectForKey:kScreenSaverURLsURLKey];
   }
