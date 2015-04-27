@@ -22,26 +22,12 @@
 #import <Foundation/Foundation.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <WebKit/WebKit.h>
+#import "WVSSConfigController.h"
 
 // A simple screen saver that is a configurable webview driven from a list
 // of URLs.
 @interface WebViewScreenSaverView : ScreenSaverView
 
-@property (nonatomic, strong) IBOutlet NSWindow *sheet;
-@property (nonatomic, strong) IBOutlet NSTableView *urlList;
-@property (nonatomic, strong) IBOutlet NSTextField *urlsURLField;
-@property (nonatomic, strong) IBOutlet NSButton *fetchURLCheckbox;
-
-@property (nonatomic, strong) NSMutableData *receivedData;
-@property (nonatomic, strong) NSMutableArray *urls;
-@property (nonatomic, copy) NSString *urlsURL;
-@property (nonatomic, strong) NSURLConnection *connection;
-@property (nonatomic, assign) BOOL shouldFetchURLs;
-
-- (IBAction)dismissConfigSheet:(id)sender;
-- (IBAction)addRow:(id)sender;
-- (IBAction)removeRow:(id)sender;
-- (IBAction)toggleFetchingURLs:(id)sender;
-- (IBAction)tableViewCellDidEdit:(id)sender;
+@property (nonatomic, strong) WVSSConfigController *configController;
 
 @end

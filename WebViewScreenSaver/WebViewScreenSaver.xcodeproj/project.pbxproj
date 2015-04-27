@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6414570D1AEDC92100FB6CDF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6414570C1AEDC92100FB6CDF /* AppDelegate.m */; };
+		6414570F1AEDC92200FB6CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6414570E1AEDC92200FB6CDF /* main.m */; };
+		641457111AEDC92200FB6CDF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 641457101AEDC92200FB6CDF /* Images.xcassets */; };
+		641457141AEDC92200FB6CDF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 641457121AEDC92200FB6CDF /* MainMenu.xib */; };
+		641457201AEDC92200FB6CDF /* WebViewScreenSaverRigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6414571F1AEDC92200FB6CDF /* WebViewScreenSaverRigTests.m */; };
+		641457291AEDCAD000FB6CDF /* WVSSConfigController.h in Headers */ = {isa = PBXBuildFile; fileRef = 641457271AEDCAD000FB6CDF /* WVSSConfigController.h */; };
+		6414572A1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457281AEDCAD000FB6CDF /* WVSSConfigController.m */; };
+		6414572B1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457281AEDCAD000FB6CDF /* WVSSConfigController.m */; };
+		6414572E1AEDCBD900FB6CDF /* WVSSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6414572C1AEDCBD900FB6CDF /* WVSSConfig.h */; };
+		6414572F1AEDCBD900FB6CDF /* WVSSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6414572D1AEDCBD900FB6CDF /* WVSSConfig.m */; };
+		641457301AEDCBD900FB6CDF /* WVSSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6414572D1AEDCBD900FB6CDF /* WVSSConfig.m */; };
+		641457331AEDCCAB00FB6CDF /* WVSSAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 641457311AEDCCAB00FB6CDF /* WVSSAddress.h */; };
+		641457341AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457321AEDCCAB00FB6CDF /* WVSSAddress.m */; };
+		641457351AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457321AEDCCAB00FB6CDF /* WVSSAddress.m */; };
+		641457381AEDD51900FB6CDF /* WVSSAddressListFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 641457361AEDD51900FB6CDF /* WVSSAddressListFetcher.h */; };
+		641457391AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */; };
+		6414573A1AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */; };
 		64EED329120EC1B40048A830 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EED328120EC1B40048A830 /* WebKit.framework */; };
 		64EED3E9120EC6380048A830 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64EED3E8120EC6380048A830 /* ConfigureSheet.xib */; };
 		8D255AC70486D3F9007BF209 /* WebViewScreenSaver_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCFA80370C50100C91783 /* WebViewScreenSaver_Prefix.pch */; };
@@ -17,6 +34,16 @@
 		8D255ACF0486D3F9007BF209 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6414571A1AEDC92200FB6CDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 641457061AEDC92100FB6CDF;
+			remoteInfo = WebViewScreenSaverRig;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -24,6 +51,24 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCFA80370C50100C91783 /* WebViewScreenSaver_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewScreenSaver_Prefix.pch; sourceTree = "<group>"; };
+		641457071AEDC92100FB6CDF /* WebViewScreenSaverRig.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebViewScreenSaverRig.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6414570A1AEDC92100FB6CDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6414570B1AEDC92100FB6CDF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6414570C1AEDC92100FB6CDF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6414570E1AEDC92200FB6CDF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		641457101AEDC92200FB6CDF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		641457131AEDC92200FB6CDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		641457191AEDC92200FB6CDF /* WebViewScreenSaverRigTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebViewScreenSaverRigTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6414571E1AEDC92200FB6CDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6414571F1AEDC92200FB6CDF /* WebViewScreenSaverRigTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewScreenSaverRigTests.m; sourceTree = "<group>"; };
+		641457271AEDCAD000FB6CDF /* WVSSConfigController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WVSSConfigController.h; sourceTree = "<group>"; };
+		641457281AEDCAD000FB6CDF /* WVSSConfigController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSSConfigController.m; sourceTree = "<group>"; };
+		6414572C1AEDCBD900FB6CDF /* WVSSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WVSSConfig.h; sourceTree = "<group>"; };
+		6414572D1AEDCBD900FB6CDF /* WVSSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSSConfig.m; sourceTree = "<group>"; };
+		641457311AEDCCAB00FB6CDF /* WVSSAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WVSSAddress.h; sourceTree = "<group>"; };
+		641457321AEDCCAB00FB6CDF /* WVSSAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSSAddress.m; sourceTree = "<group>"; };
+		641457361AEDD51900FB6CDF /* WVSSAddressListFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WVSSAddressListFetcher.h; sourceTree = "<group>"; };
+		641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSSAddressListFetcher.m; sourceTree = "<group>"; };
 		64EED328120EC1B40048A830 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		64EED3E8120EC6380048A830 /* ConfigureSheet.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
 		8D255AD20486D3F9007BF209 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -33,6 +78,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		641457041AEDC92100FB6CDF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		641457161AEDC92200FB6CDF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D255ACD0486D3F9007BF209 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,6 +111,8 @@
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32DBCFA70370C4F300C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
+				641457081AEDC92100FB6CDF /* WebViewScreenSaverRig */,
+				6414571C1AEDC92200FB6CDF /* WebViewScreenSaverRigTests */,
 				089C1671FE841209C02AAC07 /* Frameworks */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 			);
@@ -85,6 +146,14 @@
 			children = (
 				F50079790118B23001CA0E54 /* WebViewScreenSaverView.h */,
 				F500797A0118B23001CA0E54 /* WebViewScreenSaverView.m */,
+				641457271AEDCAD000FB6CDF /* WVSSConfigController.h */,
+				641457281AEDCAD000FB6CDF /* WVSSConfigController.m */,
+				6414572C1AEDCBD900FB6CDF /* WVSSConfig.h */,
+				6414572D1AEDCBD900FB6CDF /* WVSSConfig.m */,
+				641457311AEDCCAB00FB6CDF /* WVSSAddress.h */,
+				641457321AEDCCAB00FB6CDF /* WVSSAddress.m */,
+				641457361AEDD51900FB6CDF /* WVSSAddressListFetcher.h */,
+				641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -93,6 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				8D255AD30486D3F9007BF209 /* WebViewScreenSaver.saver */,
+				641457071AEDC92100FB6CDF /* WebViewScreenSaverRig.app */,
+				641457191AEDC92200FB6CDF /* WebViewScreenSaverRigTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,6 +176,44 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
+		641457081AEDC92100FB6CDF /* WebViewScreenSaverRig */ = {
+			isa = PBXGroup;
+			children = (
+				6414570B1AEDC92100FB6CDF /* AppDelegate.h */,
+				6414570C1AEDC92100FB6CDF /* AppDelegate.m */,
+				641457101AEDC92200FB6CDF /* Images.xcassets */,
+				641457121AEDC92200FB6CDF /* MainMenu.xib */,
+				641457091AEDC92100FB6CDF /* Supporting Files */,
+			);
+			path = WebViewScreenSaverRig;
+			sourceTree = "<group>";
+		};
+		641457091AEDC92100FB6CDF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6414570A1AEDC92100FB6CDF /* Info.plist */,
+				6414570E1AEDC92200FB6CDF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6414571C1AEDC92200FB6CDF /* WebViewScreenSaverRigTests */ = {
+			isa = PBXGroup;
+			children = (
+				6414571F1AEDC92200FB6CDF /* WebViewScreenSaverRigTests.m */,
+				6414571D1AEDC92200FB6CDF /* Supporting Files */,
+			);
+			path = WebViewScreenSaverRigTests;
+			sourceTree = "<group>";
+		};
+		6414571D1AEDC92200FB6CDF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6414571E1AEDC92200FB6CDF /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -114,12 +223,51 @@
 			files = (
 				8D255AC70486D3F9007BF209 /* WebViewScreenSaver_Prefix.pch in Headers */,
 				8D255AC80486D3F9007BF209 /* WebViewScreenSaverView.h in Headers */,
+				641457291AEDCAD000FB6CDF /* WVSSConfigController.h in Headers */,
+				641457331AEDCCAB00FB6CDF /* WVSSAddress.h in Headers */,
+				641457381AEDD51900FB6CDF /* WVSSAddressListFetcher.h in Headers */,
+				6414572E1AEDCBD900FB6CDF /* WVSSConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		641457061AEDC92100FB6CDF /* WebViewScreenSaverRig */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 641457211AEDC92200FB6CDF /* Build configuration list for PBXNativeTarget "WebViewScreenSaverRig" */;
+			buildPhases = (
+				641457031AEDC92100FB6CDF /* Sources */,
+				641457041AEDC92100FB6CDF /* Frameworks */,
+				641457051AEDC92100FB6CDF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WebViewScreenSaverRig;
+			productName = WebViewScreenSaverRig;
+			productReference = 641457071AEDC92100FB6CDF /* WebViewScreenSaverRig.app */;
+			productType = "com.apple.product-type.application";
+		};
+		641457181AEDC92200FB6CDF /* WebViewScreenSaverRigTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 641457241AEDC92200FB6CDF /* Build configuration list for PBXNativeTarget "WebViewScreenSaverRigTests" */;
+			buildPhases = (
+				641457151AEDC92200FB6CDF /* Sources */,
+				641457161AEDC92200FB6CDF /* Frameworks */,
+				641457171AEDC92200FB6CDF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6414571B1AEDC92200FB6CDF /* PBXTargetDependency */,
+			);
+			name = WebViewScreenSaverRigTests;
+			productName = WebViewScreenSaverRigTests;
+			productReference = 641457191AEDC92200FB6CDF /* WebViewScreenSaverRigTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8D255AC50486D3F9007BF209 /* WebViewScreenSaver */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF7AD72D08BB986600CE4634 /* Build configuration list for PBXNativeTarget "WebViewScreenSaver" */;
@@ -148,6 +296,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					641457061AEDC92100FB6CDF = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					641457181AEDC92200FB6CDF = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 641457061AEDC92100FB6CDF;
+					};
+				};
 			};
 			buildConfigurationList = EF7AD73108BB986600CE4634 /* Build configuration list for PBXProject "WebViewScreenSaver" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -158,17 +315,36 @@
 				Japanese,
 				French,
 				German,
+				Base,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* WebViewScreenSaver */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				8D255AC50486D3F9007BF209 /* WebViewScreenSaver */,
+				641457061AEDC92100FB6CDF /* WebViewScreenSaverRig */,
+				641457181AEDC92200FB6CDF /* WebViewScreenSaverRigTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		641457051AEDC92100FB6CDF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				641457111AEDC92200FB6CDF /* Images.xcassets in Resources */,
+				641457141AEDC92200FB6CDF /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		641457171AEDC92200FB6CDF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D255AC90486D3F9007BF209 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -208,15 +384,48 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		641457031AEDC92100FB6CDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				641457301AEDCBD900FB6CDF /* WVSSConfig.m in Sources */,
+				6414572B1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */,
+				6414570F1AEDC92200FB6CDF /* main.m in Sources */,
+				641457351AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */,
+				6414570D1AEDC92100FB6CDF /* AppDelegate.m in Sources */,
+				6414573A1AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		641457151AEDC92200FB6CDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				641457201AEDC92200FB6CDF /* WebViewScreenSaverRigTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D255ACB0486D3F9007BF209 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				641457391AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */,
+				6414572A1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */,
+				641457341AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */,
 				8D255ACC0486D3F9007BF209 /* WebViewScreenSaverView.m in Sources */,
+				6414572F1AEDCBD900FB6CDF /* WVSSConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6414571B1AEDC92200FB6CDF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 641457061AEDC92100FB6CDF /* WebViewScreenSaverRig */;
+			targetProxy = 6414571A1AEDC92200FB6CDF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
@@ -227,9 +436,187 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		641457121AEDC92200FB6CDF /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				641457131AEDC92200FB6CDF /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		641457221AEDC92200FB6CDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = WebViewScreenSaverRig/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		641457231AEDC92200FB6CDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = WebViewScreenSaverRig/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		641457251AEDC92200FB6CDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = WebViewScreenSaverRigTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WebViewScreenSaverRig.app/Contents/MacOS/WebViewScreenSaverRig";
+			};
+			name = Debug;
+		};
+		641457261AEDC92200FB6CDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = WebViewScreenSaverRigTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WebViewScreenSaverRig.app/Contents/MacOS/WebViewScreenSaverRig";
+			};
+			name = Release;
+		};
 		EF7AD72E08BB986600CE4634 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -286,6 +673,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		641457211AEDC92200FB6CDF /* Build configuration list for PBXNativeTarget "WebViewScreenSaverRig" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				641457221AEDC92200FB6CDF /* Debug */,
+				641457231AEDC92200FB6CDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		641457241AEDC92200FB6CDF /* Build configuration list for PBXNativeTarget "WebViewScreenSaverRigTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				641457251AEDC92200FB6CDF /* Debug */,
+				641457261AEDC92200FB6CDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EF7AD72D08BB986600CE4634 /* Build configuration list for PBXNativeTarget "WebViewScreenSaver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -35,7 +35,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">WebViewScreenSaverView</string>
+				<string key="NSClassName">WVSSConfigController</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -76,19 +76,20 @@
 															<reference key="NSNextResponder" ref="136311703"/>
 															<int key="NSvFlags">256</int>
 															<array class="NSMutableArray" key="NSSubviews">
-																<object class="NSTableCellView" id="647638748">
+																<object class="NSTableCellView" id="605492913">
 																	<reference key="NSNextResponder" ref="83551336"/>
 																	<int key="NSvFlags">274</int>
 																	<array class="NSMutableArray" key="NSSubviews">
-																		<object class="NSTextField" id="103552131">
-																			<reference key="NSNextResponder" ref="647638748"/>
+																		<object class="NSTextField" id="779605712">
+																			<reference key="NSNextResponder" ref="605492913"/>
 																			<int key="NSvFlags">266</int>
 																			<string key="NSFrameSize">{277, 17}</string>
-																			<reference key="NSSuperview" ref="647638748"/>
+																			<reference key="NSSuperview" ref="605492913"/>
 																			<reference key="NSWindow"/>
+																			<reference key="NSNextKeyView" ref="835259677"/>
 																			<string key="NSAntiCompressionPriority">{250, 750}</string>
 																			<bool key="NSEnabled">YES</bool>
-																			<object class="NSTextFieldCell" key="NSCell" id="414190293">
+																			<object class="NSTextFieldCell" key="NSCell" id="584503173">
 																				<int key="NSCellFlags">337641537</int>
 																				<int key="NSCellFlags2">272631872</int>
 																				<string key="NSContents">Table View Cell</string>
@@ -97,7 +98,7 @@
 																					<double key="NSSize">13</double>
 																					<int key="NSfFlags">1044</int>
 																				</object>
-																				<reference key="NSControlView" ref="103552131"/>
+																				<reference key="NSControlView" ref="779605712"/>
 																				<object class="NSColor" key="NSBackgroundColor" id="625604962">
 																					<int key="NSColorSpace">6</int>
 																					<string key="NSCatalogName">System</string>
@@ -124,25 +125,27 @@
 																	<string key="NSFrame">{{1, 1}, {277, 17}}</string>
 																	<reference key="NSSuperview" ref="83551336"/>
 																	<reference key="NSWindow"/>
+																	<reference key="NSNextKeyView" ref="779605712"/>
 																</object>
-																<object class="NSTableCellView" id="696688960">
+																<object class="NSTableCellView" id="835259677">
 																	<reference key="NSNextResponder" ref="83551336"/>
 																	<int key="NSvFlags">274</int>
 																	<array class="NSMutableArray" key="NSSubviews">
-																		<object class="NSTextField" id="280738900">
-																			<reference key="NSNextResponder" ref="696688960"/>
+																		<object class="NSTextField" id="7868949">
+																			<reference key="NSNextResponder" ref="835259677"/>
 																			<int key="NSvFlags">266</int>
 																			<string key="NSFrameSize">{86, 17}</string>
-																			<reference key="NSSuperview" ref="696688960"/>
+																			<reference key="NSSuperview" ref="835259677"/>
 																			<reference key="NSWindow"/>
+																			<reference key="NSNextKeyView" ref="840552672"/>
 																			<string key="NSAntiCompressionPriority">{250, 750}</string>
 																			<bool key="NSEnabled">YES</bool>
-																			<object class="NSTextFieldCell" key="NSCell" id="854109843">
+																			<object class="NSTextFieldCell" key="NSCell" id="548691668">
 																				<int key="NSCellFlags">338165825</int>
 																				<int key="NSCellFlags2">272631872</int>
 																				<string key="NSContents">Table View Cell</string>
 																				<reference key="NSSupport" ref="887466456"/>
-																				<reference key="NSControlView" ref="280738900"/>
+																				<reference key="NSControlView" ref="7868949"/>
 																				<reference key="NSBackgroundColor" ref="625604962"/>
 																				<reference key="NSTextColor" ref="558049465"/>
 																			</object>
@@ -153,12 +156,13 @@
 																	<string key="NSFrame">{{281, 1}, {86, 17}}</string>
 																	<reference key="NSSuperview" ref="83551336"/>
 																	<reference key="NSWindow"/>
+																	<reference key="NSNextKeyView" ref="7868949"/>
 																</object>
 															</array>
 															<string key="NSFrameSize">{369, 101}</string>
 															<reference key="NSSuperview" ref="136311703"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="840552672"/>
+															<reference key="NSNextKeyView" ref="605492913"/>
 															<bool key="NSEnabled">YES</bool>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -521,6 +525,7 @@
 							<string key="NSFrame">{{333, 12}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="493877120">
 								<int key="NSCellFlags">67108864</int>
@@ -567,14 +572,6 @@
 					<int key="connectionID">60</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">urlList</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="83551336"/>
-					</object>
-					<int key="connectionID">81</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">removeRow:</string>
 						<reference key="source" ref="1001"/>
@@ -618,9 +615,17 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">tableViewCellDidEdit:</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="103552131"/>
+						<reference key="destination" ref="779605712"/>
 					</object>
 					<int key="connectionID">142</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">urlTable</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="83551336"/>
+					</object>
+					<int key="connectionID">143</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -641,16 +646,16 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">textField</string>
-						<reference key="source" ref="647638748"/>
-						<reference key="destination" ref="103552131"/>
+						<reference key="source" ref="605492913"/>
+						<reference key="destination" ref="779605712"/>
 					</object>
 					<int key="connectionID">137</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">textField</string>
-						<reference key="source" ref="696688960"/>
-						<reference key="destination" ref="280738900"/>
+						<reference key="source" ref="835259677"/>
+						<reference key="destination" ref="7868949"/>
 					</object>
 					<int key="connectionID">141</int>
 				</object>
@@ -759,7 +764,7 @@
 						<reference key="object" ref="754387920"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="255068721"/>
-							<reference ref="647638748"/>
+							<reference ref="605492913"/>
 						</array>
 						<reference key="parent" ref="83551336"/>
 					</object>
@@ -778,7 +783,7 @@
 						<reference key="object" ref="67826613"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="892897871"/>
-							<reference ref="696688960"/>
+							<reference ref="835259677"/>
 						</array>
 						<reference key="parent" ref="83551336"/>
 					</object>
@@ -854,45 +859,45 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">134</int>
-						<reference key="object" ref="647638748"/>
+						<reference key="object" ref="605492913"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="103552131"/>
+							<reference ref="779605712"/>
 						</array>
 						<reference key="parent" ref="754387920"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">135</int>
-						<reference key="object" ref="103552131"/>
+						<reference key="object" ref="779605712"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="414190293"/>
+							<reference ref="584503173"/>
 						</array>
-						<reference key="parent" ref="647638748"/>
+						<reference key="parent" ref="605492913"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">136</int>
-						<reference key="object" ref="414190293"/>
-						<reference key="parent" ref="103552131"/>
+						<reference key="object" ref="584503173"/>
+						<reference key="parent" ref="779605712"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">138</int>
-						<reference key="object" ref="696688960"/>
+						<reference key="object" ref="835259677"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="280738900"/>
+							<reference ref="7868949"/>
 						</array>
 						<reference key="parent" ref="67826613"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">139</int>
-						<reference key="object" ref="280738900"/>
+						<reference key="object" ref="7868949"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="854109843"/>
+							<reference ref="548691668"/>
 						</array>
-						<reference key="parent" ref="696688960"/>
+						<reference key="parent" ref="835259677"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">140</int>
-						<reference key="object" ref="854109843"/>
-						<reference key="parent" ref="280738900"/>
+						<reference key="object" ref="548691668"/>
+						<reference key="parent" ref="7868949"/>
 					</object>
 				</array>
 			</object>
@@ -926,14 +931,14 @@
 				<string key="75.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="75.isInViewBasedMode"/>
 				<array key="75.prototypeCellViews">
-					<reference ref="647638748"/>
+					<reference ref="605492913"/>
 				</array>
 				<string key="79.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="80.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="85.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="85.isInViewBasedMode"/>
 				<array key="85.prototypeCellViews">
-					<reference ref="696688960"/>
+					<reference ref="835259677"/>
 				</array>
 				<string key="86.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="93.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -946,46 +951,31 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">142</int>
+			<int key="maxID">143</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">WebViewScreenSaverView</string>
-					<string key="superclassName">ScreenSaverView</string>
+					<string key="className">WVSSConfigController</string>
+					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addRow:">id</string>
-						<string key="dismissConfigSheet:">id</string>
 						<string key="removeRow:">id</string>
-						<string key="tableViewCellDidEdit:">id</string>
-						<string key="toggleFetchingURLs:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="addRow:">
 							<string key="name">addRow:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="dismissConfigSheet:">
-							<string key="name">dismissConfigSheet:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="removeRow:">
 							<string key="name">removeRow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="tableViewCellDidEdit:">
-							<string key="name">tableViewCellDidEdit:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleFetchingURLs:">
-							<string key="name">toggleFetchingURLs:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="fetchURLCheckbox">NSButton</string>
 						<string key="sheet">NSWindow</string>
-						<string key="urlList">NSTableView</string>
+						<string key="urlTable">NSTableView</string>
 						<string key="urlsURLField">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -997,8 +987,8 @@
 							<string key="name">sheet</string>
 							<string key="candidateClassName">NSWindow</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="urlList">
-							<string key="name">urlList</string>
+						<object class="IBToOneOutletInfo" key="urlTable">
+							<string key="name">urlTable</string>
 							<string key="candidateClassName">NSTableView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="urlsURLField">
@@ -1008,11 +998,11 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../WebViewScreenSaverView.h</string>
+						<string key="minorKey">../WVSSConfigController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">WebViewScreenSaverView</string>
+					<string key="className">WVSSConfigController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addRow:">id</string>
 						<string key="dismissConfigSheet:">id</string>
@@ -1044,7 +1034,7 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../WebViewScreenSaverView.m</string>
+						<string key="minorKey">../WVSSConfigController.m</string>
 					</object>
 				</object>
 			</array>
