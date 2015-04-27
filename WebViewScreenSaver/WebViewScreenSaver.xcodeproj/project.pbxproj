@@ -24,6 +24,7 @@
 		641457381AEDD51900FB6CDF /* WVSSAddressListFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 641457361AEDD51900FB6CDF /* WVSSAddressListFetcher.h */; };
 		641457391AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */; };
 		6414573A1AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */; };
+		6414573B1AEDECD800FB6CDF /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64EED3E8120EC6380048A830 /* ConfigureSheet.xib */; };
 		64EED329120EC1B40048A830 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EED328120EC1B40048A830 /* WebKit.framework */; };
 		64EED3E9120EC6380048A830 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64EED3E8120EC6380048A830 /* ConfigureSheet.xib */; };
 		8D255AC70486D3F9007BF209 /* WebViewScreenSaver_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCFA80370C50100C91783 /* WebViewScreenSaver_Prefix.pch */; };
@@ -335,6 +336,7 @@
 			files = (
 				641457111AEDC92200FB6CDF /* Images.xcassets in Resources */,
 				641457141AEDC92200FB6CDF /* MainMenu.xib in Resources */,
+				6414573B1AEDECD800FB6CDF /* ConfigureSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +682,7 @@
 				641457231AEDC92200FB6CDF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		641457241AEDC92200FB6CDF /* Build configuration list for PBXNativeTarget "WebViewScreenSaverRigTests" */ = {
 			isa = XCConfigurationList;
@@ -688,6 +691,7 @@
 				641457261AEDC92200FB6CDF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF7AD72D08BB986600CE4634 /* Build configuration list for PBXNativeTarget "WebViewScreenSaver" */ = {
 			isa = XCConfigurationList;

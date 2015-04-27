@@ -14,7 +14,10 @@
 @interface WVSSConfigController : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 
 @property(nonatomic, strong) id<WVSSConfigControllerDelegate> delegate;
+
 @property(nonatomic, strong) IBOutlet NSWindow *sheet;
+@property(nonatomic, strong) IBOutlet NSView *sheetContents;
+
 @property(nonatomic, strong) IBOutlet NSTableView *urlTable;
 @property(nonatomic, strong) IBOutlet NSTextField *urlsURLField;
 @property(nonatomic, strong) IBOutlet NSButton *fetchURLCheckbox;

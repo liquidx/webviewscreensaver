@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kWVSSAddressURLKey;
+extern NSString * const kWVSSAddressTimeKey;
+
 @interface WVSSAddress : NSObject
 @property(nonatomic, strong) NSString *url;
 @property(nonatomic, assign) NSInteger duration;

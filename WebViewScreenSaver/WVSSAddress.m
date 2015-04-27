@@ -11,6 +11,10 @@
 static NSTimeInterval const kDefaultDuration = 5 * 60.0;
 static NSString * const kScreenSaverDefaultURL = @"http://www.google.com/";
 
+// Keys for the dictionaries in kScreenSaverURLList - string values should not be changed.
+NSString * const kWVSSAddressURLKey = @"kScreenSaverURL";
+NSString * const kWVSSAddressTimeKey = @"kScreenSaverTime";
+
 @implementation WVSSAddress
 
 + (WVSSAddress *)addressWithURL:(NSString *)url duration:(NSInteger)duration {
@@ -33,7 +37,11 @@ static NSString * const kScreenSaverDefaultURL = @"http://www.google.com/";
 }
 
 - (NSDictionary *)dictionaryRepresentation {
-  return @{@"url": self.url, @"duration": @(self.duration)};
+  return @{kWVSSAddressURLKey: self.url, kWVSSAddressTimeKey: @(self.duration)};
+}
+
+- (NSString *)description {
+  return [NSString stringWithFormat:@"<%@ : %@ for %ld>", [self className], self.url, self.duration];
 }
 
 @end
