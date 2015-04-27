@@ -4,7 +4,7 @@
 //
 //  Created by Alastair Tse on 8/8/10.
 //
-//  Copyright 2010 Alastair Tse.
+//  Copyright 2015 Alastair Tse.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
