@@ -114,6 +114,8 @@ static NSTimeInterval const kOneMinute = 60.0;
   [_webView setDrawsBackground:NO];
   [self addSubview:_webView];
 
+  NSLog(@"Bounds: %@", NSStringFromRect([self bounds]));
+
   NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
   [[_webView layer] setBackgroundColor:color.CGColor];
 
@@ -123,6 +125,7 @@ static NSTimeInterval const kOneMinute = 60.0;
 }
 
 - (void)stopAnimation {
+  NSLog(@"stopAnimation");
   [super stopAnimation];
   [_timer invalidate];
   _timer = nil;
@@ -142,6 +145,8 @@ static NSTimeInterval const kOneMinute = 60.0;
     duration = [self timeIntervalForIndex:_currentIndex];
     url = [self urlForIndex:_currentIndex];
   }
+
+  NSLog(@"loadFromStart: %@", url);
 
   [self loadURLThing:url];
   [_timer invalidate];
@@ -209,6 +214,10 @@ static NSTimeInterval const kOneMinute = 60.0;
   } else {
     return kOneMinute;
   }
+}
+
+- (void)animateOneFrame {
+  [super animateOneFrame];
 }
 
 #pragma mark Focus Overrides

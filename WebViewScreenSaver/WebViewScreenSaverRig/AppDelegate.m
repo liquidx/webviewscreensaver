@@ -21,6 +21,7 @@
 
 #import "AppDelegate.h"
 #import "WVSSConfigController.h"
+#import "WebViewScreenSaverView.h"
 
 @interface AppDelegate () <WVSSConfigControllerDelegate>
 
@@ -37,6 +38,12 @@
 
   NSWindow *window = [self.configController configureSheet];
   [self.window addChildWindow:window ordered:NSWindowAbove];
+
+  WebViewScreenSaverView *wvsv = [[WebViewScreenSaverView alloc] initWithFrame:window.frame];
+  wvsv.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+  self.window.contentView = wvsv;
+
+  [wvsv startAnimation];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
