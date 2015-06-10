@@ -44,7 +44,7 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
     self.addressListURL = [userDefaults stringForKey:kScreenSaverURLsURLKey];
     self.shouldFetchAddressList = [userDefaults boolForKey:kScreenSaverFetchURLsKey];
 
-    NSLog(@"Loaded Addresses: %@", self.addresses);
+    //NSLog(@"Loaded Addresses: %@", self.addresses);
 
     if (!self.addresses) {
       self.addresses = [NSMutableArray array];
@@ -73,7 +73,7 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
   for (WVSSAddress *address in self.addresses) {
     [addressesForUserDefaults addObject:[address dictionaryRepresentation]];
   }
-  NSLog(@"Saved Addresses: %@", addressesForUserDefaults);
+  //NSLog(@"Saved Addresses: %@", addressesForUserDefaults);
 
   [userDefaults setObject:addressesForUserDefaults forKey:kScreenSaverURLListKey];
 }

@@ -87,7 +87,6 @@ NS_ENUM(NSInteger, WVSSColumn) {
   if (!addressFetchURL.length) return;
   if (!([addressFetchURL hasPrefix:@"http://"] || [addressFetchURL hasPrefix:@"https://"])) return;
 
-  NSLog(@"fetching URLs");
   WVSSAddressListFetcher *fetcher = [[WVSSAddressListFetcher alloc] initWithURL:addressFetchURL];
   fetcher.delegate = self;
 
@@ -152,7 +151,7 @@ NS_ENUM(NSInteger, WVSSColumn) {
   if (!self.sheet) {
     NSBundle *thisBundle = [NSBundle bundleForClass:[self class]];
     if (![thisBundle loadNibNamed:@"ConfigureSheet" owner:self topLevelObjects:NULL]) {
-      NSLog(@"Unable to load configuration sheet");
+      //NSLog(@"Unable to load configuration sheet");
     }
 
     // If there is a urlListURL.
