@@ -33,13 +33,19 @@ Websites that look good as screensavers:
  - http://www.google.com/trends/hottrends/visualize?pn=p1
  - http://twistori.com/#i_love
  - http://randomstreetview.com/#slideshow
- - http://www.iamnop.com/particles/
- - http://globe.chromeexperiments.com/
- - http://mrdoob.com/lab/javascript/webgl/clouds/
- - http://mrdoob.com/lab/javascript/webgl/particles/magicdust.html
- - http://clouds.chromeexperiments.com/
- - http://oos.moxiecode.com/js_webgl/forest/index.html
+ - http://www.airtightinteractive.com/demos/js/nebula/
  - http://alteredqualia.com/three/examples/webgl_cubes.html
  - http://akirodic.com/p/jellyfish/
- - http://oos.moxiecode.com/js_webgl/water_noise/
  - http://matthew.wagerfield.com/flat-surface-shader/
+ - https://developer.mozilla.org/en-US/demos/detail/consola-matrix/launch
+ - http://spielzeugz.de/html5/liquid-particles.html
+
+Cool, but they don't work in Safari WebKit
+------------------------------------------
+ - http://www.iamnop.com/particles/
+ - http://mrdoob.com/lab/javascript/webgl/clouds/
+ - http://mrdoob.com/lab/javascript/webgl/particles/magicdust.html
+ - http://globe.chromeexperiments.com/
+ - http://clouds.chromeexperiments.com/
+ - http://oos.moxiecode.com/js_webgl/forest/index.html
+ - http://oos.moxiecode.com/js_webgl/water_noise/
