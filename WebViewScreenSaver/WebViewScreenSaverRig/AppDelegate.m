@@ -36,14 +36,10 @@
   self.configController = [[WVSSConfigController alloc] initWithUserDefaults:userDefaults];
   self.configController.delegate = self;
 
-  NSWindow *window = [self.configController configureSheet];
-  [self.window addChildWindow:window ordered:NSWindowAbove];
+  [self reloadWebView];
+  [self.window makeKeyWindow];
 
-  WebViewScreenSaverView *wvsv = [[WebViewScreenSaverView alloc] initWithFrame:window.frame];
-  wvsv.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-  self.window.contentView = wvsv;
-
-  [wvsv startAnimation];
+  [self performSelector:@selector(showPreferences:) withObject:nil afterDelay:0];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -51,7 +47,32 @@
 }
 
 - (void)configController:(WVSSConfigController *)configController dismissConfigSheet:(NSWindow *)sheet {
+  [self reloadWebView];
   [sheet close];
+}
+
+- (IBAction)showPreferences:(id)sender {
+  NSWindow *window = [self.configController configureSheet];
+  [self.window beginSheet:window completionHandler:nil];
+}
+
+- (IBAction)reloadWebView {
+  WebViewScreenSaverView *wvsv;
+
+  // Remove the older webview
+  if ([self.window.contentView subviews]) {
+    wvsv = (WebViewScreenSaverView *)[[self.window.contentView subviews] firstObject];
+    [wvsv stopAnimation];
+    [wvsv removeFromSuperview];
+  }
+
+  // Recreate the subview.
+  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+  NSRect bounds = [self.window.contentView bounds];
+  wvsv = [[WebViewScreenSaverView alloc] initWithFrame:bounds isPreview:NO prefsStore:userDefaults];
+  wvsv.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+  [self.window.contentView addSubview:wvsv];
+  [wvsv startAnimation];
 }
 
 @end

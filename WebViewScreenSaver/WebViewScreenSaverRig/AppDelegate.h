@@ -23,6 +23,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-
+- (IBAction)showPreferences:(id)sender;
+- (IBAction)reloadWebView;
 @end
 

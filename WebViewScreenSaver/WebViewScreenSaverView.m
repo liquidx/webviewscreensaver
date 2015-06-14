@@ -50,6 +50,12 @@ static NSTimeInterval const kOneMinute = 60.0;
 }
 
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
+  NSUserDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
+  return [self initWithFrame:frame isPreview:isPreview prefsStore:prefs];
+}
+
+
+- (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview prefsStore:(NSUserDefaults *)prefs {
   self = [super initWithFrame:frame isPreview:isPreview];
   if (self) {
     [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
@@ -59,7 +65,6 @@ static NSTimeInterval const kOneMinute = 60.0;
     _isPreview = isPreview;
 
     // Load state from the preferences.
-    ScreenSaverDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
     self.configController = [[WVSSConfigController alloc] initWithUserDefaults:prefs];
     self.configController.delegate = self;
   }
@@ -90,11 +95,14 @@ static NSTimeInterval const kOneMinute = 60.0;
   return [self.configController configureSheet];
 }
 
-- (void)configController:(WVSSConfigController *)configController dismissConfigSheet:(id)sheet {
+- (void)configController:(WVSSConfigController *)configController dismissConfigSheet:(NSWindow *)sheet {
   if (_isPreview) {
     [self loadFromStart];
   }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   [[NSApplication sharedApplication] endSheet:sheet];
+#pragma GCC diagnostic pop
 }
 
 #pragma mark ScreenSaverView

@@ -19,6 +19,9 @@
 //  limitations under the License.
 //
 
+// Codesign:
+// http://www.wurst-wasser.net/wiki/index.php/How_To_codesign_a_Screen_Saver_for_Yosemite
+
 #import <Foundation/Foundation.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <WebKit/WebKit.h>
@@ -29,5 +32,7 @@
 @interface WebViewScreenSaverView : ScreenSaverView
 
 @property (nonatomic, strong) WVSSConfigController *configController;
+
+- (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview prefsStore:(NSUserDefaults *)prefs;
 
 @end
