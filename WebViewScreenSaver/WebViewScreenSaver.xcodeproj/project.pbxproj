@@ -26,6 +26,8 @@
 		6414573A1AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */; };
 		6414573B1AEDECD800FB6CDF /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64EED3E8120EC6380048A830 /* ConfigureSheet.xib */; };
 		64628F051B27BBE100B7B73D /* WebViewScreenSaverView.m in Sources */ = {isa = PBXBuildFile; fileRef = F500797A0118B23001CA0E54 /* WebViewScreenSaverView.m */; };
+		64628F301B281BB300B7B73D /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 64628F2E1B281BB300B7B73D /* thumbnail.png */; };
+		64628F311B281BB300B7B73D /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64628F2F1B281BB300B7B73D /* thumbnail@2x.png */; };
 		64EED329120EC1B40048A830 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EED328120EC1B40048A830 /* WebKit.framework */; };
 		64EED3E9120EC6380048A830 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64EED3E8120EC6380048A830 /* ConfigureSheet.xib */; };
 		8D255AC70486D3F9007BF209 /* WebViewScreenSaver_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCFA80370C50100C91783 /* WebViewScreenSaver_Prefix.pch */; };
@@ -71,6 +73,8 @@
 		641457321AEDCCAB00FB6CDF /* WVSSAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSSAddress.m; sourceTree = "<group>"; };
 		641457361AEDD51900FB6CDF /* WVSSAddressListFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WVSSAddressListFetcher.h; sourceTree = "<group>"; };
 		641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSSAddressListFetcher.m; sourceTree = "<group>"; };
+		64628F2E1B281BB300B7B73D /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
+		64628F2F1B281BB300B7B73D /* thumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@2x.png"; sourceTree = "<group>"; };
 		64EED328120EC1B40048A830 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		64EED3E8120EC6380048A830 /* ConfigureSheet.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
 		8D255AD20486D3F9007BF209 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				64628F2E1B281BB300B7B73D /* thumbnail.png */,
+				64628F2F1B281BB300B7B73D /* thumbnail@2x.png */,
 				8D255AD20486D3F9007BF209 /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				64EED3E8120EC6380048A830 /* ConfigureSheet.xib */,
@@ -353,7 +359,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D255ACA0486D3F9007BF209 /* InfoPlist.strings in Resources */,
+				64628F311B281BB300B7B73D /* thumbnail@2x.png in Resources */,
 				64EED3E9120EC6380048A830 /* ConfigureSheet.xib in Resources */,
+				64628F301B281BB300B7B73D /* thumbnail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
