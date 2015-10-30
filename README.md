@@ -50,3 +50,19 @@ Cool, but they don't work in Safari WebKit
  - http://clouds.chromeexperiments.com/
  - http://oos.moxiecode.com/js_webgl/forest/index.html
  - http://oos.moxiecode.com/js_webgl/water_noise/
+
+JSON format for remote loading URLS
+-----------------------------------
+
+```
+[
+	{
+		"url": "https://example.com/", 
+		"duration": 30
+	},
+	{
+		"url": "https://something.com/", 
+		"duration": 30
+	}
+]
+```
