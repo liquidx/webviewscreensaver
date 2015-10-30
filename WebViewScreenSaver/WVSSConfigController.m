@@ -114,9 +114,18 @@ NS_ENUM(NSInteger, WVSSColumn) {
 }
 
 - (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher
-        didFinishWithArray:(NSArray *)response {
+        didFinishWithArray:(NSArray *)array {
+  NSMutableArray *addresses = [NSMutableArray arrayWithCapacity:[array count]];
+  for (id responseObect in array) {
+      if ([responseObect isKindOfClass:[NSDictionary class]]) {
+          NSDictionary *dictionary = responseObect;
+          WVSSAddress *address = [WVSSAddress addressWithURL:dictionary[@"url"]  duration:[dictionary[@"duration"] intValue]];
+          [addresses addObject:address];
+      }
+  }
+    
   [self.config.addresses removeAllObjects];
-  [self.config.addresses addObjectsFromArray:response];
+  [self.config.addresses addObjectsFromArray:addresses];
   [self.urlTable reloadData];
 
   // TODO(altse): tell delegate that the URL list had had updated.
