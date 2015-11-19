@@ -20,9 +20,10 @@
 //
 
 #import "WVSSAddress.h"
+#import "WebViewScreenSaverView.h"
 
 static NSTimeInterval const kDefaultDuration = 5 * 60.0;
-static NSString * const kScreenSaverDefaultURL = @"http://www.google.com/";
+static NSString * const kScreenSaverDefaultURLKey = @"WVSSDefaultAddressURL";
 
 // Keys for the dictionaries in kScreenSaverURLList - string values should not be changed.
 NSString * const kWVSSAddressURLKey = @"kScreenSaverURL";
@@ -38,11 +39,13 @@ NSString * const kWVSSAddressTimeKey = @"kScreenSaverTime";
 }
 
 + (WVSSAddress *)defaultAddress {
-  return [self addressWithURL:kScreenSaverDefaultURL duration:kDefaultDuration];
+  return [self addressWithURL:[self defaultAddressURL] duration:kDefaultDuration];
 }
 
 + (NSString *)defaultAddressURL {
-  return kScreenSaverDefaultURL;
+  // Get the default address from Info.plist
+  NSDictionary * info = [[NSBundle bundleForClass:[WebViewScreenSaverView class]] infoDictionary];
+  return [info valueForKey:kScreenSaverDefaultURLKey];
 }
 
 + (NSInteger)defaultDuration {
