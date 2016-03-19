@@ -40,6 +40,7 @@ Websites that look good as screensavers:
  - https://developer.mozilla.org/en-US/demos/detail/consola-matrix/launch
  - http://spielzeugz.de/html5/liquid-particles.html
  - http://codepen.io/ykob/full/zGpjeK/
+ - http://ameswarb.github.io/twitchsaver/
 
 Cool, but they don't work in Safari WebKit
 ------------------------------------------
