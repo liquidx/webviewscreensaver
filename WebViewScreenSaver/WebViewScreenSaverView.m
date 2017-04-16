@@ -21,6 +21,7 @@
 
 #import "WebViewScreenSaverView.h"
 #import "WVSSAddress.h"
+#import "BSHTTPCookieStorage.h"
 
 // ScreenSaverDefaults module name.
 static NSString * const kScreenSaverName = @"WebViewScreenSaver";
@@ -49,6 +50,7 @@ static NSTimeInterval const kOneMinute = 60.0;
   WebView *_webView;
   WebPreferences *_webPreferences;
   NSInteger _currentIndex;
+  BSHTTPCookieStorage *_cookieStorage;
   BOOL _isPreview;
 }
 
@@ -106,6 +108,9 @@ static NSTimeInterval const kOneMinute = 60.0;
   if (_isPreview) {
     [self loadFromStart];
   }
+  
+  // I cannot find a way to dismiss the sheet properly under System Preferences without using
+  // this deprecated API.
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   [[NSApplication sharedApplication] endSheet:sheet];
@@ -117,7 +122,8 @@ static NSTimeInterval const kOneMinute = 60.0;
 - (void)startAnimation {
   [super startAnimation];
 
-  //NSLog(@"startAnimation: %d %@", [NSThread isMainThread], [NSThread currentThread]);
+  _cookieStorage = [[BSHTTPCookieStorage alloc] init];
+  // TODO: Load from disk storage.
 
   // Create the webview for the screensaver.
   _webView = [[WebView alloc] initWithFrame:[self bounds]];
@@ -151,6 +157,10 @@ static NSTimeInterval const kOneMinute = 60.0;
   [_webView removeFromSuperview];
   [_webView close];
   _webView = nil;
+  
+  // TODO: Store cookies to disk.
+  [_cookieStorage encodeWithCoder:nil];
+  _cookieStorage = nil;
 }
 
 #pragma mark Loading URLs
@@ -311,6 +321,27 @@ static NSTimeInterval const kOneMinute = 60.0;
 
 - (void)webViewUnfocus:(WebView *)sender {
   return;
+}
+
+#pragma mark WebResourceLoadDelegate
+
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveResponse:(NSURLResponse *)response fromDataSource:(WebDataSource *)dataSource {
+  if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+    // cookieStorage is your cookie storage implementation.
+    
+    [_cookieStorage handleCookiesInResponse:(NSHTTPURLResponse*) response];
+  }
+}
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource {
+  if ([redirectResponse isKindOfClass:[NSHTTPURLResponse class]]) {
+    [_cookieStorage handleCookiesInResponse:(NSHTTPURLResponse*) redirectResponse];
+  }
+  
+  NSMutableURLRequest* modifiedRequest = [request mutableCopy];
+  [modifiedRequest setHTTPShouldHandleCookies:NO];
+  [_cookieStorage handleCookiesInRequest:modifiedRequest];
+  return modifiedRequest;
 }
 
 

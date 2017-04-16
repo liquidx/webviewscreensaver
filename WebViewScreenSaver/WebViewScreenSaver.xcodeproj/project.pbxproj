@@ -28,6 +28,9 @@
 		64628F051B27BBE100B7B73D /* WebViewScreenSaverView.m in Sources */ = {isa = PBXBuildFile; fileRef = F500797A0118B23001CA0E54 /* WebViewScreenSaverView.m */; };
 		64628F301B281BB300B7B73D /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 64628F2E1B281BB300B7B73D /* thumbnail.png */; };
 		64628F311B281BB300B7B73D /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64628F2F1B281BB300B7B73D /* thumbnail@2x.png */; };
+		649C0B921EA31137001A7318 /* BSHTTPCookieStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 649C0B901EA31137001A7318 /* BSHTTPCookieStorage.h */; };
+		649C0B931EA31137001A7318 /* BSHTTPCookieStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 649C0B911EA31137001A7318 /* BSHTTPCookieStorage.m */; };
+		649C0B941EA31137001A7318 /* BSHTTPCookieStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 649C0B911EA31137001A7318 /* BSHTTPCookieStorage.m */; };
 		64EED329120EC1B40048A830 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EED328120EC1B40048A830 /* WebKit.framework */; };
 		64EED3E9120EC6380048A830 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64EED3E8120EC6380048A830 /* ConfigureSheet.xib */; };
 		8D255AC70486D3F9007BF209 /* WebViewScreenSaver_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCFA80370C50100C91783 /* WebViewScreenSaver_Prefix.pch */; };
@@ -75,6 +78,8 @@
 		641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSSAddressListFetcher.m; sourceTree = "<group>"; };
 		64628F2E1B281BB300B7B73D /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
 		64628F2F1B281BB300B7B73D /* thumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@2x.png"; sourceTree = "<group>"; };
+		649C0B901EA31137001A7318 /* BSHTTPCookieStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSHTTPCookieStorage.h; sourceTree = "<group>"; };
+		649C0B911EA31137001A7318 /* BSHTTPCookieStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSHTTPCookieStorage.m; sourceTree = "<group>"; };
 		64EED328120EC1B40048A830 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		64EED3E8120EC6380048A830 /* ConfigureSheet.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
 		8D255AD20486D3F9007BF209 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -162,6 +167,8 @@
 				641457321AEDCCAB00FB6CDF /* WVSSAddress.m */,
 				641457361AEDD51900FB6CDF /* WVSSAddressListFetcher.h */,
 				641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */,
+				649C0B901EA31137001A7318 /* BSHTTPCookieStorage.h */,
+				649C0B911EA31137001A7318 /* BSHTTPCookieStorage.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -231,6 +238,7 @@
 			files = (
 				8D255AC70486D3F9007BF209 /* WebViewScreenSaver_Prefix.pch in Headers */,
 				8D255AC80486D3F9007BF209 /* WebViewScreenSaverView.h in Headers */,
+				649C0B921EA31137001A7318 /* BSHTTPCookieStorage.h in Headers */,
 				641457291AEDCAD000FB6CDF /* WVSSConfigController.h in Headers */,
 				641457331AEDCCAB00FB6CDF /* WVSSAddress.h in Headers */,
 				641457381AEDD51900FB6CDF /* WVSSAddressListFetcher.h in Headers */,
@@ -408,6 +416,7 @@
 				641457301AEDCBD900FB6CDF /* WVSSConfig.m in Sources */,
 				6414572B1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */,
 				6414570F1AEDC92200FB6CDF /* main.m in Sources */,
+				649C0B941EA31137001A7318 /* BSHTTPCookieStorage.m in Sources */,
 				641457351AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */,
 				6414570D1AEDC92100FB6CDF /* AppDelegate.m in Sources */,
 				6414573A1AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */,
@@ -428,6 +437,7 @@
 			files = (
 				641457391AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */,
 				6414572A1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */,
+				649C0B931EA31137001A7318 /* BSHTTPCookieStorage.m in Sources */,
 				641457341AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */,
 				8D255ACC0486D3F9007BF209 /* WebViewScreenSaverView.m in Sources */,
 				6414572F1AEDCBD900FB6CDF /* WVSSConfig.m in Sources */,
