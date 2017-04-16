@@ -28,7 +28,12 @@ static NSString * const kScreenSaverName = @"WebViewScreenSaver";
 static NSTimeInterval const kOneMinute = 60.0;
 
 
-@interface WebViewScreenSaverView () <WVSSConfigControllerDelegate>
+@interface WebViewScreenSaverView () <
+  WVSSConfigControllerDelegate,
+  WebEditingDelegate,
+  WebFrameLoadDelegate,
+  WebPolicyDelegate,
+  WebUIDelegate>
 // Timer callback that loads the next URL in the URL list.
 - (void)loadNext:(NSTimer *)timer;
 // Returns the URL for the index in the preferences.
