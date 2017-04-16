@@ -34,6 +34,7 @@ static NSTimeInterval const kOneMinute = 60.0;
   WebFrameLoadDelegate,
   WebPolicyDelegate,
   WebUIDelegate>
+
 // Timer callback that loads the next URL in the URL list.
 - (void)loadNext:(NSTimer *)timer;
 // Returns the URL for the index in the preferences.
@@ -46,6 +47,7 @@ static NSTimeInterval const kOneMinute = 60.0;
 @implementation WebViewScreenSaverView {
   NSTimer *_timer;
   WebView *_webView;
+  WebPreferences *_webPreferences;
   NSInteger _currentIndex;
   BOOL _isPreview;
 }
@@ -128,6 +130,11 @@ static NSTimeInterval const kOneMinute = 60.0;
   [_webView setAutoresizesSubviews:YES];
   [_webView setDrawsBackground:NO];
   [self addSubview:_webView];
+  
+  _webPreferences = [WebPreferences standardPreferences];
+  _webPreferences.javaScriptCanOpenWindowsAutomatically = NO;
+  _webPreferences.javaEnabled = NO;
+  _webView.preferences = _webPreferences;
 
   NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
   [[_webView layer] setBackgroundColor:color.CGColor];
