@@ -28,6 +28,9 @@ Usage
 Example URLs
 ------------
 
+Full Screen Video's/Entire Youtube Playlists:
+ - https://www.youtube.com/embed/durCuF6jb8k?rel=0&autoplay=1&list=PLZbIo_dYB77vgAus0es8Ul3kFkRYIRjJc&index=1&?rel=0&autoplay=1
+
 Websites that look good as screensavers:
 
  - http://www.google.com/trends/hottrends/visualize?pn=p1
