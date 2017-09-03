@@ -28,6 +28,7 @@
 @property(nonatomic, strong, readonly) NSMutableArray *addresses;
 @property(nonatomic, strong) NSString *addressListURL;
 @property(nonatomic, assign) BOOL shouldFetchAddressList;
+@property(nonatomic, assign) BOOL randomizeURL;
 
 - (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults;
 - (void)synchronize;

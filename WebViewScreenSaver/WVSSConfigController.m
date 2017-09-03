@@ -167,6 +167,7 @@ NS_ENUM(NSInteger, WVSSColumn) {
 
     [self.fetchURLCheckbox setIntegerValue:self.config.shouldFetchAddressList];
     [self.urlsURLField setEnabled:self.config.shouldFetchAddressList];
+    self.randomCheckbox.integerValue = self.config.randomizeURL;
   }
   return self.sheet;
 }
@@ -257,7 +258,7 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   return YES;
 }
 
-#pragma mark -
+#pragma mark - Actions
 
 - (IBAction)tableViewCellDidEdit:(NSTextField *)textField {
   NSInteger col = [self.urlTable columnForView:textField];
@@ -283,5 +284,9 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   [self.urlsURLField setEnabled:self.config.shouldFetchAddressList];
 }
 
+- (void)toggleRandom:(id)sender {
+    self.config.randomizeURL = ! self.config.randomizeURL;
+    self.randomCheckbox.integerValue = self.config.randomizeURL;
+}
 
 @end

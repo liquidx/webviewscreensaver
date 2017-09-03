@@ -26,6 +26,7 @@
 static NSString * const kScreenSaverFetchURLsKey = @"kScreenSaverFetchURLs";  // BOOL
 static NSString * const kScreenSaverURLsURLKey = @"kScreenSaverURLsURL";  // NSString (URL)
 static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSArray of NSDictionary
+static NSString * const kScreenSaverRadnomizeURL = @"kScreenSaverRadnomizeURL";
 
 
 @interface WVSSConfig ()
@@ -36,18 +37,19 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
 @implementation WVSSConfig
 
 - (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults {
-  self = [super init];
-  if (self) {
-    self.userDefaults = userDefaults;
-
-    self.addresses = [self loadAddressesFromUserDefaults:userDefaults];
-    self.addressListURL = [userDefaults stringForKey:kScreenSaverURLsURLKey];
-    self.shouldFetchAddressList = [userDefaults boolForKey:kScreenSaverFetchURLsKey];
-
-    //NSLog(@"Loaded Addresses: %@", self.addresses);
-
-    if (!self.addresses) {
-      self.addresses = [NSMutableArray array];
+    self = [super init];
+    if (self) {
+        self.userDefaults = userDefaults;
+        
+        self.addresses = [self loadAddressesFromUserDefaults:userDefaults];
+        self.addressListURL = [userDefaults stringForKey:kScreenSaverURLsURLKey];
+        self.shouldFetchAddressList = [userDefaults boolForKey:kScreenSaverFetchURLsKey];
+        self.randomizeURL = [userDefaults boolForKey:kScreenSaverRadnomizeURL];
+        
+        //NSLog(@"Loaded Addresses: %@", self.addresses);
+        
+        if (!self.addresses) {
+            self.addresses = [NSMutableArray array];
     }
   }
   return self;
@@ -79,16 +81,17 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
 }
 
 - (void)synchronize {
-  [self saveAddressesToUserDefaults:self.userDefaults];
-  [self.userDefaults setBool:self.shouldFetchAddressList forKey:kScreenSaverFetchURLsKey];
-
-  if (self.addressListURL.length) {
-    [self.userDefaults setObject:self.addressListURL forKey:kScreenSaverURLsURLKey];
-  } else {
-    [self.userDefaults removeObjectForKey:kScreenSaverURLsURLKey];
-  }
-  [self.userDefaults synchronize];
-
+    [self saveAddressesToUserDefaults:self.userDefaults];
+    [self.userDefaults setBool:self.shouldFetchAddressList forKey:kScreenSaverFetchURLsKey];
+    [self.userDefaults setBool:self.randomizeURL forKey:kScreenSaverRadnomizeURL];
+    
+    if (self.addressListURL.length) {
+        [self.userDefaults setObject:self.addressListURL forKey:kScreenSaverURLsURLKey];
+    } else {
+        [self.userDefaults removeObjectForKey:kScreenSaverURLsURLKey];
+    }
+    [self.userDefaults synchronize];
+    
 }
 
 - (void)addAddressWithURL:(NSString *)url duration:(NSInteger)duration {

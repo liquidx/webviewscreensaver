@@ -34,6 +34,7 @@
 @property(nonatomic, strong) IBOutlet NSTableView *urlTable;
 @property(nonatomic, strong) IBOutlet NSTextField *urlsURLField;
 @property(nonatomic, strong) IBOutlet NSButton *fetchURLCheckbox;
+@property(nonatomic, weak) IBOutlet NSButton *randomCheckbox;
 
 - (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults;
 - (void)synchronize;
@@ -47,6 +48,7 @@
 
 - (IBAction)dismissConfigSheet:(id)sender;
 - (IBAction)toggleFetchingURLs:(id)sender;
+- (IBAction)toggleRandom:(id)sender;
 - (IBAction)tableViewCellDidEdit:(id)sender;
 
 - (void)fetchAddresses;
