@@ -66,6 +66,20 @@ NS_ENUM(NSInteger, WVSSColumn) {
 }
 
 - (NSArray *)addresses {
+    
+    if (self.config.shufflePlaylist)
+    {
+        NSMutableArray *mutableArray = [self.config.addresses mutableCopy];
+        NSUInteger count = [mutableArray count];
+        if (count <= 1) return nil;
+        
+        for (NSUInteger i = 0; i < count - 1; ++i) {
+            NSInteger remainingCount = count - i;
+            NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t )remainingCount);
+            [mutableArray exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
+        }
+        return mutableArray;
+    }
   return self.config.addresses;
 }
 
@@ -167,7 +181,7 @@ NS_ENUM(NSInteger, WVSSColumn) {
 
     [self.fetchURLCheckbox setIntegerValue:self.config.shouldFetchAddressList];
     [self.urlsURLField setEnabled:self.config.shouldFetchAddressList];
-    self.randomCheckbox.integerValue = self.config.randomizeURL;
+    self.shuffleCheckbox.integerValue = self.config.shufflePlaylist;
   }
   return self.sheet;
 }
@@ -284,9 +298,9 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   [self.urlsURLField setEnabled:self.config.shouldFetchAddressList];
 }
 
-- (void)toggleRandom:(id)sender {
-    self.config.randomizeURL = ! self.config.randomizeURL;
-    self.randomCheckbox.integerValue = self.config.randomizeURL;
+- (void)toggleShuffle:(id)sender {
+    self.config.shufflePlaylist = ! self.config.shufflePlaylist;
+    self.shuffleCheckbox.integerValue = self.config.shufflePlaylist;
 }
 
 @end

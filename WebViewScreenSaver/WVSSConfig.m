@@ -26,7 +26,7 @@
 static NSString * const kScreenSaverFetchURLsKey = @"kScreenSaverFetchURLs";  // BOOL
 static NSString * const kScreenSaverURLsURLKey = @"kScreenSaverURLsURL";  // NSString (URL)
 static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSArray of NSDictionary
-static NSString * const kScreenSaverRadnomizeURL = @"kScreenSaverRadnomizeURL";
+static NSString * const kScreenSaverShufflePlaylist = @"kScreenSaverShufflePlaylist";
 
 
 @interface WVSSConfig ()
@@ -44,7 +44,7 @@ static NSString * const kScreenSaverRadnomizeURL = @"kScreenSaverRadnomizeURL";
         self.addresses = [self loadAddressesFromUserDefaults:userDefaults];
         self.addressListURL = [userDefaults stringForKey:kScreenSaverURLsURLKey];
         self.shouldFetchAddressList = [userDefaults boolForKey:kScreenSaverFetchURLsKey];
-        self.randomizeURL = [userDefaults boolForKey:kScreenSaverRadnomizeURL];
+        self.shufflePlaylist = [userDefaults boolForKey:kScreenSaverShufflePlaylist];
         
         //NSLog(@"Loaded Addresses: %@", self.addresses);
         
@@ -83,7 +83,7 @@ static NSString * const kScreenSaverRadnomizeURL = @"kScreenSaverRadnomizeURL";
 - (void)synchronize {
     [self saveAddressesToUserDefaults:self.userDefaults];
     [self.userDefaults setBool:self.shouldFetchAddressList forKey:kScreenSaverFetchURLsKey];
-    [self.userDefaults setBool:self.randomizeURL forKey:kScreenSaverRadnomizeURL];
+    [self.userDefaults setBool:self.shufflePlaylist forKey:kScreenSaverShufflePlaylist];
     
     if (self.addressListURL.length) {
         [self.userDefaults setObject:self.addressListURL forKey:kScreenSaverURLsURLKey];

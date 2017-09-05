@@ -34,12 +34,15 @@ WebEditingDelegate,
 WebFrameLoadDelegate,
 WebPolicyDelegate,
 WebUIDelegate>
+
 // Timer callback that loads the next URL in the URL list.
 - (void)loadNext:(NSTimer *)timer;
 // Returns the URL for the index in the preferences.
 - (NSString *)urlForIndex:(NSInteger)index;
 // Returns the time interval in the preferences.
 - (NSTimeInterval)timeIntervalForIndex:(NSInteger)index;
+
+
 @end
 
 
@@ -48,6 +51,7 @@ WebUIDelegate>
     WebView *_webView;
     NSInteger _currentIndex;
     BOOL _isPreview;
+    NSArray *_playlist;
 }
 
 + (BOOL)performGammaFade {
@@ -92,10 +96,6 @@ WebUIDelegate>
     return YES;
 }
 
-//- (void)setFrame:(NSRect)frameRect {
-//  [super setFrame:frameRect];
-//}
-
 - (NSWindow *)configureSheet {
     return [self.configController configureSheet];
 }
@@ -115,7 +115,8 @@ WebUIDelegate>
 - (void)startAnimation {
     [super startAnimation];
     
-    //NSLog(@"startAnimation: %d %@", [NSThread isMainThread], [NSThread currentThread]);
+    // Get the playlist
+    _playlist = self.configController.addresses;
     
     // Create the webview for the screensaver.
     _webView = [[WebView alloc] initWithFrame:[self bounds]];
@@ -132,7 +133,7 @@ WebUIDelegate>
     NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
     [[_webView layer] setBackgroundColor:color.CGColor];
     
-    if (!_isPreview && _currentIndex < [[self selectedURLs] count]) {
+    if (!_isPreview && _currentIndex < _playlist.count) {
         [self loadFromStart];
     }
 }
@@ -144,6 +145,7 @@ WebUIDelegate>
     [_webView removeFromSuperview];
     [_webView close];
     _webView = nil;
+    _playlist = nil;
 }
 
 #pragma mark Loading URLs
@@ -153,7 +155,7 @@ WebUIDelegate>
     NSString *url = [WVSSAddress defaultAddressURL];
     _currentIndex = 0;
     
-    if ([[self selectedURLs] count]) {
+    if (_playlist.count) {
         duration = [self timeIntervalForIndex:_currentIndex];
         url = [self urlForIndex:_currentIndex];
     }
@@ -173,13 +175,13 @@ WebUIDelegate>
     NSInteger nextIndex = _currentIndex;
     
     // Last element, fetchURLs if they exist.
-    if (_currentIndex == [[self selectedURLs] count] - 1) {
+    if (_currentIndex == _playlist.count - 1) {
         [self.configController fetchAddresses];
     }
     
     // Progress the URL counter.
-    if ([[self selectedURLs] count] > 0) {
-        nextIndex = (_currentIndex + 1) % [[self selectedURLs] count];
+    if ([_playlist count] > 0) {
+        nextIndex = (_currentIndex + 1) % _playlist.count;
         duration = [self timeIntervalForIndex:nextIndex];
         url = [self urlForIndex:nextIndex];
     }
@@ -207,18 +209,13 @@ WebUIDelegate>
     }
 }
 
-- (NSArray *)selectedURLs {
-    return self.configController.addresses;
-}
-
-
 - (NSString *)urlForIndex:(NSInteger)index {
-    WVSSAddress *address = [self.configController.addresses objectAtIndex:index];
+    WVSSAddress *address = [_playlist objectAtIndex:index];
     return address.url;
 }
 
 - (NSTimeInterval)timeIntervalForIndex:(NSInteger)index {
-    WVSSAddress *address = [self.configController.addresses objectAtIndex:index];
+    WVSSAddress *address = [_playlist objectAtIndex:index];
     if (address) {
         return (NSTimeInterval)address.duration;
     } else {
@@ -305,6 +302,5 @@ decisionListener:(id < WebPolicyDecisionListener >)listener {
 - (void)webViewUnfocus:(WebView *)sender {
     return;
 }
-
 
 @end

@@ -9,15 +9,15 @@
         <customObject id="-2" userLabel="File's Owner" customClass="WVSSConfigController">
             <connections>
                 <outlet property="fetchURLCheckbox" destination="129" id="131"/>
-                <outlet property="randomCheckbox" destination="kbH-GS-hdi" id="1Tm-MJ-We7"/>
                 <outlet property="sheet" destination="1" id="60"/>
                 <outlet property="sheetContents" destination="2" id="144"/>
+                <outlet property="shuffleCheckbox" destination="kbH-GS-hdi" id="tM0-xJ-MCU"/>
                 <outlet property="urlTable" destination="73" id="143"/>
                 <outlet property="urlsURLField" destination="99" id="128"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="WebView Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" documentModal="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -196,12 +196,12 @@
                                 <button misplaced="YES" id="kbH-GS-hdi">
                                     <rect key="frame" x="318" y="16" width="72" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Random" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Wti-Gh-Lgd">
+                                    <buttonCell key="cell" type="check" title="Shuffle" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Wti-Gh-Lgd">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="toggleRandom:" target="-2" id="X0I-Mb-p5w"/>
+                                        <action selector="toggleShuffle:" target="-2" id="PKo-Hz-Uxa"/>
                                     </connections>
                                 </button>
                             </subviews>
