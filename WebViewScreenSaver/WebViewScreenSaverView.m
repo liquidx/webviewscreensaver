@@ -182,14 +182,21 @@ static NSTimeInterval const kOneMinute = 60.0;
   _currentIndex = nextIndex;
 }
 
-- (void)loadURLThing:(NSString *)url {
-  NSURL *_url = [NSURL URLWithString:url];
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:_url];
+- (void)loadURLThing:(NSString *)urlString {
+  NSString *escapedUrlString =
+      [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+  NSURL *url = [NSURL URLWithString:urlString];
 
-  if ([_url.scheme isEqualToString:@"http"] || [_url.scheme isEqualToString:@"https"]) {
+  if (url.scheme == nil) {
+    url = [NSURL URLWithString:[@"file://" stringByAppendingString:escapedUrlString]];
+  }
+
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+
+  if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
     [_webView loadRequest:request];
-  } else if ([_url.scheme isEqualToString:@"file"]) {
-    [_webView loadFileURL:_url allowingReadAccessToURL:[_url URLByDeletingLastPathComponent]];
+  } else if ([url.scheme isEqualToString:@"file"] || url.scheme == nil) {
+    [_webView loadFileURL:url allowingReadAccessToURL:[url URLByDeletingLastPathComponent]];
   } else {
     // no-op
   }
