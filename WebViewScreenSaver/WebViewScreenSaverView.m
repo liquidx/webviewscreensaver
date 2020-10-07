@@ -149,6 +149,8 @@ static NSTimeInterval const kOneMinute = 60.0;
 
   [self loadURLThing:url];
   [_timer invalidate];
+
+  if (duration < 0) return;  // Infinite
   _timer = [NSTimer scheduledTimerWithTimeInterval:duration
                                             target:self
                                           selector:@selector(loadNext:)
