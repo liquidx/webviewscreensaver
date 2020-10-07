@@ -44,6 +44,7 @@
 
 - (IBAction)addRow:(id)sender;
 - (IBAction)removeRow:(id)sender;
+- (IBAction)resetData:(id)sender;
 
 - (IBAction)dismissConfigSheet:(id)sender;
 - (IBAction)toggleFetchingURLs:(id)sender;

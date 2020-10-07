@@ -24,6 +24,8 @@
 #import "WVSSAddressListFetcher.h"
 #import "WVSSConfig.h"
 
+#import <WebKit/WebKit.h>
+
 static NSString *const kURLTableRow = @"kURLTableRow";
 // Configuration sheet columns.
 static NSString *const kTableColumnURL = @"url";
@@ -97,6 +99,32 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
   if (row != NSNotFound) {
     [self removeAddressAtIndex:row];
   }
+}
+
+- (IBAction)resetData:(id)sender {
+  NSAlert *alert = [[NSAlert alloc] init];
+  [alert setMessageText:@"Clear History"];
+  [alert setInformativeText:@"Clears history, cookies, cache and more."];
+  [alert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+  [alert addButtonWithTitle:@"Clear Data"];
+  [alert addButtonWithTitle:@"Cancel"];
+  [alert setAlertStyle:NSAlertStyleWarning];
+  [alert beginSheetModalForWindow:self.sheet
+                completionHandler:^(NSModalResponse returnCode) {
+                  if (returnCode == NSAlertFirstButtonReturn) {
+                    [self clearWebViewHistory];
+                  }
+                }];
+}
+
+- (void)clearWebViewHistory {
+  NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+  NSDate *since = [NSDate dateWithTimeIntervalSince1970:0];
+  [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes
+                                             modifiedSince:since
+                                         completionHandler:^{
+                                           NSLog(@"Web cache cleared");
+                                         }];
 }
 
 #pragma mark -
