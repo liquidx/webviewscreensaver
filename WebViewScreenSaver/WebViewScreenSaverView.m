@@ -28,21 +28,21 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 static NSTimeInterval const kOneMinute = 60.0;
 
 @interface WebViewScreenSaverView () <WVSSConfigControllerDelegate,
-                                      WebEditingDelegate,
-                                      WebFrameLoadDelegate,
-                                      WebPolicyDelegate,
-                                      WebUIDelegate>
+                                      WKUIDelegate,
+                                      WKNavigationDelegate>
+
 // Timer callback that loads the next URL in the URL list.
 - (void)loadNext:(NSTimer *)timer;
 // Returns the URL for the index in the preferences.
 - (NSString *)urlForIndex:(NSInteger)index;
 // Returns the time interval in the preferences.
 - (NSTimeInterval)timeIntervalForIndex:(NSInteger)index;
+
 @end
 
 @implementation WebViewScreenSaverView {
   NSTimer *_timer;
-  WebView *_webView;
+  WKWebView *_webView;
   NSInteger _currentIndex;
   BOOL _isPreview;
 }
@@ -73,11 +73,6 @@ static NSTimeInterval const kOneMinute = 60.0;
 }
 
 - (void)dealloc {
-  [_webView setFrameLoadDelegate:nil];
-  [_webView setPolicyDelegate:nil];
-  [_webView setUIDelegate:nil];
-  [_webView setEditingDelegate:nil];
-  [_webView close];
   [_timer invalidate];
   _timer = nil;
 }
@@ -87,10 +82,6 @@ static NSTimeInterval const kOneMinute = 60.0;
 - (BOOL)hasConfigureSheet {
   return YES;
 }
-
-//- (void)setFrame:(NSRect)frameRect {
-//  [super setFrame:frameRect];
-//}
 
 - (NSWindow *)configureSheet {
   return [self.configController configureSheet];
@@ -112,24 +103,23 @@ static NSTimeInterval const kOneMinute = 60.0;
 - (void)startAnimation {
   [super startAnimation];
 
-  // NSLog(@"startAnimation: %d %@", [NSThread isMainThread], [NSThread currentThread]);
-
   // Create the webview for the screensaver.
-  _webView = [[WebView alloc] initWithFrame:[self bounds]];
-  [_webView setFrameLoadDelegate:self];
-  [_webView setShouldUpdateWhileOffscreen:YES];
-  [_webView setPolicyDelegate:self];
-  [_webView setUIDelegate:self];
-  [_webView setEditingDelegate:self];
+  WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+  WKPreferences *preferences = [[WKPreferences alloc] init];
+  preferences.javaScriptCanOpenWindowsAutomatically = NO;
+  configuration.preferences = preferences;
+
+  _webView = [[WKWebView alloc] initWithFrame:[self bounds] configuration:configuration];
+  _webView.UIDelegate = self;
+  _webView.navigationDelegate = self;
   [_webView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
   [_webView setAutoresizesSubviews:YES];
-  [_webView setDrawsBackground:NO];
   [self addSubview:_webView];
 
   NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
   [[_webView layer] setBackgroundColor:color.CGColor];
 
-  if (!_isPreview && _currentIndex < [[self selectedURLs] count]) {
+  if (_currentIndex < [[self selectedURLs] count]) {
     [self loadFromStart];
   }
 }
@@ -139,7 +129,7 @@ static NSTimeInterval const kOneMinute = 60.0;
   [_timer invalidate];
   _timer = nil;
   [_webView removeFromSuperview];
-  [_webView close];
+  //  [_webView close];
   _webView = nil;
 }
 
@@ -191,16 +181,15 @@ static NSTimeInterval const kOneMinute = 60.0;
 }
 
 - (void)loadURLThing:(NSString *)url {
-  NSString *javascriptPrefix = @"javascript:";
+  NSURL *_url = [NSURL URLWithString:url];
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:_url];
 
-  if ([url isKindOfClass:[NSURL class]]) {
-    url = [(NSURL *)url absoluteString];
-  }
-
-  if ([url hasPrefix:javascriptPrefix]) {
-    [_webView stringByEvaluatingJavaScriptFromString:url];
+  if ([_url.scheme isEqualToString:@"http"] || [_url.scheme isEqualToString:@"https"]) {
+    [_webView loadRequest:request];
+  } else if ([_url.scheme isEqualToString:@"file"]) {
+    [_webView loadFileURL:_url allowingReadAccessToURL:[_url URLByDeletingLastPathComponent]];
   } else {
-    [_webView setMainFrameURL:url];
+    // no-op
   }
 }
 
@@ -235,73 +224,24 @@ static NSTimeInterval const kOneMinute = 60.0;
   return self;
 }
 
-- (void)keyDown:(NSEvent *)theEvent {
-  return;
-}
-
-- (void)keyUp:(NSEvent *)theEvent {
-  return;
-}
-
 - (BOOL)acceptsFirstResponder {
-  return YES;
+  return NO;
 }
 
 - (BOOL)resignFirstResponder {
   return NO;
 }
 
-#pragma mark WebPolicyDelegate
+#pragma mark WKNavigationDelegate
 
-- (void)webView:(WebView *)webView
-    decidePolicyForNewWindowAction:(NSDictionary *)actionInformation
-                           request:(NSURLRequest *)request
-                      newFrameName:(NSString *)frameName
-                  decisionListener:(id<WebPolicyDecisionListener>)listener {
+- (void)webView:(WKWebView *)webView
+    decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+                    decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
   // Don't open new windows.
-  [listener ignore];
-}
-
-- (void)webView:(WebView *)webView didFinishLoadForFrame:(WebFrame *)frame {
-  [webView resignFirstResponder];
-  [[[webView mainFrame] frameView] setAllowsScrolling:NO];
-  //[webView setDrawsBackground:YES];
-}
-
-- (void)webView:(WebView *)webView
-    unableToImplementPolicyWithError:(NSError *)error
-                               frame:(WebFrame *)frame {
-  NSLog(@"unableToImplement: %@", error);
-}
-
-#pragma mark WebUIDelegate
-
-- (NSResponder *)webViewFirstResponder:(WebView *)sender {
-  return self;
-}
-
-- (void)webViewClose:(WebView *)sender {
-  return;
-}
-
-- (BOOL)webViewIsResizable:(WebView *)sender {
-  return NO;
-}
-
-- (BOOL)webViewIsStatusBarVisible:(WebView *)sender {
-  return NO;
-}
-
-- (void)webViewRunModal:(WebView *)sender {
-  return;
-}
-
-- (void)webViewShow:(WebView *)sender {
-  return;
-}
-
-- (void)webViewUnfocus:(WebView *)sender {
-  return;
+  if (navigationAction.targetFrame == nil) {
+    decisionHandler(WKNavigationActionPolicyCancel);
+  }
+  decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 @end
