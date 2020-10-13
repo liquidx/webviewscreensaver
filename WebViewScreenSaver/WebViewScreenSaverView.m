@@ -118,6 +118,8 @@ static NSTimeInterval const kOneMinute = 60.0;
 
   NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
   [[_webView layer] setBackgroundColor:color.CGColor];
+  [_webView setValue:@(YES)
+              forKey:@"drawsTransparentBackground"];  // Deprecated and internal but works
 
   if (_currentIndex < [[self selectedURLs] count]) {
     [self loadFromStart];
