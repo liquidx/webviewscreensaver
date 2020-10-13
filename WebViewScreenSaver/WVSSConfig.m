@@ -23,10 +23,9 @@
 #import "WVSSAddress.h"
 
 // ScreenSaverDefault Keys
-static NSString * const kScreenSaverFetchURLsKey = @"kScreenSaverFetchURLs";  // BOOL
-static NSString * const kScreenSaverURLsURLKey = @"kScreenSaverURLsURL";  // NSString (URL)
-static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSArray of NSDictionary
-
+static NSString *const kScreenSaverFetchURLsKey = @"kScreenSaverFetchURLs";  // BOOL
+static NSString *const kScreenSaverURLsURLKey = @"kScreenSaverURLsURL";      // NSString (URL)
+static NSString *const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSArray of NSDictionary
 
 @interface WVSSConfig ()
 @property(nonatomic, strong) NSUserDefaults *userDefaults;
@@ -44,7 +43,7 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
     self.addressListURL = [userDefaults stringForKey:kScreenSaverURLsURLKey];
     self.shouldFetchAddressList = [userDefaults boolForKey:kScreenSaverFetchURLsKey];
 
-    //NSLog(@"Loaded Addresses: %@", self.addresses);
+    // NSLog(@"Loaded Addresses: %@", self.addresses);
 
     if (!self.addresses) {
       self.addresses = [NSMutableArray array];
@@ -54,10 +53,10 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
 }
 
 - (NSMutableArray *)loadAddressesFromUserDefaults:(NSUserDefaults *)userDefaults {
-  NSArray *addressesFromUserDefaults = [[userDefaults arrayForKey:kScreenSaverURLListKey] mutableCopy];
+  NSArray *addressesFromUserDefaults =
+      [[userDefaults arrayForKey:kScreenSaverURLListKey] mutableCopy];
   NSMutableArray *addresses = [NSMutableArray array];
   for (NSDictionary *addressDictionary in addressesFromUserDefaults) {
-
     NSString *url = addressDictionary[kWVSSAddressURLKey];
     NSInteger time = [addressDictionary[kWVSSAddressTimeKey] integerValue];
     if (url) {
@@ -73,7 +72,7 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
   for (WVSSAddress *address in self.addresses) {
     [addressesForUserDefaults addObject:[address dictionaryRepresentation]];
   }
-  //NSLog(@"Saved Addresses: %@", addressesForUserDefaults);
+  // NSLog(@"Saved Addresses: %@", addressesForUserDefaults);
 
   [userDefaults setObject:addressesForUserDefaults forKey:kScreenSaverURLListKey];
 }
@@ -88,13 +87,11 @@ static NSString * const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSA
     [self.userDefaults removeObjectForKey:kScreenSaverURLsURLKey];
   }
   [self.userDefaults synchronize];
-
 }
 
 - (void)addAddressWithURL:(NSString *)url duration:(NSInteger)duration {
   WVSSAddress *address = [WVSSAddress addressWithURL:url duration:duration];
   [self.addresses addObject:address];
 }
-
 
 @end

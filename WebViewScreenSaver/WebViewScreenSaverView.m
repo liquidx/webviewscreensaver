@@ -23,17 +23,15 @@
 #import "WVSSAddress.h"
 
 // ScreenSaverDefaults module name.
-static NSString * const kScreenSaverName = @"WebViewScreenSaver";
+static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 // Default intervals.
 static NSTimeInterval const kOneMinute = 60.0;
 
-
-@interface WebViewScreenSaverView () <
-  WVSSConfigControllerDelegate,
-  WebEditingDelegate,
-  WebFrameLoadDelegate,
-  WebPolicyDelegate,
-  WebUIDelegate>
+@interface WebViewScreenSaverView () <WVSSConfigControllerDelegate,
+                                      WebEditingDelegate,
+                                      WebFrameLoadDelegate,
+                                      WebPolicyDelegate,
+                                      WebUIDelegate>
 // Timer callback that loads the next URL in the URL list.
 - (void)loadNext:(NSTimer *)timer;
 // Returns the URL for the index in the preferences.
@@ -41,7 +39,6 @@ static NSTimeInterval const kOneMinute = 60.0;
 // Returns the time interval in the preferences.
 - (NSTimeInterval)timeIntervalForIndex:(NSInteger)index;
 @end
-
 
 @implementation WebViewScreenSaverView {
   NSTimer *_timer;
@@ -59,11 +56,10 @@ static NSTimeInterval const kOneMinute = 60.0;
   return [self initWithFrame:frame isPreview:isPreview prefsStore:prefs];
 }
 
-
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview prefsStore:(NSUserDefaults *)prefs {
   self = [super initWithFrame:frame isPreview:isPreview];
   if (self) {
-    [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    [self setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
     [self setAutoresizesSubviews:YES];
 
     _currentIndex = 0;
@@ -100,7 +96,8 @@ static NSTimeInterval const kOneMinute = 60.0;
   return [self.configController configureSheet];
 }
 
-- (void)configController:(WVSSConfigController *)configController dismissConfigSheet:(NSWindow *)sheet {
+- (void)configController:(WVSSConfigController *)configController
+      dismissConfigSheet:(NSWindow *)sheet {
   if (_isPreview) {
     [self loadFromStart];
   }
@@ -115,7 +112,7 @@ static NSTimeInterval const kOneMinute = 60.0;
 - (void)startAnimation {
   [super startAnimation];
 
-  //NSLog(@"startAnimation: %d %@", [NSThread isMainThread], [NSThread currentThread]);
+  // NSLog(@"startAnimation: %d %@", [NSThread isMainThread], [NSThread currentThread]);
 
   // Create the webview for the screensaver.
   _webView = [[WebView alloc] initWithFrame:[self bounds]];
@@ -124,7 +121,7 @@ static NSTimeInterval const kOneMinute = 60.0;
   [_webView setPolicyDelegate:self];
   [_webView setUIDelegate:self];
   [_webView setEditingDelegate:self];
-  [_webView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+  [_webView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
   [_webView setAutoresizesSubviews:YES];
   [_webView setDrawsBackground:NO];
   [self addSubview:_webView];
@@ -200,7 +197,7 @@ static NSTimeInterval const kOneMinute = 60.0;
     url = [(NSURL *)url absoluteString];
   }
 
-  if([url hasPrefix:javascriptPrefix]) {
+  if ([url hasPrefix:javascriptPrefix]) {
     [_webView stringByEvaluatingJavaScriptFromString:url];
   } else {
     [_webView setMainFrameURL:url];
@@ -210,7 +207,6 @@ static NSTimeInterval const kOneMinute = 60.0;
 - (NSArray *)selectedURLs {
   return self.configController.addresses;
 }
-
 
 - (NSString *)urlForIndex:(NSInteger)index {
   WVSSAddress *address = [self.configController.addresses objectAtIndex:index];
@@ -259,9 +255,9 @@ static NSTimeInterval const kOneMinute = 60.0;
 
 - (void)webView:(WebView *)webView
     decidePolicyForNewWindowAction:(NSDictionary *)actionInformation
-    request:(NSURLRequest *)request
-    newFrameName:(NSString *)frameName
-    decisionListener:(id < WebPolicyDecisionListener >)listener {
+                           request:(NSURLRequest *)request
+                      newFrameName:(NSString *)frameName
+                  decisionListener:(id<WebPolicyDecisionListener>)listener {
   // Don't open new windows.
   [listener ignore];
 }
@@ -272,7 +268,9 @@ static NSTimeInterval const kOneMinute = 60.0;
   //[webView setDrawsBackground:YES];
 }
 
-- (void)webView:(WebView *)webView unableToImplementPolicyWithError:(NSError *)error frame:(WebFrame *)frame {
+- (void)webView:(WebView *)webView
+    unableToImplementPolicyWithError:(NSError *)error
+                               frame:(WebFrame *)frame {
   NSLog(@"unableToImplement: %@", error);
 }
 
@@ -305,6 +303,5 @@ static NSTimeInterval const kOneMinute = 60.0;
 - (void)webViewUnfocus:(WebView *)sender {
   return;
 }
-
 
 @end

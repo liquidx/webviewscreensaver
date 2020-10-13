@@ -22,8 +22,8 @@
 #import "WVSSAddressListFetcher.h"
 
 @interface WVSSAddressListFetcher ()
-@property (nonatomic, strong) NSMutableData *receivedData;
-@property (nonatomic, strong) NSURLConnection *connection;
+@property(nonatomic, strong) NSMutableData *receivedData;
+@property(nonatomic, strong) NSURLConnection *connection;
 @end
 
 @implementation WVSSAddressListFetcher
@@ -39,7 +39,6 @@
   }
   return self;
 }
-
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
   NSLog(@"Unable to fetch URLs: %@", error);
@@ -77,7 +76,5 @@
   self.connection = nil;
   NSLog(@"fetching URLS finished");
 }
-
-
 
 @end

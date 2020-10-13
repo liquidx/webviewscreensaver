@@ -20,21 +20,16 @@
 //
 
 #import "WVSSConfigController.h"
-#import "WVSSConfig.h"
 #import "WVSSAddress.h"
 #import "WVSSAddressListFetcher.h"
+#import "WVSSConfig.h"
 
-static NSString * const kURLTableRow = @"kURLTableRow";
+static NSString *const kURLTableRow = @"kURLTableRow";
 // Configuration sheet columns.
-static NSString * const kTableColumnURL = @"url";
-static NSString * const kTableColumnTime = @"time";
+static NSString *const kTableColumnURL = @"url";
+static NSString *const kTableColumnTime = @"time";
 
-
-
-NS_ENUM(NSInteger, WVSSColumn) {
-  kWVSSColumnURL = 0,
-  kWVSSColumnDuration = 1
-};
+NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
 
 @interface WVSSConfigController () <WVSSAddressListFetcherDelegate>
 @property(nonatomic, strong) WVSSConfig *config;
@@ -89,11 +84,9 @@ NS_ENUM(NSInteger, WVSSColumn) {
 
   WVSSAddressListFetcher *fetcher = [[WVSSAddressListFetcher alloc] initWithURL:addressFetchURL];
   fetcher.delegate = self;
-
 }
 
 #pragma mark - Actions
-
 
 - (IBAction)addRow:(id)sender {
   [self appendAddress];
@@ -106,11 +99,9 @@ NS_ENUM(NSInteger, WVSSColumn) {
   }
 }
 
-#pragma mark - 
+#pragma mark -
 
-- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher
-          didFailWithError:(NSError *)error {
-
+- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher didFailWithError:(NSError *)error {
 }
 
 - (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher
@@ -124,14 +115,13 @@ NS_ENUM(NSInteger, WVSSColumn) {
   //[self loadNext:nil];
 }
 
-
 #pragma mark Bundle
 
 - (NSArray *)bundleHTML {
   NSString *resourcePath = [[NSBundle bundleForClass:[self class]] resourcePath];
   NSError *error = nil;
   NSArray *bundleResourceContents =
-  [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcePath error:&error];
+      [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcePath error:&error];
 
   NSMutableArray *bundleURLs = [NSMutableArray array];
   for (NSString *filename in bundleResourceContents) {
@@ -151,7 +141,7 @@ NS_ENUM(NSInteger, WVSSColumn) {
   if (!self.sheet) {
     NSBundle *thisBundle = [NSBundle bundleForClass:[self class]];
     if (![thisBundle loadNibNamed:@"ConfigureSheet" owner:self topLevelObjects:NULL]) {
-      //NSLog(@"Unable to load configuration sheet");
+      // NSLog(@"Unable to load configuration sheet");
     }
 
     // If there is a urlListURL.
@@ -162,7 +152,7 @@ NS_ENUM(NSInteger, WVSSColumn) {
     }
 
     // URLs
-    [self.urlTable setDraggingSourceOperationMask:NSDragOperationMove  forLocal:YES];
+    [self.urlTable setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     [self.urlTable registerForDraggedTypes:[NSArray arrayWithObject:kURLTableRow]];
 
     [self.fetchURLCheckbox setIntegerValue:self.config.shouldFetchAddressList];
@@ -171,17 +161,16 @@ NS_ENUM(NSInteger, WVSSColumn) {
   return self.sheet;
 }
 
-
 - (IBAction)dismissConfigSheet:(id)sender {
   [self synchronize];
   [self.delegate configController:self dismissConfigSheet:self.sheet];
 }
 
-
-
 #pragma mark NSTableView
 
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+- (NSView *)tableView:(NSTableView *)tableView
+    viewForTableColumn:(NSTableColumn *)tableColumn
+                   row:(NSInteger)row {
   // In IB the tableColumn has the identifier set to the same string as the keys in our dictionary
   NSString *identifier = [tableColumn identifier];
 
@@ -209,20 +198,18 @@ NS_ENUM(NSInteger, WVSSColumn) {
   return YES;
 }
 
-
 - (BOOL)tableView:(NSTableView *)tv
-writeRowsWithIndexes:(NSIndexSet *)rowIndexes
-     toPasteboard:(NSPasteboard*)pboard {
+    writeRowsWithIndexes:(NSIndexSet *)rowIndexes
+            toPasteboard:(NSPasteboard *)pboard {
   // Copy the row numbers to the pasteboard.
   NSData *serializedIndexes = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
-  [pboard declareTypes:[NSArray arrayWithObject:kURLTableRow]
-                 owner:self];
+  [pboard declareTypes:[NSArray arrayWithObject:kURLTableRow] owner:self];
   [pboard setData:serializedIndexes forType:kURLTableRow];
   return YES;
 }
 
-- (NSDragOperation)tableView:(NSTableView*)tv
-                validateDrop:(id )info
+- (NSDragOperation)tableView:(NSTableView *)tv
+                validateDrop:(id)info
                  proposedRow:(NSInteger)row
        proposedDropOperation:(NSTableViewDropOperation)op {
   // Add code here to validate the drop
@@ -230,14 +217,12 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView
-       acceptDrop:(id )info
+       acceptDrop:(id)info
               row:(NSInteger)row
     dropOperation:(NSTableViewDropOperation)operation {
-
-  NSPasteboard* pboard = [info draggingPasteboard];
-  NSData* rowData = [pboard dataForType:kURLTableRow];
-  NSIndexSet* rowIndexes =
-  [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+  NSPasteboard *pboard = [info draggingPasteboard];
+  NSData *rowData = [pboard dataForType:kURLTableRow];
+  NSIndexSet *rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
   NSInteger dragRow = [rowIndexes firstIndex];
 
   NSMutableArray *addresses = self.config.addresses;
@@ -275,13 +260,11 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
   //                             columnIndexes:[NSIndexSet indexSetWithIndex:col]];
 }
 
-
 - (IBAction)toggleFetchingURLs:(id)sender {
   BOOL currentValue = self.config.shouldFetchAddressList;
   self.config.shouldFetchAddressList = !currentValue;
   [self.fetchURLCheckbox setIntegerValue:self.config.shouldFetchAddressList];
   [self.urlsURLField setEnabled:self.config.shouldFetchAddressList];
 }
-
 
 @end
