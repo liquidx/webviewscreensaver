@@ -1,52 +1,60 @@
-WebViewScreenSaver
-==================
+# WebViewScreenSaver
+[![Build](https://img.shields.io/github/workflow/status/liquidx/webviewscreensaver/CI)](https://github.com/liquidx/webviewscreensaver/actions)
+[![GitHub release](https://img.shields.io/github/v/release/liquidx/webviewscreensaver)](https://github.com/liquidx/webviewscreensaver/releases)
 
- - Author: Alastair Tse <alastair@liquidx.net>
- - URL: http://github.com/liquidx/webviewscreensaver
- - Twitter: @liquidx
+A macOS screen saver that displays a web page or a series of web pages.
 
-Introduction
-------------
-A Mac OS X screen saver that displays a web page or a series of web pages.
+## Installation
 
-The web page runs as though you opened it in Safari, but it will not accept
-any keyboard or mouse input. The list of URLs it will can be set via
-the "Options..." panel in the Screen Saver settings.
+* Using [brew](https://brew.sh/)
 
-Usage
------
+``` bash
+brew cask install webviewscreensaver
+```
 
-1. Download from https://github.com/liquidx/webviewscreensaver/releases
-2. Unpack the WebViewScreenSaver-x.x.zip file.
-3. Double-click (Open) the WebViewScreenSaver.saver file and choose to install
-   it.
-4. Open up System Preferences > Desktop and Screen Saver > Screen Saver
-5. Select "WebViewScreenSaver" (It'll be at the bottom of the Screen Savers list.)
-6. Press "Screen Saver Options" and enter the URLs you would like it to load and the
-   duration they should show for in minutes.
+* Directly from the [releases](https://github.com/liquidx/webviewscreensaver/releases) page. Just unpack and double click to install.
 
-Example URLs
-------------
+**Note**: Our package is **unsigned** and will remain like that for the foreseeable future.
 
-Websites that look good as screensavers:
+When opening it up for the first time you will be prompted that *the developer cannot be verified*. <br />
+Hit **cancel**, go to **Security and Privacy** where there should be a section explaining that "WebViewScreenSaver.saver" was blocked and an **Open Anyway** button next to it. Click that. <br />
+Upon returning to the screensaver options an **Open** button should now be available which will remove security prompts until a future update.
 
- - http://www.google.com/trends/hottrends/visualize?pn=p1
- - http://twistori.com/#i_love
- - http://randomstreetview.com/#slideshow
- - http://www.airtightinteractive.com/demos/js/nebula/
- - http://alteredqualia.com/three/examples/webgl_cubes.html
- - http://akirodic.com/p/jellyfish/
- - http://matthew.wagerfield.com/flat-surface-shader/
- - https://developer.mozilla.org/en-US/demos/detail/consola-matrix/launch
- - http://spielzeugz.de/html5/liquid-particles.html
- - http://codepen.io/ykob/full/zGpjeK/
+**Alternatively**:
+* if you are using [brew](https://brew.sh/) pass in `--no-quarantine` option to `install` or `reinstall` command.
 
-Cool, but they don't work in Safari WebKit
-------------------------------------------
- - http://www.iamnop.com/particles/
- - http://mrdoob.com/lab/javascript/webgl/clouds/
- - http://mrdoob.com/lab/javascript/webgl/particles/magicdust.html
- - http://globe.chromeexperiments.com/
- - http://clouds.chromeexperiments.com/
- - http://oos.moxiecode.com/js_webgl/forest/index.html
- - http://oos.moxiecode.com/js_webgl/water_noise/
+* or if you installed it via direct download run the folllowing command to remove the file from quarantine:
+``` bash
+xattr -d com.apple.quarantine WebViewScreenSaver.saver
+```
+
+## Configuration
+
+Open up System Preferences > **Desktop and Screen Saver** > Screen Saver and **WebViewScreenSaver** should be at the end of the list.
+
+In the addresses section fill in as many websites as you want the screensaver to cycle through and the amount of time to pause on each.
+
+Passing in a negative time value e.g. `-1` will notify the screensaver to remain on that website indefinitely.
+
+Need some website ideas? Check out suggestions in the [examples](examples.md) section.
+
+Local **absolute** paths can also be used as an address with or without the `file://` schema.
+
+E.g. `file:///Users/myUser/mySreensaver/index.html`
+
+**Note**: If you are running **Catalina** or newer the provided path cannot reside in your personal folders which require extra permissions (this includes things like *Downloads*, *Documents* or *Desktop*) but can be anywhere else in your user's folder.
+
+### Configuration for IT
+If you are interested in scripting configuration changes, WebViewScreenSaver, like most other screensavers, makes use of the macOS `defaults` system.
+
+This can be queried and updated via:
+``` bash
+defaults -currentHost read WebViewScreensaver
+```
+or directly *(if installed for current user or should find it in `/Library` otherwise)*
+``` bash
+/usr/libexec/PlistBuddy -c 'Print' ~/Library/Preferences/ByHost/WebViewScreenSaver.*
+```
+
+## License
+Code is licensed under the [Apache License, Version 2.0 License](LICENSE.md).
