@@ -17,3 +17,4 @@ Feel free to suggest others.
  - http://matthew.wagerfield.com/flat-surface-shader/
  - http://codepen.io/ykob/full/zGpjeK/
  - http://d-pixie.github.io/striped-clock/
+ - http://www.aresluna.org/polish-tv-clock/
