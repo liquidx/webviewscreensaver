@@ -34,6 +34,8 @@ Open up System Preferences > **Desktop and Screen Saver** > Screen Saver and **W
 
 In the addresses section fill in as many websites as you want the screensaver to cycle through and the amount of time to pause on each.
 
+**Tip**: To edit a **selected** row, click **once** or tap **Enter** or **Tab**.
+
 Passing in a negative time value e.g. `-1` will notify the screensaver to remain on that website indefinitely.
 
 Need some website ideas? Check out suggestions in the [examples](examples.md) section.
