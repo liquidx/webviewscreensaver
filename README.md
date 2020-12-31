@@ -9,7 +9,7 @@ A macOS screen saver that displays a web page or a series of web pages.
 * Using [brew](https://brew.sh/)
 
 ``` bash
-brew cask install webviewscreensaver
+brew install --cask webviewscreensaver
 ```
 
 * Directly from the [releases](https://github.com/liquidx/webviewscreensaver/releases) page. Just unpack and double click to install.
@@ -21,7 +21,10 @@ Hit **cancel**, go to **Security and Privacy** where there should be a section e
 Upon returning to the screensaver options an **Open** button should now be available which will remove security prompts until a future update.
 
 **Alternatively**:
-* if you are using [brew](https://brew.sh/) pass in `--no-quarantine` option to `install` or `reinstall` command.
+* if you are using [brew](https://brew.sh/) pass in `--no-quarantine` option to `install` or `reinstall` command:
+``` bash
+brew install --cask webviewscreensaver --no-quarantine
+```
 
 * or if you installed it via direct download run the folllowing command to remove the file from quarantine:
 ``` bash
