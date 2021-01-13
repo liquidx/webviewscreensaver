@@ -11,6 +11,10 @@ A macOS screen saver that displays a web page or a series of web pages.
 ``` bash
 brew cask install webviewscreensaver
 ```
+Or with brew >= [2.7.0](https://news.ycombinator.com/item?id=25528475) use
+``` bash
+brew install --cask  webviewscreensaver
+```
 
 * Directly from the [releases](https://github.com/liquidx/webviewscreensaver/releases) page. Just unpack and double click to install.
 
