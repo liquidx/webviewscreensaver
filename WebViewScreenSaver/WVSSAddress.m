@@ -44,7 +44,8 @@ NSString *const kWVSSAddressTimeKey = @"kScreenSaverTime";
 
 + (NSString *)defaultAddressURL {
   // Get the default address from Info.plist
-  NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+  // Using bundleForClass: to target the correct bundle which is different when loading the screensaver
+  NSDictionary *info = [[NSBundle bundleForClass:[self class]] infoDictionary];
   return [info valueForKey:kScreenSaverDefaultURLKey];
 }
 
