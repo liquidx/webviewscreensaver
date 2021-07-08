@@ -9,6 +9,7 @@ ARTIFACT="WebViewScreenSaver.saver.zip"
 
 pushd "$PRJ_DIR"
 xcodebuild -project WebViewScreenSaver.xcodeproj -scheme WebViewScreenSaver -configuration Release clean archive -archivePath "$BUILD_DIR/build.xcarchive" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+codesign --sign - --force "$(find "$BUILD_DIR" -iname "*.saver")"
 
 ln -s "$(find "$BUILD_DIR" -iname "*.saver")" "$PKG_DIR"
 rm -f "../$ARTIFACT"
