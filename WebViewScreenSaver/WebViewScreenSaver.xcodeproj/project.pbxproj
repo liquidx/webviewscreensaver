@@ -285,7 +285,6 @@
 				8D255ACB0486D3F9007BF209 /* Sources */,
 				8D255ACD0486D3F9007BF209 /* Frameworks */,
 				8D255AD00486D3F9007BF209 /* Rez */,
-				64EED3F0120F357C0048A830 /* Copy to Screen Savers */,
 			);
 			buildRules = (
 			);
@@ -378,23 +377,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXRezBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		64EED3F0120F357C0048A830 /* Copy to Screen Savers */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy to Screen Savers";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cp -pr ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.saver \"${HOME}/Library/Screen Savers\"";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		641457031AEDC92100FB6CDF /* Sources */ = {
