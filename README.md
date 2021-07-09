@@ -6,21 +6,28 @@ A macOS screen saver that displays a web page or a series of web pages.
 
 ## Installation
 
-* Using [brew](https://brew.sh/)
+* Using [brew](https://brew.sh/).&#42;
 
 ``` bash
 brew install --cask webviewscreensaver
 ```
 
-* Directly from the [releases](https://github.com/liquidx/webviewscreensaver/releases) page. Just unpack and double click to install.
+* Directly from the [releases](https://github.com/liquidx/webviewscreensaver/releases) page. Unpack and double click to install.&#42;
 
-**Note**: Our package is **unsigned** and will remain like that for the foreseeable future.
+* From source (requires [Xcode](https://developer.apple.com/xcode/)):
+``` bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/liquidx/webviewscreensaver/master/install-from-source.sh)"
+```
 
-When opening it up for the first time you will be prompted that *the developer cannot be verified*. <br />
-Hit **cancel**, go to **Security and Privacy** where there should be a section explaining that "WebViewScreenSaver.saver" was blocked and an **Open Anyway** button next to it. Click that. <br />
-Upon returning to the screensaver options an **Open** button should now be available which will remove security prompts until a future update.
+**&#42;Note**: The package is **adhoc signed** (since v2.2.1, previously unsigned).
+
+When opening it the first time you will get a security prompt about Apple not being able to verify the software. <br />
+Hit **ok** (cancel in older macOS) and go to **Security and Privacy**.<br />
+In the section explaining that "WebViewScreenSaver.saver" was blocked click **Open Anyway**.<br />
+Upon returning to screensaver options you'll get a second prompt that can be confirmed by clicking **Open**.
 
 **Alternatively**:
+
 * if you are using [brew](https://brew.sh/) pass in `--no-quarantine` option to `install` or `reinstall` command:
 ``` bash
 brew install --cask webviewscreensaver --no-quarantine
