@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" documentModal="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="170" width="443" height="340"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="443" height="340"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -180,9 +180,9 @@
                                     </textFieldCell>
                                 </textField>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="129">
-                                    <rect key="frame" x="16" y="220" width="153" height="18"/>
+                                    <rect key="frame" x="16" y="220" width="137" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Fetch URLs Remotely" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="130">
+                                    <buttonCell key="cell" type="check" title="Use URLs list From" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="130">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -201,6 +201,17 @@
                                         <action selector="resetData:" target="-2" id="45L-5d-BK9"/>
                                     </connections>
                                 </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lIN-Gf-n8X">
+                                    <rect key="frame" x="247" y="221" width="136" height="23"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <buttonCell key="cell" type="roundTextured" title="Open for interaction" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vf5-GQ-RCq">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="addRow:" target="-2" id="ofL-77-Z9w"/>
+                                    </connections>
+                                </button>
                             </subviews>
                         </view>
                     </box>
@@ -217,7 +228,7 @@
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="140" y="147"/>
+            <point key="canvasLocation" x="139.5" y="147"/>
         </window>
     </objects>
 </document>
