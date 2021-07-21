@@ -209,7 +209,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="addRow:" target="-2" id="ofL-77-Z9w"/>
+                                        <action selector="openNewWIndowForInteraction:" target="-2" id="zNz-1e-KSe"/>
                                     </connections>
                                 </button>
                             </subviews>

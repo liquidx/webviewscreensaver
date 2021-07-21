@@ -32,6 +32,7 @@
 @interface WebViewScreenSaverView : ScreenSaverView
 
 @property (nonatomic, strong) WVSSConfigController *configController;
+@property (nonatomic) BOOL allowInteractive;
 
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview prefsStore:(NSUserDefaults *)prefs;
 

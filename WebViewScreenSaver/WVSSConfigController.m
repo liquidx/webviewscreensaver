@@ -23,6 +23,7 @@
 #import "WVSSAddress.h"
 #import "WVSSAddressListFetcher.h"
 #import "WVSSConfig.h"
+#import "WebViewScreenSaverView.h"
 
 #import <WebKit/WebKit.h>
 
@@ -115,6 +116,18 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
                     [self clearWebViewHistory];
                   }
                 }];
+}
+
+- (IBAction)openNewWIndowForInteraction:(id)sender {
+    NSRect bounds = NSMakeRect(0, 0, 1024, 768);
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    WebViewScreenSaverView *wvsv = [[WebViewScreenSaverView alloc] initWithFrame:bounds isPreview:YES prefsStore:userDefaults];
+    wvsv.allowInteractive = YES;
+    wvsv.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(100,100,bounds.size.width, bounds.size.height) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:YES];
+    [window.contentView addSubview:wvsv];
+    [[[NSWindowController alloc] initWithWindow:window] showWindow:window];
+    [wvsv startAnimation];
 }
 
 - (void)clearWebViewHistory {

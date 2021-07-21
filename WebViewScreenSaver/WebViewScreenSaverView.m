@@ -232,6 +232,9 @@ static NSTimeInterval const kOneMinute = 60.0;
 // the webview from getting any keyboard focus.
 
 - (NSView *)hitTest:(NSPoint)aPoint {
+  if (self.allowInteractive) {
+    return [super hitTest:aPoint];
+  }
   return self;
 }
 
