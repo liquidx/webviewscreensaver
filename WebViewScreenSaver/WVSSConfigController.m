@@ -36,6 +36,7 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
 
 @interface WVSSConfigController () <WVSSAddressListFetcherDelegate>
 @property(nonatomic, strong) WVSSConfig *config;
+@property(nonatomic, strong) NSUserDefaults *userDefaults;
 @end
 
 @implementation WVSSConfigController
@@ -43,6 +44,7 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
 - (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults {
   self = [super init];
   if (self) {
+    self.userDefaults = userDefaults;
     self.config = [[WVSSConfig alloc] initWithUserDefaults:userDefaults];
     [self appendSampleAddressIfEmpty];
 
@@ -120,8 +122,7 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
 
 - (IBAction)openNewWIndowForInteraction:(id)sender {
     NSRect bounds = NSMakeRect(0, 0, 1024, 768);
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    WebViewScreenSaverView *wvsv = [[WebViewScreenSaverView alloc] initWithFrame:bounds isPreview:YES prefsStore:userDefaults];
+    WebViewScreenSaverView *wvsv = [[WebViewScreenSaverView alloc] initWithFrame:bounds isPreview:YES prefsStore:self.userDefaults];
     wvsv.allowInteractive = YES;
     wvsv.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(100,100,bounds.size.width, bounds.size.height) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:YES];
