@@ -125,7 +125,7 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
     WebViewScreenSaverView *wvsv = [[WebViewScreenSaverView alloc] initWithFrame:bounds isPreview:YES prefsStore:self.userDefaults];
     wvsv.allowInteractive = YES;
     wvsv.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(100,100,bounds.size.width, bounds.size.height) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:YES];
+    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(100,100,bounds.size.width, bounds.size.height) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:YES];
     [window.contentView addSubview:wvsv];
     [[[NSWindowController alloc] initWithWindow:window] showWindow:window];
     [wvsv startAnimation];
