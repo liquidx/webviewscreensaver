@@ -281,6 +281,7 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
     //[self.urlList noteNumberOfRowsChanged];
     [self.urlTable reloadData];
   }
+  [self synchronize];
   return YES;
 }
 
@@ -300,6 +301,7 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
   // I don't think we need to reload the table.
   //    [self.urlTable reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
   //                             columnIndexes:[NSIndexSet indexSetWithIndex:col]];
+  [self synchronize];
 }
 
 - (IBAction)toggleFetchingURLs:(id)sender {
@@ -307,6 +309,7 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
   self.config.shouldFetchAddressList = !currentValue;
   [self.fetchURLCheckbox setIntegerValue:self.config.shouldFetchAddressList];
   [self.urlsURLField setEnabled:self.config.shouldFetchAddressList];
+  [self synchronize];
 }
 
 @end
