@@ -16,7 +16,7 @@ brew install --cask webviewscreensaver
 
 * From source (requires [Xcode](https://developer.apple.com/xcode/)):
 ``` bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/liquidx/webviewscreensaver/master/install-from-source.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/leavez/webviewscreensaver/master/install-from-source.sh)"
 ```
 
 **&#42;Note**: The package is **adhoc signed** (since v2.2.1, previously unsigned).

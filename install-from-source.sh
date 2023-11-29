@@ -22,7 +22,7 @@ if ! command -v xcodebuild >/dev/null; then
     abort "Install process requires Xcode."
 fi
 
-GIT_REMOTE="https://github.com/liquidx/webviewscreensaver.git"
+GIT_REMOTE="https://github.com/leavez/webviewscreensaver.git"
 DIR_NAME="webviewscreensaver"
 PRJ_NAME="WebViewScreenSaver"
 BUILD_DIR="build"
