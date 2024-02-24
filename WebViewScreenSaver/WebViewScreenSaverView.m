@@ -52,9 +52,17 @@ static NSTimeInterval const kOneMinute = 60.0;
   return YES;
 }
 
+// Called by System Preferences/ScreenSaverEngine
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
   NSUserDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
-  return [self initWithFrame:frame isPreview:isPreview prefsStore:prefs];
+  self = [self initWithFrame:frame isPreview:isPreview prefsStore:prefs];
+  
+  [NSDistributedNotificationCenter.defaultCenter addObserver:self
+                                                  selector:@selector(screensaverWillStop:)
+                                                      name:@"com.apple.screensaver.willstop"
+                                                    object:nil];
+  
+  return self;
 }
 
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview prefsStore:(NSUserDefaults *)prefs {
@@ -74,6 +82,7 @@ static NSTimeInterval const kOneMinute = 60.0;
 }
 
 - (void)dealloc {
+  [NSDistributedNotificationCenter.defaultCenter removeObserver:self];
   [_timer invalidate];
   _timer = nil;
 }
@@ -256,6 +265,13 @@ static NSTimeInterval const kOneMinute = 60.0;
     decisionHandler(WKNavigationActionPolicyCancel);
   }
   decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+// Inspired by: https://github.com/JohnCoates/Aerial/commit/8c78e7cc4f77f4417371966ae7666125d87496d1
+- (void)screensaverWillStop:(NSNotification *)notification {
+  if (@available(macOS 14.0, *)) {
+    exit(0);
+  }
 }
 
 @end
