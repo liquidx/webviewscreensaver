@@ -21,6 +21,7 @@
 
 #import "WebViewScreenSaverView.h"
 #import "WVSSAddress.h"
+#import "WKWebViewPrivate.h"
 
 // ScreenSaverDefaults module name.
 static NSString *const kScreenSaverName = @"WebViewScreenSaver";
@@ -112,6 +113,8 @@ static NSTimeInterval const kOneMinute = 60.0;
   _webView = [[WKWebView alloc] initWithFrame:[self bounds] configuration:configuration];
   _webView.UIDelegate = self;
   _webView.navigationDelegate = self;
+  // Sonoma ScreenSaverEngine view hierarchy occludes webview pausing animations and JS.
+  [_webView wvss_setWindowOcclusionDetectionEnabled: NO];
   [_webView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
   [_webView setAutoresizesSubviews:YES];
   [self addSubview:_webView];

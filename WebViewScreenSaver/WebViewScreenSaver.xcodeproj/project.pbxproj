@@ -36,6 +36,9 @@
 		8D255ACC0486D3F9007BF209 /* WebViewScreenSaverView.m in Sources */ = {isa = PBXBuildFile; fileRef = F500797A0118B23001CA0E54 /* WebViewScreenSaverView.m */; };
 		8D255ACE0486D3F9007BF209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		8D255ACF0486D3F9007BF209 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */; };
+		F931A6832B8A8F6D00418701 /* WKWebViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F931A6812B8A8F6D00418701 /* WKWebViewPrivate.h */; };
+		F931A6842B8A8F6D00418701 /* WKWebViewPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = F931A6822B8A8F6D00418701 /* WKWebViewPrivate.m */; };
+		F931A6852B8A925C00418701 /* WKWebViewPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = F931A6822B8A8F6D00418701 /* WKWebViewPrivate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +84,8 @@
 		8D255AD30486D3F9007BF209 /* WebViewScreenSaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebViewScreenSaver.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50079790118B23001CA0E54 /* WebViewScreenSaverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewScreenSaverView.h; sourceTree = "<group>"; };
 		F500797A0118B23001CA0E54 /* WebViewScreenSaverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewScreenSaverView.m; sourceTree = "<group>"; };
+		F931A6812B8A8F6D00418701 /* WKWebViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; };
+		F931A6822B8A8F6D00418701 /* WKWebViewPrivate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKWebViewPrivate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +167,8 @@
 				641457321AEDCCAB00FB6CDF /* WVSSAddress.m */,
 				641457361AEDD51900FB6CDF /* WVSSAddressListFetcher.h */,
 				641457371AEDD51900FB6CDF /* WVSSAddressListFetcher.m */,
+				F931A6812B8A8F6D00418701 /* WKWebViewPrivate.h */,
+				F931A6822B8A8F6D00418701 /* WKWebViewPrivate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -234,6 +241,7 @@
 				641457291AEDCAD000FB6CDF /* WVSSConfigController.h in Headers */,
 				641457331AEDCCAB00FB6CDF /* WVSSAddress.h in Headers */,
 				641457381AEDD51900FB6CDF /* WVSSAddressListFetcher.h in Headers */,
+				F931A6832B8A8F6D00418701 /* WKWebViewPrivate.h in Headers */,
 				6414572E1AEDCBD900FB6CDF /* WVSSConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F931A6852B8A925C00418701 /* WKWebViewPrivate.m in Sources */,
 				64628F051B27BBE100B7B73D /* WebViewScreenSaverView.m in Sources */,
 				641457301AEDCBD900FB6CDF /* WVSSConfig.m in Sources */,
 				6414572B1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */,
@@ -408,6 +417,7 @@
 				641457391AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */,
 				6414572A1AEDCAD000FB6CDF /* WVSSConfigController.m in Sources */,
 				641457341AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */,
+				F931A6842B8A8F6D00418701 /* WKWebViewPrivate.m in Sources */,
 				8D255ACC0486D3F9007BF209 /* WebViewScreenSaverView.m in Sources */,
 				6414572F1AEDCBD900FB6CDF /* WVSSConfig.m in Sources */,
 			);
