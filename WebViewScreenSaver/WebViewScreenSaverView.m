@@ -73,6 +73,15 @@ static NSTimeInterval const kOneMinute = 60.0;
 
     _currentIndex = 0;
     _isPreview = isPreview;
+    
+    // Simplified preview
+    if (_isPreview) {
+      NSBundle *bundle = [NSBundle bundleForClass:self.class];
+      NSImageView *logoView = [NSImageView imageViewWithImage:[bundle imageForResource:@"thumbnail"]];
+      logoView.frame = self.bounds;
+      logoView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+      [self addSubview:logoView];
+    }
 
     // Load state from the preferences.
     self.configController = [[WVSSConfigController alloc] initWithUserDefaults:prefs];
@@ -112,6 +121,8 @@ static NSTimeInterval const kOneMinute = 60.0;
 
 - (void)startAnimation {
   [super startAnimation];
+  
+  if (_isPreview) return;
 
   // Create the webview for the screensaver.
   WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
@@ -140,6 +151,9 @@ static NSTimeInterval const kOneMinute = 60.0;
 
 - (void)stopAnimation {
   [super stopAnimation];
+  
+  if (!_isPreview) return;
+  
   [_timer invalidate];
   _timer = nil;
   [_webView removeFromSuperview];
@@ -270,7 +284,9 @@ static NSTimeInterval const kOneMinute = 60.0;
 // Inspired by: https://github.com/JohnCoates/Aerial/commit/8c78e7cc4f77f4417371966ae7666125d87496d1
 - (void)screensaverWillStop:(NSNotification *)notification {
   if (@available(macOS 14.0, *)) {
-    exit(0);
+    if (!_isPreview) {
+      exit(0);
+    }
   }
 }
 

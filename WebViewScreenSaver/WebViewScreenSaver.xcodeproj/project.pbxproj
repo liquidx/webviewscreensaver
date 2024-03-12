@@ -39,6 +39,8 @@
 		F931A6832B8A8F6D00418701 /* WKWebViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F931A6812B8A8F6D00418701 /* WKWebViewPrivate.h */; };
 		F931A6842B8A8F6D00418701 /* WKWebViewPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = F931A6822B8A8F6D00418701 /* WKWebViewPrivate.m */; };
 		F931A6852B8A925C00418701 /* WKWebViewPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = F931A6822B8A8F6D00418701 /* WKWebViewPrivate.m */; };
+		F945D8A82BA0A2EE0038B7B5 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 64628F2E1B281BB300B7B73D /* thumbnail.png */; };
+		F945D8A92BA0A2EE0038B7B5 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64628F2F1B281BB300B7B73D /* thumbnail@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -350,6 +352,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F945D8A82BA0A2EE0038B7B5 /* thumbnail.png in Resources */,
+				F945D8A92BA0A2EE0038B7B5 /* thumbnail@2x.png in Resources */,
 				641457111AEDC92200FB6CDF /* Images.xcassets in Resources */,
 				641457141AEDC92200FB6CDF /* MainMenu.xib in Resources */,
 				6414573B1AEDECD800FB6CDF /* ConfigureSheet.xib in Resources */,
