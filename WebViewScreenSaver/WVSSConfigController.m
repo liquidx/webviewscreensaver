@@ -23,6 +23,7 @@
 #import "WVSSAddress.h"
 #import "WVSSAddressListFetcher.h"
 #import "WVSSConfig.h"
+#import "WebViewScreenSaverView.h"
 
 #import <WebKit/WebKit.h>
 
@@ -30,8 +31,7 @@ static NSString *const kURLTableRow = @"kURLTableRow";
 // Configuration sheet columns.
 static NSString *const kTableColumnURL = @"url";
 static NSString *const kTableColumnTime = @"time";
-
-NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
+static NSString *const kTableColumnPreview = @"preview";
 
 @interface WVSSConfigController () <WVSSAddressListFetcherDelegate>
 @property(nonatomic, strong) WVSSConfig *config;
@@ -212,6 +212,9 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
     cellView.textField.stringValue = [[NSNumber numberWithLong:address.duration] stringValue];
     return cellView;
+  } else if ([identifier isEqual:kTableColumnPreview]) {
+    NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
+    return cellView;
   } else {
     NSAssert1(NO, @"Unhandled table column identifier %@", identifier);
   }
@@ -273,13 +276,14 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
 #pragma mark -
 
 - (IBAction)tableViewCellDidEdit:(NSTextField *)textField {
-  NSInteger col = [self.urlTable columnForView:textField];
+  NSTableColumn *column = [self.urlTable.tableColumns objectAtIndex:[self.urlTable columnForView:textField]];
+  NSString *identifier = column.identifier;
   NSInteger row = [self.urlTable selectedRow];
-
-  if (col == kWVSSColumnURL) {
+  
+  if ([identifier isEqual:kTableColumnURL]) {
     WVSSAddress *address = [self.config.addresses objectAtIndex:row];
     address.url = textField.stringValue;
-  } else if (col == kWVSSColumnDuration) {
+  } else if ([identifier isEqual:kTableColumnTime]) {
     WVSSAddress *address = [self.config.addresses objectAtIndex:row];
     address.duration = [textField.stringValue intValue];
   }
@@ -293,6 +297,28 @@ NS_ENUM(NSInteger, WVSSColumn){kWVSSColumnURL = 0, kWVSSColumnDuration = 1};
   self.config.shouldFetchAddressList = !currentValue;
   [self.fetchURLCheckbox setIntegerValue:self.config.shouldFetchAddressList];
   [self.urlsURLField setEnabled:self.config.shouldFetchAddressList];
+}
+
+- (IBAction)previewButtonClicked:(NSButton *)sender {
+  NSInteger row = [self.urlTable rowForView:sender.superview];
+  
+  WVSSAddress *address = [self.config.addresses objectAtIndex:row];
+  [self openAddress:address];
+}
+
+- (void)openAddress:(WVSSAddress *)address {
+  NSPoint mouse = NSEvent.mouseLocation;
+  NSRect bounds = NSMakeRect(0, 0, 1024, 768);
+  NSRect frame = NSOffsetRect(bounds, mouse.x - bounds.size.width / 2, mouse.y - bounds.size.height / 2);
+  NSWindow *window = [[NSWindow alloc] initWithContentRect:NSIntegralRect(frame)
+                                                 styleMask:NSWindowStyleMaskClosable|NSWindowStyleMaskTitled|NSWindowStyleMaskResizable
+                                                   backing:NSBackingStoreBuffered defer:YES];
+
+  WKWebView *webView = [WebViewScreenSaverView makeWebView:bounds];
+  [window.contentView addSubview:webView];
+  
+  [[[NSWindowController alloc] initWithWindow:window] showWindow:window];
+  [WebViewScreenSaverView loadAddress:address target:webView];
 }
 
 @end
