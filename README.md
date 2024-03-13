@@ -9,7 +9,7 @@ A macOS screen saver that displays a web page or a series of web pages.
 * Using [brew](https://brew.sh/).&#42;
 
 ``` bash
-brew install --cask webviewscreensaver
+brew install --cask webviewscreensaver --no-quarantine
 ```
 
 * Directly from the [releases](https://github.com/liquidx/webviewscreensaver/releases) page. Unpack and double click to install.&#42;
@@ -21,19 +21,14 @@ brew install --cask webviewscreensaver
 
 **&#42;Note**: The package is **adhoc signed** (since v2.2.1, previously unsigned).
 
-When opening it the first time you will get a security prompt about Apple not being able to verify the software. <br />
-Hit **ok** (cancel in older macOS) and go to **Security and Privacy**.<br />
-In the section explaining that "WebViewScreenSaver.saver" was blocked click **Open Anyway**.<br />
+`--no-quarantine` disables macOS's Gatekeeper during installation.
+
+Otherwise when opening it the first time you will get multiple security prompts about Apple not being able to verify the software. <br />
+Hit **ok** (cancel in older macOS) and go to **Privacy & Security** and scroll to bottom.<br />
+You'll find a section explaining that "WebViewScreenSaver.saver" was blocked click **Open Anyway**.<br />
 Upon returning to screensaver options you'll get a second prompt that can be confirmed by clicking **Open**.
 
-**Alternatively**:
-
-* if you are using [brew](https://brew.sh/) pass in `--no-quarantine` option to `install` or `reinstall` command:
-``` bash
-brew install --cask webviewscreensaver --no-quarantine
-```
-
-* or if you installed it via direct download run the folllowing command to remove the file from quarantine:
+**Alternative** if you installed it via direct download run the folllowing command to remove the file from quarantine:
 ``` bash
 xattr -d com.apple.quarantine WebViewScreenSaver.saver
 ```
@@ -61,12 +56,18 @@ If you are interested in scripting configuration changes, WebViewScreenSaver, li
 
 This can be queried and updated via:
 ``` bash
-defaults -currentHost read WebViewScreensaver
+/usr/libexec/PlistBuddy -c 'Print' ~/Library/Containers/com.apple.ScreenSaver.Engine.legacyScreenSaver/Data/Library/Preferences/ByHost/WebViewScreenSaver.*.plist
 ```
-or directly *(if installed for current user or should find it in `/Library` otherwise)*
-``` bash
-/usr/libexec/PlistBuddy -c 'Print' ~/Library/Preferences/ByHost/WebViewScreenSaver.*
+
+Depending on how it was installed, which macOS version and which architecture you are running you might find the plist under the following paths:
+```bash
+ls ~/Library/Containers/com.apple.ScreenSaver.Engine.legacyScreenSaver/Data/Library/Preferences/ByHost/WebViewScreenSaver.*
+ls ~/Library/Containers/com.apple.ScreenSaver.Engine.legacyScreenSaver/Data/Library/Preferences/net.liquidx.WebViewScreenSaver
+ls ~/Library/Containers/com.apple.ScreenSaver.Engine.legacyScreenSaver-x86_64/Data/Library/Preferences/net.liquidx.WebViewScreenSaver
+ls ~/Library/Preferences/ByHost/WebViewScreenSaver.* # Pre macOS 10.15
 ```
+
+Any .plist editor can be used including built-in `PlistBuddy` and `plutil`.
 
 ## License
 Code is licensed under the [Apache License, Version 2.0 License](LICENSE.md).
