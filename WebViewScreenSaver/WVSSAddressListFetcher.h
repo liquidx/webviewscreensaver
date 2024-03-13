@@ -21,6 +21,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSExceptionName const WVSSInvalidArgumentException;
+
 @protocol WVSSAddressListFetcherDelegate;
 
 @interface WVSSAddressListFetcher : NSObject

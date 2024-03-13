@@ -130,6 +130,7 @@ static NSString *const kTableColumnPreview = @"preview";
 #pragma mark -
 
 - (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher didFailWithError:(NSError *)error {
+  NSLog(@"URLs fetcher encountered issue: %@", error.localizedDescription);
 }
 
 - (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher

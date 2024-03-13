@@ -43,7 +43,9 @@ In the addresses section fill in as many websites as you want the screensaver to
 
 Passing in a negative time value e.g. `-1` will notify the screensaver to remain on that website indefinitely.
 
-Need some website ideas? Check out suggestions in the [examples](examples.md) section.
+Need some website ideas? Check out suggestions in the [examples](examples.json). (feel free to suggest others)
+
+The example file can also be used with the **fetch URLs** feature: `https://raw.githubusercontent.com/liquidx/webviewscreensaver/master/examples.json`
 
 Local **absolute** paths can also be used as an address with or without the `file://` schema.
 

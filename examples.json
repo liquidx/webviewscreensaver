@@ -1,0 +1,15 @@
+[
+    { "url": "https://ykob.github.io/sketch-threejs/sketch/dna.html", "duration": 600},
+    { "url": "https://ykob.github.io/sketch-threejs/sketch/sun.html", "duration": 600},
+    { "url": "http://www.google.com/trends/hottrends/visualize?pn=p1", "duration": 600 },
+    { "url": "http://randomstreetview.com/#slideshow", "duration": 600 },
+    { "url": "http://mrdoob.com/lab/javascript/webgl/clouds/", "duration": 600 },
+    { "url": "http://mrdoob.com/lab/javascript/webgl/particles/magicdust.html", "duration": 600 },
+    { "url": "http://www.iamnop.com/particles/", "duration": 600 },
+    { "url": "http://www.airtightinteractive.com/demos/js/nebula/", "duration": 600 },
+    { "url": "http://alteredqualia.com/three/examples/webgl_cubes.html", "duration": 600 },
+    { "url": "http://akirodic.com/p/jellyfish/", "duration": 600 },
+    { "url": "http://matthew.wagerfield.com/flat-surface-shader/", "duration": 600 },
+    { "url": "http://codepen.io/ykob/full/zGpjeK/", "duration": 600 },
+    { "url": "http://www.aresluna.org/polish-tv-clock/", "duration": 600 }
+]
