@@ -198,7 +198,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 
   if (url.scheme == nil) {
     NSString *escapedUrlString =
-        [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [urlString stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
     url = [NSURL URLWithString:[@"file://" stringByAppendingString:escapedUrlString]];
   }
 
