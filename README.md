@@ -1,5 +1,5 @@
 # WebViewScreenSaver
-[![Build](https://img.shields.io/github/workflow/status/liquidx/webviewscreensaver/CI)](https://github.com/liquidx/webviewscreensaver/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/liquidx/webviewscreensaver/ci.yml?branch=master)](https://github.com/liquidx/webviewscreensaver/actions)
 [![GitHub release](https://img.shields.io/github/v/release/liquidx/webviewscreensaver)](https://github.com/liquidx/webviewscreensaver/releases)
 
 A macOS screen saver that displays a web page or a series of web pages.
