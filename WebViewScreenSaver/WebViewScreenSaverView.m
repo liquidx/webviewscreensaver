@@ -107,10 +107,22 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   if (_isPreview) {
     [self loadFromStart];
   }
+  void (^endSheetBlock)(void) = ^{
+    if ([NSApp respondsToSelector:@selector(endSheet:returnCode:)]) {
+      [NSApp endSheet:sheet returnCode:NSModalResponseOK];
+    } else {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-  [[NSApplication sharedApplication] endSheet:sheet];
+      [NSApp endSheet:sheet];
 #pragma GCC diagnostic pop
+    }
+    [sheet orderOut:nil];
+  };
+  if (NSThread.isMainThread) {
+    endSheetBlock();
+  } else {
+    dispatch_async(dispatch_get_main_queue(), endSheetBlock);
+  }
 }
 
 #pragma mark ScreenSaverView
