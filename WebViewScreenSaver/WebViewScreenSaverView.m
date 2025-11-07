@@ -32,6 +32,8 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 
 // Timer callback that loads the next URL in the URL list.
 - (void)loadNext:(NSTimer *)timer;
+- (void)teardownWebView;
+- (void)updateWebViewFrame;
 
 @end
 
@@ -134,6 +136,8 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   
   if (_isPreview) return;
 
+  [self teardownWebView];
+
   // Create the webview for the screensaver.
   _webView = [self.class makeWebView:self.bounds];
   _webView.UIDelegate = self;
@@ -141,6 +145,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   // Sonoma ScreenSaverEngine view hierarchy occludes webview pausing animations and JS.
   [_webView wvss_setWindowOcclusionDetectionEnabled: NO];
   [self addSubview:_webView];
+  [self updateWebViewFrame];
 
   if (_currentIndex < [[self selectedURLs] count]) {
     [self loadFromStart];
@@ -150,13 +155,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (void)stopAnimation {
   [super stopAnimation];
   
-  if (!_isPreview) return;
-  
-  [_timer invalidate];
-  _timer = nil;
-  [_webView removeFromSuperview];
-  //  [_webView close];
-  _webView = nil;
+  [self teardownWebView];
 }
 
 #pragma mark Loading URLs
@@ -258,8 +257,37 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (void)screensaverWillStop:(NSNotification *)notification {
   if (@available(macOS 14.0, *)) {
     if (!_isPreview) {
+      [self teardownWebView];
       exit(0);
     }
+  }
+}
+
+- (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
+  [super resizeSubviewsWithOldSize:oldBoundsSize];
+  [self updateWebViewFrame];
+}
+
+- (void)viewDidMoveToWindow {
+  [super viewDidMoveToWindow];
+  [self updateWebViewFrame];
+}
+
+- (void)teardownWebView {
+  [_timer invalidate];
+  _timer = nil;
+  if (_webView) {
+    [_webView stopLoading];
+    [_webView removeFromSuperview];
+    _webView = nil;
+  }
+}
+
+- (void)updateWebViewFrame {
+  if (_webView == nil) return;
+  NSRect bounds = self.bounds;
+  if (!NSEqualRects(bounds, _webView.frame)) {
+    _webView.frame = bounds;
   }
 }
 
