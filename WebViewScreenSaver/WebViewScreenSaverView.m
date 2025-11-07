@@ -22,6 +22,7 @@
 #import "WebViewScreenSaverView.h"
 #import "WVSSAddress.h"
 #import "WKWebViewPrivate.h"
+#import <math.h>
 
 // ScreenSaverDefaults module name.
 static NSString *const kScreenSaverName = @"WebViewScreenSaver";
@@ -34,11 +35,17 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (void)loadNext:(NSTimer *)timer;
 - (void)teardownWebView;
 - (void)updateWebViewFrame;
+- (BOOL)isWebViewGeometryValid;
+- (BOOL)isWebViewOnScreen;
+- (void)forceWindowToScreen;
+- (void)startLayoutGuard;
+- (void)stopLayoutGuard;
 
 @end
 
 @implementation WebViewScreenSaverView {
   NSTimer *_timer;
+  NSTimer *_layoutGuard;
   WKWebView *_webView;
   NSInteger _currentIndex;
   BOOL _isPreview;
@@ -158,6 +165,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   [_webView wvss_setWindowOcclusionDetectionEnabled: NO];
   [self addSubview:_webView];
   [self updateWebViewFrame];
+  [self startLayoutGuard];
 
   if (_currentIndex < [[self selectedURLs] count]) {
     [self loadFromStart];
@@ -288,6 +296,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (void)teardownWebView {
   [_timer invalidate];
   _timer = nil;
+  [self stopLayoutGuard];
   if (_webView) {
     [_webView stopLoading];
     [_webView removeFromSuperview];
@@ -301,6 +310,92 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   if (!NSEqualRects(bounds, _webView.frame)) {
     _webView.frame = bounds;
   }
+}
+
+- (BOOL)isWebViewGeometryValid {
+  if (_webView == nil) return YES;
+  NSRect bounds = NSIntegralRectWithOptions(self.bounds, NSAlignAllEdgesOutward);
+  NSRect frame = NSIntegralRectWithOptions(_webView.frame, NSAlignAllEdgesOutward);
+  CGFloat epsilon = 0.5;
+  BOOL sizeMatches = (fabs(NSWidth(bounds) - NSWidth(frame)) <= epsilon) &&
+                     (fabs(NSHeight(bounds) - NSHeight(frame)) <= epsilon);
+  BOOL originMatches = (fabs(NSMinX(bounds) - NSMinX(frame)) <= epsilon) &&
+                       (fabs(NSMinY(bounds) - NSMinY(frame)) <= epsilon);
+  return sizeMatches && originMatches;
+}
+
+- (void)startLayoutGuard {
+  if (_layoutGuard || _webView == nil) return;
+  _layoutGuard =
+      [NSTimer scheduledTimerWithTimeInterval:1.0
+                                       target:self
+                                     selector:@selector(layoutGuardFired:)
+                                     userInfo:nil
+                                      repeats:YES];
+  _layoutGuard.tolerance = 0.2;
+  [[NSRunLoop mainRunLoop] addTimer:_layoutGuard forMode:NSRunLoopCommonModes];
+}
+
+- (void)stopLayoutGuard {
+  [_layoutGuard invalidate];
+  _layoutGuard = nil;
+}
+
+- (void)layoutGuardFired:(NSTimer *)timer {
+  if (_webView == nil) return;
+  BOOL geometryOK = [self isWebViewGeometryValid];
+  BOOL onScreen = [self isWebViewOnScreen];
+  if (geometryOK && onScreen) return;
+
+  [self updateWebViewFrame];
+  if (!onScreen) {
+    [self forceWindowToScreen];
+  }
+  geometryOK = [self isWebViewGeometryValid];
+  onScreen = [self isWebViewOnScreen];
+  if (!(geometryOK && onScreen)) {
+    [_webView removeFromSuperview];
+    [self addSubview:_webView];
+    [self updateWebViewFrame];
+    [self forceWindowToScreen];
+    [_webView wvss_setWindowOcclusionDetectionEnabled:NO];
+  }
+}
+
+- (NSScreen *)targetScreen {
+  NSScreen *screen = self.window.screen;
+  if (!screen) screen = NSScreen.mainScreen;
+  if (!screen) screen = NSScreen.screens.firstObject;
+  return screen;
+}
+
+- (BOOL)isWebViewOnScreen {
+  if (_webView == nil) return YES;
+  NSScreen *screen = [self targetScreen];
+  if (!screen) return YES;
+  NSRect expected = screen.frame;
+  NSRect viewInWindow = [self convertRect:_webView.frame toView:nil];
+  NSRect viewOnScreen = self.window ? [self.window convertRectToScreen:viewInWindow] : viewInWindow;
+  NSRect intersection = NSIntersectionRect(expected, viewOnScreen);
+  CGFloat epsilon = 0.5;
+  BOOL coversWidth = (NSWidth(intersection) + epsilon) >= NSWidth(viewOnScreen);
+  BOOL coversHeight = (NSHeight(intersection) + epsilon) >= NSHeight(viewOnScreen);
+  return coversWidth && coversHeight;
+}
+
+- (void)forceWindowToScreen {
+  NSScreen *screen = [self targetScreen];
+  if (!screen) return;
+  NSRect screenFrame = screen.frame;
+  if (self.window && !NSEqualRects(self.window.frame, screenFrame)) {
+    [self.window setFrame:screenFrame display:NO];
+  }
+  if (self.superview) {
+    self.frame = self.superview.bounds;
+  } else {
+    self.frame = NSMakeRect(0, 0, NSWidth(screenFrame), NSHeight(screenFrame));
+  }
+  [self updateWebViewFrame];
 }
 
 @end

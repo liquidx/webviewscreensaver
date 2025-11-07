@@ -1,0 +1,132 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/leask/Desktop/webviewscreensaver/bin/WebViewScreenSaver.saver/Contents/MacOS/WebViewScreenSaver'
+relocations:
+  - { offset: 0x71AC7, size: 0x8, addend: 0x0, symName: '-[WVSSAddressListFetcher initWithURL:]', symObjAddr: 0x0, symBinAddr: 0xE58, symSize: 0x150 }
+  - { offset: 0x71AE1, size: 0x8, addend: 0x0, symName: _WVSSInvalidArgumentException, symObjAddr: 0xA38, symBinAddr: 0xC060, symSize: 0x0 }
+  - { offset: 0x71B65, size: 0x8, addend: 0x0, symName: '-[WVSSAddressListFetcher initWithURL:]', symObjAddr: 0x0, symBinAddr: 0xE58, symSize: 0x150 }
+  - { offset: 0x71BCB, size: 0x8, addend: 0x0, symName: '___38-[WVSSAddressListFetcher initWithURL:]_block_invoke', symObjAddr: 0x150, symBinAddr: 0xFA8, symSize: 0xD4 }
+  - { offset: 0x71C79, size: 0x8, addend: 0x0, symName: '___38-[WVSSAddressListFetcher initWithURL:]_block_invoke_2', symObjAddr: 0x224, symBinAddr: 0x107C, symSize: 0x10 }
+  - { offset: 0x71CD8, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s40s48s, symObjAddr: 0x234, symBinAddr: 0x108C, symSize: 0x30 }
+  - { offset: 0x71D01, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s40s48s, symObjAddr: 0x264, symBinAddr: 0x10BC, symSize: 0x30 }
+  - { offset: 0x71D20, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s, symObjAddr: 0x294, symBinAddr: 0x10EC, symSize: 0x8 }
+  - { offset: 0x71D47, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s, symObjAddr: 0x29C, symBinAddr: 0x10F4, symSize: 0x8 }
+  - { offset: 0x71D66, size: 0x8, addend: 0x0, symName: '-[WVSSAddressListFetcher didFinishLoading:error:]', symObjAddr: 0x2A4, symBinAddr: 0x10FC, symSize: 0x464 }
+  - { offset: 0x71ED1, size: 0x8, addend: 0x0, symName: _expectClass, symObjAddr: 0x708, symBinAddr: 0x1560, symSize: 0xE4 }
+  - { offset: 0x71F8A, size: 0x8, addend: 0x0, symName: '-[WVSSAddressListFetcher delegate]', symObjAddr: 0x7EC, symBinAddr: 0x1644, symSize: 0x18 }
+  - { offset: 0x71FC1, size: 0x8, addend: 0x0, symName: '-[WVSSAddressListFetcher setDelegate:]', symObjAddr: 0x804, symBinAddr: 0x165C, symSize: 0xC }
+  - { offset: 0x72002, size: 0x8, addend: 0x0, symName: '-[WVSSAddressListFetcher .cxx_destruct]', symObjAddr: 0x810, symBinAddr: 0x1668, symSize: 0x2C }
+  - { offset: 0x721E6, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController initWithUserDefaults:]', symObjAddr: 0x0, symBinAddr: 0x1694, symSize: 0xA4 }
+  - { offset: 0x724A2, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController initWithUserDefaults:]', symObjAddr: 0x0, symBinAddr: 0x1694, symSize: 0xA4 }
+  - { offset: 0x724E9, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController synchronize]', symObjAddr: 0xA4, symBinAddr: 0x1738, symSize: 0x94 }
+  - { offset: 0x7251C, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController appendSampleAddressIfEmpty]', symObjAddr: 0x138, symBinAddr: 0x17CC, symSize: 0x74 }
+  - { offset: 0x7254F, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController addresses]', symObjAddr: 0x1AC, symBinAddr: 0x1840, symSize: 0x44 }
+  - { offset: 0x72586, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController appendAddress]', symObjAddr: 0x1F0, symBinAddr: 0x1884, symSize: 0x9C }
+  - { offset: 0x725C9, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController removeAddressAtIndex:]', symObjAddr: 0x28C, symBinAddr: 0x1920, symSize: 0x7C }
+  - { offset: 0x7260C, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController fetchAddresses]', symObjAddr: 0x308, symBinAddr: 0x199C, symSize: 0xE4 }
+  - { offset: 0x7265F, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController addRow:]', symObjAddr: 0x3EC, symBinAddr: 0x1A80, symSize: 0x4 }
+  - { offset: 0x7269C, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController removeRow:]', symObjAddr: 0x3F0, symBinAddr: 0x1A84, symSize: 0x68 }
+  - { offset: 0x726EB, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController resetData:]', symObjAddr: 0x458, symBinAddr: 0x1AEC, symSize: 0x134 }
+  - { offset: 0x7273A, size: 0x8, addend: 0x0, symName: '___34-[WVSSConfigController resetData:]_block_invoke', symObjAddr: 0x58C, symBinAddr: 0x1C20, symSize: 0x14 }
+  - { offset: 0x72787, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController clearWebViewHistory]', symObjAddr: 0x5B0, symBinAddr: 0x1C34, symSize: 0x90 }
+  - { offset: 0x727D6, size: 0x8, addend: 0x0, symName: '___43-[WVSSConfigController clearWebViewHistory]_block_invoke', symObjAddr: 0x640, symBinAddr: 0x1CC4, symSize: 0x1C }
+  - { offset: 0x7281D, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController addressListFetcher:didFailWithError:]', symObjAddr: 0x65C, symBinAddr: 0x1CE0, symSize: 0x48 }
+  - { offset: 0x72876, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController addressListFetcher:didFinishWithArray:]', symObjAddr: 0x6A4, symBinAddr: 0x1D28, symSize: 0xC8 }
+  - { offset: 0x728C5, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController bundleHTML]', symObjAddr: 0x76C, symBinAddr: 0x1DF0, symSize: 0x29C }
+  - { offset: 0x7299A, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController configureSheet]', symObjAddr: 0xA08, symBinAddr: 0x208C, symSize: 0x24C }
+  - { offset: 0x729F0, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController dismissConfigSheet:]', symObjAddr: 0xC54, symBinAddr: 0x22D8, symSize: 0x6C }
+  - { offset: 0x72A2F, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController tableView:viewForTableColumn:row:]', symObjAddr: 0xCC0, symBinAddr: 0x2344, symSize: 0x24C }
+  - { offset: 0x72B17, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController numberOfRowsInTableView:]', symObjAddr: 0xF0C, symBinAddr: 0x2590, symSize: 0x5C }
+  - { offset: 0x72B5A, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController canDragRowsWithIndexes:atPoint:]', symObjAddr: 0xF68, symBinAddr: 0x25EC, symSize: 0x8 }
+  - { offset: 0x72BA5, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController tableView:writeRowsWithIndexes:toPasteboard:]', symObjAddr: 0xF70, symBinAddr: 0x25F4, symSize: 0xBC }
+  - { offset: 0x72C18, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController tableView:validateDrop:proposedRow:proposedDropOperation:]', symObjAddr: 0x102C, symBinAddr: 0x26B0, symSize: 0x8 }
+  - { offset: 0x72C7B, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController tableView:acceptDrop:row:dropOperation:]', symObjAddr: 0x1034, symBinAddr: 0x26B8, symSize: 0x170 }
+  - { offset: 0x72D5D, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController tableViewCellDidEdit:]', symObjAddr: 0x11A4, symBinAddr: 0x2828, symSize: 0x20C }
+  - { offset: 0x72E15, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController toggleFetchingURLs:]', symObjAddr: 0x13B0, symBinAddr: 0x2A34, symSize: 0xF4 }
+  - { offset: 0x72E67, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController previewButtonClicked:]', symObjAddr: 0x14A4, symBinAddr: 0x2B28, symSize: 0xD8 }
+  - { offset: 0x72ECE, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController openAddress:]', symObjAddr: 0x157C, symBinAddr: 0x2C00, symSize: 0x17C }
+  - { offset: 0x72FBA, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController delegate]', symObjAddr: 0x16F8, symBinAddr: 0x2D7C, symSize: 0x8 }
+  - { offset: 0x72FF1, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController setDelegate:]', symObjAddr: 0x1700, symBinAddr: 0x2D84, symSize: 0xC }
+  - { offset: 0x73032, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController sheet]', symObjAddr: 0x170C, symBinAddr: 0x2D90, symSize: 0x8 }
+  - { offset: 0x73069, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController setSheet:]', symObjAddr: 0x1714, symBinAddr: 0x2D98, symSize: 0xC }
+  - { offset: 0x730AA, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController sheetContents]', symObjAddr: 0x1720, symBinAddr: 0x2DA4, symSize: 0x8 }
+  - { offset: 0x730E1, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController setSheetContents:]', symObjAddr: 0x1728, symBinAddr: 0x2DAC, symSize: 0xC }
+  - { offset: 0x73122, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController urlTable]', symObjAddr: 0x1734, symBinAddr: 0x2DB8, symSize: 0x8 }
+  - { offset: 0x73159, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController setUrlTable:]', symObjAddr: 0x173C, symBinAddr: 0x2DC0, symSize: 0xC }
+  - { offset: 0x7319A, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController urlsURLField]', symObjAddr: 0x1748, symBinAddr: 0x2DCC, symSize: 0x8 }
+  - { offset: 0x731D1, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController setUrlsURLField:]', symObjAddr: 0x1750, symBinAddr: 0x2DD4, symSize: 0xC }
+  - { offset: 0x73212, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController fetchURLCheckbox]', symObjAddr: 0x175C, symBinAddr: 0x2DE0, symSize: 0x8 }
+  - { offset: 0x73249, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController setFetchURLCheckbox:]', symObjAddr: 0x1764, symBinAddr: 0x2DE8, symSize: 0xC }
+  - { offset: 0x7328A, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController config]', symObjAddr: 0x1770, symBinAddr: 0x2DF4, symSize: 0x8 }
+  - { offset: 0x732C1, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController setConfig:]', symObjAddr: 0x1778, symBinAddr: 0x2DFC, symSize: 0xC }
+  - { offset: 0x73302, size: 0x8, addend: 0x0, symName: '-[WVSSConfigController .cxx_destruct]', symObjAddr: 0x1784, symBinAddr: 0x2E08, symSize: 0x6C }
+  - { offset: 0x73B22, size: 0x8, addend: 0x0, symName: '+[WVSSAddress addressWithURL:duration:]', symObjAddr: 0x0, symBinAddr: 0x2E74, symSize: 0x68 }
+  - { offset: 0x73B48, size: 0x8, addend: 0x0, symName: _kWVSSAddressURLKey, symObjAddr: 0x3B8, symBinAddr: 0xC138, symSize: 0x0 }
+  - { offset: 0x73B5E, size: 0x8, addend: 0x0, symName: _kWVSSAddressTimeKey, symObjAddr: 0x3C0, symBinAddr: 0xC140, symSize: 0x0 }
+  - { offset: 0x73BD8, size: 0x8, addend: 0x0, symName: '+[WVSSAddress addressWithURL:duration:]', symObjAddr: 0x0, symBinAddr: 0x2E74, symSize: 0x68 }
+  - { offset: 0x73C3F, size: 0x8, addend: 0x0, symName: '+[WVSSAddress defaultAddress]', symObjAddr: 0x68, symBinAddr: 0x2EDC, symSize: 0x54 }
+  - { offset: 0x73C76, size: 0x8, addend: 0x0, symName: '+[WVSSAddress defaultAddressURL]', symObjAddr: 0xBC, symBinAddr: 0x2F30, symSize: 0x7C }
+  - { offset: 0x73CBD, size: 0x8, addend: 0x0, symName: '+[WVSSAddress defaultDuration]', symObjAddr: 0x138, symBinAddr: 0x2FAC, symSize: 0x8 }
+  - { offset: 0x73CF0, size: 0x8, addend: 0x0, symName: '-[WVSSAddress dictionaryRepresentation]', symObjAddr: 0x140, symBinAddr: 0x2FB4, symSize: 0xE4 }
+  - { offset: 0x73D27, size: 0x8, addend: 0x0, symName: '-[WVSSAddress description]', symObjAddr: 0x224, symBinAddr: 0x3098, symSize: 0x98 }
+  - { offset: 0x73D5E, size: 0x8, addend: 0x0, symName: '-[WVSSAddress url]', symObjAddr: 0x2BC, symBinAddr: 0x3130, symSize: 0x8 }
+  - { offset: 0x73D95, size: 0x8, addend: 0x0, symName: '-[WVSSAddress setUrl:]', symObjAddr: 0x2C4, symBinAddr: 0x3138, symSize: 0xC }
+  - { offset: 0x73DD6, size: 0x8, addend: 0x0, symName: '-[WVSSAddress duration]', symObjAddr: 0x2D0, symBinAddr: 0x3144, symSize: 0x8 }
+  - { offset: 0x73E0D, size: 0x8, addend: 0x0, symName: '-[WVSSAddress setDuration:]', symObjAddr: 0x2D8, symBinAddr: 0x314C, symSize: 0x8 }
+  - { offset: 0x73E4A, size: 0x8, addend: 0x0, symName: '-[WVSSAddress .cxx_destruct]', symObjAddr: 0x2E0, symBinAddr: 0x3154, symSize: 0xC }
+  - { offset: 0x73EE6, size: 0x8, addend: 0x0, symName: '-[WKWebView(Compat) wvss_setWindowOcclusionDetectionEnabled:]', symObjAddr: 0x0, symBinAddr: 0x3160, symSize: 0x44 }
+  - { offset: 0x73FF9, size: 0x8, addend: 0x0, symName: '-[WKWebView(Compat) wvss_setWindowOcclusionDetectionEnabled:]', symObjAddr: 0x0, symBinAddr: 0x3160, symSize: 0x44 }
+  - { offset: 0x7469A, size: 0x8, addend: 0x0, symName: '+[WebViewScreenSaverView performGammaFade]', symObjAddr: 0x0, symBinAddr: 0x31A4, symSize: 0x8 }
+  - { offset: 0x74FDA, size: 0x8, addend: 0x0, symName: '+[WebViewScreenSaverView performGammaFade]', symObjAddr: 0x0, symBinAddr: 0x31A4, symSize: 0x8 }
+  - { offset: 0x7500D, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView initWithFrame:isPreview:]', symObjAddr: 0x8, symBinAddr: 0x31AC, symSize: 0xD4 }
+  - { offset: 0x75070, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView initWithFrame:isPreview:prefsStore:]', symObjAddr: 0xDC, symBinAddr: 0x3280, symSize: 0x1CC }
+  - { offset: 0x75102, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView dealloc]', symObjAddr: 0x2A8, symBinAddr: 0x344C, symSize: 0x84 }
+  - { offset: 0x75135, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView hasConfigureSheet]', symObjAddr: 0x32C, symBinAddr: 0x34D0, symSize: 0x8 }
+  - { offset: 0x75168, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView configureSheet]', symObjAddr: 0x334, symBinAddr: 0x34D8, symSize: 0x44 }
+  - { offset: 0x7519F, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView configController:dismissConfigSheet:]', symObjAddr: 0x378, symBinAddr: 0x351C, symSize: 0xFC }
+  - { offset: 0x752B7, size: 0x8, addend: 0x0, symName: '___62-[WebViewScreenSaverView configController:dismissConfigSheet:]_block_invoke', symObjAddr: 0x474, symBinAddr: 0x3618, symSize: 0x5C }
+  - { offset: 0x752F2, size: 0x8, addend: 0x0, symName: '+[WebViewScreenSaverView makeWebView:]', symObjAddr: 0x4E0, symBinAddr: 0x3674, symSize: 0x158 }
+  - { offset: 0x75371, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView startAnimation]', symObjAddr: 0x638, symBinAddr: 0x37CC, symSize: 0x11C }
+  - { offset: 0x753A4, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView stopAnimation]', symObjAddr: 0x754, symBinAddr: 0x38E8, symSize: 0x48 }
+  - { offset: 0x753D7, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView loadFromStart]', symObjAddr: 0x79C, symBinAddr: 0x3930, symSize: 0x18 }
+  - { offset: 0x75408, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView loadNext:]', symObjAddr: 0x7B4, symBinAddr: 0x3948, symSize: 0x1A0 }
+  - { offset: 0x75467, size: 0x8, addend: 0x0, symName: '+[WebViewScreenSaverView loadAddress:target:]', symObjAddr: 0x954, symBinAddr: 0x3AE8, symSize: 0x254 }
+  - { offset: 0x75505, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView selectedURLs]', symObjAddr: 0xBA8, symBinAddr: 0x3D3C, symSize: 0x44 }
+  - { offset: 0x7553C, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView addressForIndex:]', symObjAddr: 0xBEC, symBinAddr: 0x3D80, symSize: 0x6C }
+  - { offset: 0x75583, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView animateOneFrame]', symObjAddr: 0xC58, symBinAddr: 0x3DEC, symSize: 0x34 }
+  - { offset: 0x755B6, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView hitTest:]', symObjAddr: 0xC8C, symBinAddr: 0x3E20, symSize: 0x4 }
+  - { offset: 0x755F7, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView acceptsFirstResponder]', symObjAddr: 0xC90, symBinAddr: 0x3E24, symSize: 0x8 }
+  - { offset: 0x7562B, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView resignFirstResponder]', symObjAddr: 0xC98, symBinAddr: 0x3E2C, symSize: 0x8 }
+  - { offset: 0x7565F, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView webView:decidePolicyForNavigationAction:decisionHandler:]', symObjAddr: 0xCA0, symBinAddr: 0x3E34, symSize: 0x68 }
+  - { offset: 0x756F2, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView screensaverWillStop:]', symObjAddr: 0xD08, symBinAddr: 0x3E9C, symSize: 0x64 }
+  - { offset: 0x7573A, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView resizeSubviewsWithOldSize:]', symObjAddr: 0xD6C, symBinAddr: 0x3F00, symSize: 0x48 }
+  - { offset: 0x7575B, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView resizeSubviewsWithOldSize:]', symObjAddr: 0xD6C, symBinAddr: 0x3F00, symSize: 0x48 }
+  - { offset: 0x7579C, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView viewDidMoveToWindow]', symObjAddr: 0xDB4, symBinAddr: 0x3F48, symSize: 0x48 }
+  - { offset: 0x757D0, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView teardownWebView]', symObjAddr: 0xDFC, symBinAddr: 0x3F90, symSize: 0x70 }
+  - { offset: 0x75804, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView updateWebViewFrame]', symObjAddr: 0xE6C, symBinAddr: 0x4000, symSize: 0xA8 }
+  - { offset: 0x75870, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView isWebViewGeometryValid]', symObjAddr: 0xF14, symBinAddr: 0x40A8, symSize: 0xA4 }
+  - { offset: 0x75940, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView startLayoutGuard]', symObjAddr: 0xFB8, symBinAddr: 0x414C, symSize: 0xD0 }
+  - { offset: 0x75974, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView stopLayoutGuard]', symObjAddr: 0x1088, symBinAddr: 0x421C, symSize: 0x34 }
+  - { offset: 0x759A8, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView layoutGuardFired:]', symObjAddr: 0x10BC, symBinAddr: 0x4250, symSize: 0xCC }
+  - { offset: 0x75A0B, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView targetScreen]', symObjAddr: 0x1188, symBinAddr: 0x431C, symSize: 0x94 }
+  - { offset: 0x75A54, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView isWebViewOnScreen]', symObjAddr: 0x121C, symBinAddr: 0x43B0, symSize: 0x160 }
+  - { offset: 0x75B37, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView forceWindowToScreen]', symObjAddr: 0x137C, symBinAddr: 0x4510, symSize: 0x164 }
+  - { offset: 0x75B9B, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView configController]', symObjAddr: 0x14E0, symBinAddr: 0x4674, symSize: 0x10 }
+  - { offset: 0x75BD2, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView setConfigController:]', symObjAddr: 0x14F0, symBinAddr: 0x4684, symSize: 0x14 }
+  - { offset: 0x75C13, size: 0x8, addend: 0x0, symName: '-[WebViewScreenSaverView .cxx_destruct]', symObjAddr: 0x1504, symBinAddr: 0x4698, symSize: 0x68 }
+  - { offset: 0x75F08, size: 0x8, addend: 0x0, symName: '-[WVSSConfig initWithUserDefaults:]', symObjAddr: 0x0, symBinAddr: 0x4700, symSize: 0x134 }
+  - { offset: 0x75FA9, size: 0x8, addend: 0x0, symName: '-[WVSSConfig initWithUserDefaults:]', symObjAddr: 0x0, symBinAddr: 0x4700, symSize: 0x134 }
+  - { offset: 0x75FF0, size: 0x8, addend: 0x0, symName: '-[WVSSConfig loadAddressesFromUserDefaults:]', symObjAddr: 0x134, symBinAddr: 0x4834, symSize: 0x1E0 }
+  - { offset: 0x760B8, size: 0x8, addend: 0x0, symName: '-[WVSSConfig saveAddressesToUserDefaults:]', symObjAddr: 0x314, symBinAddr: 0x4A14, symSize: 0x168 }
+  - { offset: 0x76122, size: 0x8, addend: 0x0, symName: '-[WVSSConfig synchronize]', symObjAddr: 0x47C, symBinAddr: 0x4B7C, symSize: 0x124 }
+  - { offset: 0x76155, size: 0x8, addend: 0x0, symName: '-[WVSSConfig addAddressWithURL:duration:]', symObjAddr: 0x5A0, symBinAddr: 0x4CA0, symSize: 0x5C }
+  - { offset: 0x761B8, size: 0x8, addend: 0x0, symName: '-[WVSSConfig addresses]', symObjAddr: 0x5FC, symBinAddr: 0x4CFC, symSize: 0x8 }
+  - { offset: 0x761EF, size: 0x8, addend: 0x0, symName: '-[WVSSConfig setAddresses:]', symObjAddr: 0x604, symBinAddr: 0x4D04, symSize: 0xC }
+  - { offset: 0x76230, size: 0x8, addend: 0x0, symName: '-[WVSSConfig addressListURL]', symObjAddr: 0x610, symBinAddr: 0x4D10, symSize: 0x8 }
+  - { offset: 0x76267, size: 0x8, addend: 0x0, symName: '-[WVSSConfig setAddressListURL:]', symObjAddr: 0x618, symBinAddr: 0x4D18, symSize: 0xC }
+  - { offset: 0x762A8, size: 0x8, addend: 0x0, symName: '-[WVSSConfig shouldFetchAddressList]', symObjAddr: 0x624, symBinAddr: 0x4D24, symSize: 0x8 }
+  - { offset: 0x762DF, size: 0x8, addend: 0x0, symName: '-[WVSSConfig setShouldFetchAddressList:]', symObjAddr: 0x62C, symBinAddr: 0x4D2C, symSize: 0x8 }
+  - { offset: 0x7631A, size: 0x8, addend: 0x0, symName: '-[WVSSConfig userDefaults]', symObjAddr: 0x634, symBinAddr: 0x4D34, symSize: 0x8 }
+  - { offset: 0x76351, size: 0x8, addend: 0x0, symName: '-[WVSSConfig setUserDefaults:]', symObjAddr: 0x63C, symBinAddr: 0x4D3C, symSize: 0xC }
+  - { offset: 0x76392, size: 0x8, addend: 0x0, symName: '-[WVSSConfig .cxx_destruct]', symObjAddr: 0x648, symBinAddr: 0x4D48, symSize: 0x3C }
+...
