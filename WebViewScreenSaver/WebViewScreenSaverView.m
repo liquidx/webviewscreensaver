@@ -40,6 +40,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (void)forceWindowToScreen;
 - (void)startLayoutGuard;
 - (void)stopLayoutGuard;
+- (void)showWebViewIfReady;
 
 @end
 
@@ -161,6 +162,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   _webView = [self.class makeWebView:self.bounds];
   _webView.UIDelegate = self;
   _webView.navigationDelegate = self;
+  _webView.hidden = YES;
   // Sonoma ScreenSaverEngine view hierarchy occludes webview pausing animations and JS.
   [_webView wvss_setWindowOcclusionDetectionEnabled: NO];
   [self addSubview:_webView];
@@ -310,6 +312,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   if (!NSEqualRects(bounds, _webView.frame)) {
     _webView.frame = bounds;
   }
+  [self showWebViewIfReady];
 }
 
 - (BOOL)isWebViewGeometryValid {
@@ -360,6 +363,9 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
     [self forceWindowToScreen];
     [_webView wvss_setWindowOcclusionDetectionEnabled:NO];
   }
+  if ([self isWebViewGeometryValid] && [self isWebViewOnScreen]) {
+    [self showWebViewIfReady];
+  }
 }
 
 - (NSScreen *)targetScreen {
@@ -396,6 +402,14 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
     self.frame = NSMakeRect(0, 0, NSWidth(screenFrame), NSHeight(screenFrame));
   }
   [self updateWebViewFrame];
+}
+
+- (void)showWebViewIfReady {
+  if (_webView == nil || !_webView.isHidden) return;
+  if ([self isWebViewGeometryValid] && [self isWebViewOnScreen]) {
+    _webView.hidden = NO;
+    [_webView setNeedsDisplay:YES];
+  }
 }
 
 @end
