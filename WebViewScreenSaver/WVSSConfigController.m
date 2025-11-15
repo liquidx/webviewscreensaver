@@ -21,7 +21,6 @@
 
 #import "WVSSConfigController.h"
 #import "WVSSAddress.h"
-#import "WVSSAddressListFetcher.h"
 #import "WVSSConfig.h"
 #import "WebViewScreenSaverView.h"
 
@@ -33,20 +32,17 @@ static NSString *const kTableColumnURL = @"url";
 static NSString *const kTableColumnTime = @"time";
 static NSString *const kTableColumnPreview = @"preview";
 
-@interface WVSSConfigController () <WVSSAddressListFetcherDelegate>
+@interface WVSSConfigController ()
 @property(nonatomic, strong) WVSSConfig *config;
 @end
 
 @implementation WVSSConfigController
 
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults {
+- (instancetype)initWithConfig:(WVSSConfig *)config {
   self = [super init];
   if (self) {
-    self.config = [[WVSSConfig alloc] initWithUserDefaults:userDefaults];
-    [self appendSampleAddressIfEmpty];
-
-    // Fetch URLs if we're using the URLsURL.
-    [self fetchAddresses];
+    self.config = config;
+    [self configureSheet];
   }
   return self;
 }
@@ -54,16 +50,6 @@ static NSString *const kTableColumnPreview = @"preview";
 - (void)synchronize {
   self.config.addressListURL = self.urlsURLField.stringValue;
   [self.config synchronize];
-}
-
-- (void)appendSampleAddressIfEmpty {
-  if (!self.config.addresses.count) {
-    [self appendAddress];
-  }
-}
-
-- (NSArray *)addresses {
-  return self.config.addresses;
 }
 
 - (void)appendAddress {
@@ -75,17 +61,6 @@ static NSString *const kTableColumnPreview = @"preview";
 - (void)removeAddressAtIndex:(NSInteger)index {
   [self.config.addresses removeObjectAtIndex:(NSUInteger)index];
   [self.urlTable reloadData];
-}
-
-- (void)fetchAddresses {
-  if (!self.config.shouldFetchAddressList) return;
-
-  NSString *addressFetchURL = self.config.addressListURL;
-  if (!addressFetchURL.length) return;
-  if (!([addressFetchURL hasPrefix:@"http://"] || [addressFetchURL hasPrefix:@"https://"])) return;
-
-  WVSSAddressListFetcher *fetcher = [[WVSSAddressListFetcher alloc] initWithURL:addressFetchURL];
-  fetcher.delegate = self;
 }
 
 #pragma mark - Actions
@@ -125,23 +100,6 @@ static NSString *const kTableColumnPreview = @"preview";
                                          completionHandler:^{
                                            NSLog(@"Web cache cleared");
                                          }];
-}
-
-#pragma mark -
-
-- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher didFailWithError:(NSError *)error {
-  NSLog(@"URLs fetcher encountered issue: %@", error.localizedDescription);
-}
-
-- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher
-        didFinishWithArray:(NSArray *)response {
-  [self.config.addresses removeAllObjects];
-  [self.config.addresses addObjectsFromArray:response];
-  [self.urlTable reloadData];
-
-  // TODO(altse): tell delegate that the URL list had had updated.
-  //_currentIndex = -1;
-  //[self loadNext:nil];
 }
 
 #pragma mark Bundle

@@ -31,5 +31,6 @@
 
 - (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults;
 - (void)synchronize;
+- (void)fetchIfNeeded;
 
 @end

@@ -36,6 +36,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 @end
 
 @implementation WebViewScreenSaverView {
+  WVSSConfig *_config;
   NSTimer *_timer;
   WKWebView *_webView;
   NSInteger _currentIndex;
@@ -78,8 +79,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
     }
 
     // Load state from the preferences.
-    self.configController = [[WVSSConfigController alloc] initWithUserDefaults:prefs];
-    self.configController.delegate = self;
+    _config = [[WVSSConfig alloc] initWithUserDefaults:prefs];
   }
   return self;
 }
@@ -97,7 +97,9 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 }
 
 - (NSWindow *)configureSheet {
-  return [self.configController configureSheet];
+  self.configController = [[WVSSConfigController alloc] initWithConfig:_config];
+  self.configController.delegate = self;
+  return self.configController.sheet;
 }
 
 - (void)configController:(WVSSConfigController *)configController
@@ -109,6 +111,8 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   [[NSApplication sharedApplication] endSheet:sheet];
 #pragma GCC diagnostic pop
+
+  self.configController = nil;
 }
 
 #pragma mark ScreenSaverView
@@ -143,7 +147,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   [_webView wvss_setWindowOcclusionDetectionEnabled:NO];
   [self addSubview:_webView];
 
-  if (_currentIndex < [[self selectedURLs] count]) {
+  if (_currentIndex < [self numberOfAddresses]) {
     [self loadFromStart];
   }
 }
@@ -172,13 +176,13 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   NSInteger nextIndex = _currentIndex;
 
   // Last element, fetchURLs if they exist.
-  if (_currentIndex == [[self selectedURLs] count] - 1) {
-    [self.configController fetchAddresses];
+  if (_currentIndex == [self numberOfAddresses] - 1) {
+    [_config fetchIfNeeded];
   }
 
   // Progress the URL counter.
-  if ([[self selectedURLs] count] > 0) {
-    nextIndex = (_currentIndex + 1) % [[self selectedURLs] count];
+  if ([self numberOfAddresses] > 0) {
+    nextIndex = (_currentIndex + 1) % [self numberOfAddresses];
     address = [self addressForIndex:nextIndex];
   }
   [self.class loadAddress:address target:_webView];
@@ -215,12 +219,12 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   }
 }
 
-- (NSArray *)selectedURLs {
-  return self.configController.addresses;
+- (NSUInteger)numberOfAddresses {
+  return _config.addresses.count;
 }
 
 - (WVSSAddress *)addressForIndex:(NSInteger)index {
-  return [self.configController.addresses objectAtIndex:index];
+  return [_config.addresses objectAtIndex:index];
 }
 
 - (void)animateOneFrame {

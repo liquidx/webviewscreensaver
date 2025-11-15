@@ -29,12 +29,13 @@
 @property(strong) WVSSConfigController *configController;
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+  WVSSConfig *_config;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-  self.configController = [[WVSSConfigController alloc] initWithUserDefaults:userDefaults];
-  self.configController.delegate = self;
+  _config = [[WVSSConfig alloc] initWithUserDefaults:userDefaults];
 
   [self reloadWebView];
   [self.window makeKeyWindow];
@@ -50,11 +51,13 @@
       dismissConfigSheet:(NSWindow *)sheet {
   [self reloadWebView];
   [sheet close];
+  self.configController = nil;
 }
 
 - (IBAction)showPreferences:(id)sender {
-  NSWindow *window = [self.configController configureSheet];
-  [self.window beginSheet:window completionHandler:nil];
+  self.configController = [[WVSSConfigController alloc] initWithConfig:_config];
+  self.configController.delegate = self;
+  [self.window beginSheet:self.configController.sheet completionHandler:nil];
 }
 
 - (IBAction)reloadWebView {

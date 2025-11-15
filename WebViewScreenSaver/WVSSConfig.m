@@ -21,18 +21,21 @@
 
 #import "WVSSConfig.h"
 #import "WVSSAddress.h"
+#import "WVSSAddressListFetcher.h"
 
 // ScreenSaverDefault Keys
 static NSString *const kScreenSaverFetchURLsKey = @"kScreenSaverFetchURLs";  // BOOL
 static NSString *const kScreenSaverURLsURLKey = @"kScreenSaverURLsURL";      // NSString (URL)
 static NSString *const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSArray of NSDictionary
 
-@interface WVSSConfig ()
+@interface WVSSConfig () <WVSSAddressListFetcherDelegate>
 @property(nonatomic, strong) NSUserDefaults *userDefaults;
 @property(nonatomic, strong) NSMutableArray *addresses;
 @end
 
-@implementation WVSSConfig
+@implementation WVSSConfig {
+  WVSSAddressListFetcher *_fetcher;
+}
 
 - (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults {
   self = [super init];
@@ -48,8 +51,19 @@ static NSString *const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSAr
     if (!self.addresses) {
       self.addresses = [NSMutableArray array];
     }
+    
+    [self appendSampleAddressIfEmpty];
+    [self fetchIfNeeded];
   }
   return self;
+}
+
+- (void)appendSampleAddressIfEmpty {
+  if (self.shouldFetchAddressList) return;
+
+  if (!self.addresses.count) {
+    [self.addresses addObject:[WVSSAddress defaultAddress]];
+  }
 }
 
 - (NSMutableArray *)loadAddressesFromUserDefaults:(NSUserDefaults *)userDefaults {
@@ -92,6 +106,29 @@ static NSString *const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSAr
 - (void)addAddressWithURL:(NSString *)url duration:(NSInteger)duration {
   WVSSAddress *address = [WVSSAddress addressWithURL:url duration:duration];
   [self.addresses addObject:address];
+}
+
+- (void)fetchIfNeeded {
+  if (!self.shouldFetchAddressList) return;
+
+  NSString *addressFetchURL = self.addressListURL;
+  if (!addressFetchURL.length) return;
+  if (!([addressFetchURL hasPrefix:@"http://"] || [addressFetchURL hasPrefix:@"https://"])) return;
+
+  _fetcher = [[WVSSAddressListFetcher alloc] initWithURL:addressFetchURL];
+  _fetcher.delegate = self;
+}
+
+#pragma mark - WVSSAddressListFetcherDelegate
+
+- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher didFailWithError:(NSError *)error {
+  NSLog(@"URLs fetcher encountered issue: %@", error.localizedDescription);
+}
+
+- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher
+        didFinishWithArray:(NSArray *)response {
+  [self.addresses removeAllObjects];
+  [self.addresses addObjectsFromArray:response];
 }
 
 @end
