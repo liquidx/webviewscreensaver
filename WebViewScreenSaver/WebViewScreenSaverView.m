@@ -40,7 +40,6 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   NSTimer *_timer;
   WKWebView *_webView;
   NSInteger _currentIndex;
-  BOOL _isPreview;
 }
 
 + (BOOL)performGammaFade {
@@ -66,10 +65,9 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
     [self setAutoresizesSubviews:YES];
 
     _currentIndex = 0;
-    _isPreview = isPreview;
 
     // Simplified preview
-    if (_isPreview) {
+    if (isPreview) {
       NSBundle *bundle = [NSBundle bundleForClass:self.class];
       NSImageView *logoView =
           [NSImageView imageViewWithImage:[bundle imageForResource:@"thumbnail"]];
@@ -104,7 +102,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 
 - (void)configController:(WVSSConfigController *)configController
       dismissConfigSheet:(NSWindow *)sheet {
-  if (_isPreview) {
+  if (self.isPreview) {
     [self loadFromStart];
   }
 #pragma GCC diagnostic push
@@ -137,7 +135,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (void)startAnimation {
   [super startAnimation];
 
-  if (_isPreview) return;
+  if (self.isPreview) return;
 
   // Create the webview for the screensaver.
   _webView = [self.class makeWebView:self.bounds];
@@ -154,8 +152,8 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 
 - (void)stopAnimation {
   [super stopAnimation];
+  if (!self.isPreview) return;
 
-  if (!_isPreview) return;
 
   [_timer invalidate];
   _timer = nil;
@@ -263,7 +261,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 // Inspired by: https://github.com/JohnCoates/Aerial/commit/8c78e7cc4f77f4417371966ae7666125d87496d1
 - (void)screensaverWillStop:(NSNotification *)notification {
   if (@available(macOS 14.0, *)) {
-    if (!_isPreview) {
+    if (!self.isPreview) {
       exit(0);
     }
   }
