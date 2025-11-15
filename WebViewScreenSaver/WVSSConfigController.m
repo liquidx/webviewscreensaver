@@ -71,7 +71,7 @@ static NSString *const kTableColumnPreview = @"preview";
 
 - (IBAction)removeRow:(id)sender {
   NSInteger row = [self.urlTable selectedRow];
-  if (row != NSNotFound) {
+  if (row != -1) {
     [self removeAddressAtIndex:row];
   }
 }
@@ -239,6 +239,9 @@ static NSString *const kTableColumnPreview = @"preview";
       [self.urlTable.tableColumns objectAtIndex:[self.urlTable columnForView:textField]];
   NSString *identifier = column.identifier;
   NSInteger row = [self.urlTable selectedRow];
+  
+  // Possible when removing the current edited row
+  if (row == -1) return;
 
   if ([identifier isEqual:kTableColumnURL]) {
     WVSSAddress *address = [self.config.addresses objectAtIndex:row];
