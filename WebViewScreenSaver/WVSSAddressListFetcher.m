@@ -21,6 +21,7 @@
 
 #import "WVSSAddressListFetcher.h"
 #import "WVSSAddress.h"
+#import "WVSSLog.h"
 
 NSExceptionName const WVSSInvalidArgumentException = @"WVSSInvalidArgumentException";
 
@@ -92,7 +93,7 @@ NSExceptionName const WVSSInvalidArgumentException = @"WVSSInvalidArgumentExcept
     }
   }
 
-  NSLog(@"fetching URLS finished");
+  WVSSLog(@"fetching URLS finished");
 }
 
 void expectClass(id target, Class aclass) {

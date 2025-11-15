@@ -22,6 +22,7 @@
 #import "WVSSConfig.h"
 #import "WVSSAddress.h"
 #import "WVSSAddressListFetcher.h"
+#import "WVSSLog.h"
 
 // ScreenSaverDefault Keys
 static NSString *const kScreenSaverFetchURLsKey = @"kScreenSaverFetchURLs";  // BOOL
@@ -122,7 +123,7 @@ static NSString *const kScreenSaverURLListKey = @"kScreenSaverURLList";  // NSAr
 #pragma mark - WVSSAddressListFetcherDelegate
 
 - (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher didFailWithError:(NSError *)error {
-  NSLog(@"URLs fetcher encountered issue: %@", error.localizedDescription);
+  WVSSLog(@"Encountered issue: %@", error.localizedDescription);
 }
 
 - (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher

@@ -22,6 +22,7 @@
 #import "WebViewScreenSaverView.h"
 #import "WKWebViewPrivate.h"
 #import "WVSSAddress.h"
+#import "WVSSLog.h"
 
 // ScreenSaverDefaults module name.
 static NSString *const kScreenSaverName = @"WebViewScreenSaver";
@@ -60,6 +61,7 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview prefsStore:(NSUserDefaults *)prefs {
   self = [super initWithFrame:frame isPreview:isPreview];
   if (self) {
+    WVSSLog(@"%@", self);
     [self setAutoresizesSubviews:YES];
 
     _currentIndex = 0;
@@ -81,9 +83,11 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 }
 
 - (void)dealloc {
+  WVSSTrace();
 }
 
 - (void)teardown {
+  WVSSLog(@"%@", self);
   [NSDistributedNotificationCenter.defaultCenter removeObserver:self];
 
   [_webView removeFromSuperview];
@@ -93,6 +97,18 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
   _timer = nil;
 }
 
+- (NSString *)frameToString:(NSRect)frame {
+  return [NSString stringWithFormat:@"(x=%.f, y=%.f, w=%.f, h=%.f)", frame.origin.x, frame.origin.y,
+                                    frame.size.width, frame.size.height];
+}
+
+- (NSString *)description {
+  return [NSString stringWithFormat:@"preview:%@ frame:%@ window:%p %@ scale:%.f",
+                                    WVSSBoolStr(self.isPreview), [self frameToString:self.frame],
+                                    self.window, [self frameToString:self.window.frame],
+                                    self.window.backingScaleFactor];
+}
+
 #pragma mark - Configure Sheet
 
 - (BOOL)hasConfigureSheet {
@@ -100,6 +116,7 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 }
 
 - (NSWindow *)configureSheet {
+  WVSSLog(@"%@", self);
   self.configController = [[WVSSConfigController alloc] initWithConfig:_config];
   self.configController.delegate = self;
   return self.configController.sheet;
@@ -160,10 +177,12 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 
 // Tearing down other instances only happens under macOS 26 which uses multiple
 - (void)configDismissed:(NSNotification *)notification {
+  WVSSTrace();
   [self teardown];
 }
 
 - (void)previewStopped:(NSNotification *)notification {
+  WVSSTrace();
   [self teardown];
 }
 
@@ -188,6 +207,7 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 
 - (void)startAnimation {
   [super startAnimation];
+  WVSSLog(@"%@", self);
 
   if (self.isPreview || _webView) return;
 
@@ -208,7 +228,8 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 
 - (void)stopAnimation {
   [super stopAnimation];
-  
+  WVSSTrace();
+
   if (self.isPreview) {
     [self postNotification:WVSSPreviewStopped];
   }
@@ -219,6 +240,8 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 #pragma mark Loading URLs
 
 - (void)loadFromStart {
+  WVSSLog(@"animating: %@", WVSSBoolStr(self.isAnimating));
+
   if (self.isAnimating) {
     _currentIndex = -1;
     [self loadNext:nil];
@@ -318,19 +341,24 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
 #pragma mark - System Screensaver Notifications
 
 - (void)screensaverDidStart:(NSNotification *)notification {
+  WVSSTrace();
 }
 
 - (void)screensaverDidStop:(NSNotification *)notification {
+  WVSSTrace();
 }
 
 - (void)screenIsLocked:(NSNotification *)notification {
+  WVSSTrace();
 }
 
 - (void)screenIsUnlocked:(NSNotification *)notification {
+  WVSSTrace();
 }
 
 // Inspired by: https://github.com/JohnCoates/Aerial/commit/8c78e7cc4f77f4417371966ae7666125d87496d1
 - (void)screensaverWillStop:(NSNotification *)notification {
+  WVSSTrace();
   if (@available(macOS 14.0, *)) {
     [self teardown];
   }

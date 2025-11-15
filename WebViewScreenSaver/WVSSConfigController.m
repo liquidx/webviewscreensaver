@@ -22,6 +22,7 @@
 #import "WVSSConfigController.h"
 #import "WVSSAddress.h"
 #import "WVSSConfig.h"
+#import "WVSSLog.h"
 #import "WebViewScreenSaverView.h"
 
 #import <WebKit/WebKit.h>
@@ -41,10 +42,15 @@ static NSString *const kTableColumnPreview = @"preview";
 - (instancetype)initWithConfig:(WVSSConfig *)config {
   self = [super init];
   if (self) {
+    WVSSTrace();
     self.config = config;
     [self configureSheet];
   }
   return self;
+}
+
+- (void)dealloc {
+  WVSSTrace();
 }
 
 - (void)synchronize {
@@ -98,8 +104,12 @@ static NSString *const kTableColumnPreview = @"preview";
   [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes
                                              modifiedSince:since
                                          completionHandler:^{
-                                           NSLog(@"Web cache cleared");
+                                           WVSSLog(@"Web cache cleared");
                                          }];
+}
+
+- (IBAction)openLogsFolder:(id)sender {
+  [NSWorkspace.sharedWorkspace openFile:WVSSFileLogger.defaultLogger.logDirectory];
 }
 
 #pragma mark Bundle
@@ -217,7 +227,7 @@ static NSString *const kTableColumnPreview = @"preview";
 
   NSMutableArray *addresses = self.config.addresses;
   id draggedObject = [addresses objectAtIndex:dragRow];
-  NSLog(@"draggedObject: %@", draggedObject);
+
   if (dragRow < row) {
     [addresses insertObject:draggedObject atIndex:row];
     [addresses removeObjectAtIndex:dragRow];
