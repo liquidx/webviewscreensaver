@@ -5,7 +5,11 @@ set -eu
 PRJ_DIR="WebViewScreenSaver"
 BUILD_DIR="build"
 PKG_DIR="WebViewScreenSaver.saver"
-ARTIFACT="WebViewScreenSaver.saver.zip"
+if [ -z "${VERSION:-}" ]; then
+  ARTIFACT="WebViewScreenSaver.saver.zip"
+else
+  ARTIFACT="WebViewScreenSaver-${VERSION}.zip"
+fi
 
 pushd "$PRJ_DIR"
 xcodebuild -project WebViewScreenSaver.xcodeproj -scheme WebViewScreenSaver -configuration Release clean archive -archivePath "$BUILD_DIR/build.xcarchive" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO

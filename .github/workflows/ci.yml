@@ -4,17 +4,17 @@ on: [push]
 
 jobs:
   build:
-
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: build
       run: ./archive.sh
       env:
-        DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
+        DEVELOPER_DIR: /Applications/Xcode_26.0.app/Contents/Developer
+
     - name: 'Store Artifact'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: WebViewScreenSaver.saver
         path: WebViewScreenSaver.saver.zip

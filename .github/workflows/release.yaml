@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+    - uses: actions/checkout@v5
+    - name: build
+      run: |
+        VERSION=${GITHUB_REF_NAME#v} ./archive.sh
+      env:
+        DEVELOPER_DIR: /Applications/Xcode_26.0.app/Contents/Developer
+
+    - name: 'Store Artifact'
+      uses: actions/upload-artifact@v5
+      with:
+        name: WebViewScreenSaver.saver
+        path: WebViewScreenSaver.saver.zip
+
+    - name: Create draft release
+      run: |
+        VERSION=${GITHUB_REF_NAME#v}
+        RELEASE_NAME="WebViewScreenSaver ${VERSION}"
+        gh release create ${GITHUB_REF_NAME} \
+          --draft \
+          --title "${RELEASE_NAME}" \
+          --generate-notes
+        gh release upload ${GITHUB_REF_NAME} WebViewScreenSaver*.*zip
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
