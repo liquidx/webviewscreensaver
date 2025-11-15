@@ -4,6 +4,9 @@
 
 A macOS screen saver that displays a web page or a series of web pages.
 
+> [!WARNING]
+> If the Options button doesn't do anything on macOS 26 Tahoe close and reopen System Settings. This seems to be an OS-level bug with no known code workaround.
+
 ## Installation
 
 * Using [brew](https://brew.sh/).&#42;
