@@ -62,7 +62,6 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview prefsStore:(NSUserDefaults *)prefs {
   self = [super initWithFrame:frame isPreview:isPreview];
   if (self) {
-    [self setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
     [self setAutoresizesSubviews:YES];
 
     _currentIndex = 0;
