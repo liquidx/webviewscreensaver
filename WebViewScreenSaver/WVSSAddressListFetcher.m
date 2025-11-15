@@ -36,12 +36,14 @@ NSExceptionName const WVSSInvalidArgumentException = @"WVSSInvalidArgumentExcept
   self = [super init];
   if (self) {
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    _task = [NSURLSession.sharedSession dataTaskWithRequest:request
-                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self didFinishLoading:data error:error];
-      });
-    }];
+    _task = [NSURLSession.sharedSession
+        dataTaskWithRequest:request
+          completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response,
+                              NSError *_Nullable error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+              [self didFinishLoading:data error:error];
+            });
+          }];
     [_task resume];
   }
   return self;
@@ -52,7 +54,7 @@ NSExceptionName const WVSSInvalidArgumentException = @"WVSSInvalidArgumentExcept
     [self.delegate addressListFetcher:self didFailWithError:error];
     return;
   }
-  
+
   NSError *jsonError = nil;
   id response = [NSJSONSerialization JSONObjectWithData:data
                                                 options:NSJSONReadingMutableContainers
@@ -61,44 +63,43 @@ NSExceptionName const WVSSInvalidArgumentException = @"WVSSInvalidArgumentExcept
     [self.delegate addressListFetcher:self didFailWithError:jsonError];
     return;
   }
-  
+
   NSMutableArray *parsed = [[NSMutableArray alloc] init];
-  
+
   @try {
     expectClass(response, NSArray.class);
     for (NSDictionary *item in (NSArray *)response) {
       expectClass(item, NSDictionary.class);
-      
+
       id url = item[@"url"];
       id duration = item[@"duration"];
-      
+
       expectClass(url, NSString.class);
       expectClass(duration, NSNumber.class);
-      
-      [parsed addObject:[WVSSAddress addressWithURL:url
-                                           duration:[(NSNumber *)duration intValue]]];
-      }
-    
+
+      [parsed addObject:[WVSSAddress addressWithURL:url duration:[(NSNumber *)duration intValue]]];
+    }
+
     [self.delegate addressListFetcher:self didFinishWithArray:parsed];
   } @catch (NSException *exception) {
     if ([exception.name isEqualToString:WVSSInvalidArgumentException]) {
       NSError *error = [NSError errorWithDomain:WVSSInvalidArgumentException
                                            code:-1
-                                       userInfo:@{NSLocalizedDescriptionKey: exception.reason}];
+                                       userInfo:@{NSLocalizedDescriptionKey : exception.reason}];
       [self.delegate addressListFetcher:self didFailWithError:error];
     } else {
       [exception raise];
     }
   }
-  
+
   NSLog(@"fetching URLS finished");
 }
 
 void expectClass(id target, Class aclass) {
   if (![target isKindOfClass:aclass]) {
-    NSString *reason = [NSString stringWithFormat:@"Expected %@ but got %@",
-                        NSStringFromClass(aclass),
-                        NSStringFromClass([target class])];
+    NSString *reason =
+        [NSString stringWithFormat:@"Expected %@ but got %@", NSStringFromClass(aclass),
+                                   NSStringFromClass([target class])];
     NSException *exc = [NSException exceptionWithName:WVSSInvalidArgumentException
                                                reason:reason
                                              userInfo:nil];

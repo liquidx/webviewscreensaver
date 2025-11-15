@@ -26,4 +26,3 @@
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)reloadWebView;
 @end
-

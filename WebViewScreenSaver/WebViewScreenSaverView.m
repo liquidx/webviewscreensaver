@@ -20,8 +20,8 @@
 //
 
 #import "WebViewScreenSaverView.h"
-#import "WVSSAddress.h"
 #import "WKWebViewPrivate.h"
+#import "WVSSAddress.h"
 
 // ScreenSaverDefaults module name.
 static NSString *const kScreenSaverName = @"WebViewScreenSaver";
@@ -50,12 +50,12 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
   NSUserDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
   self = [self initWithFrame:frame isPreview:isPreview prefsStore:prefs];
-  
+
   [NSDistributedNotificationCenter.defaultCenter addObserver:self
-                                                  selector:@selector(screensaverWillStop:)
-                                                      name:@"com.apple.screensaver.willstop"
-                                                    object:nil];
-  
+                                                    selector:@selector(screensaverWillStop:)
+                                                        name:@"com.apple.screensaver.willstop"
+                                                      object:nil];
+
   return self;
 }
 
@@ -66,11 +66,12 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 
     _currentIndex = 0;
     _isPreview = isPreview;
-    
+
     // Simplified preview
     if (_isPreview) {
       NSBundle *bundle = [NSBundle bundleForClass:self.class];
-      NSImageView *logoView = [NSImageView imageViewWithImage:[bundle imageForResource:@"thumbnail"]];
+      NSImageView *logoView =
+          [NSImageView imageViewWithImage:[bundle imageForResource:@"thumbnail"]];
       logoView.frame = self.bounds;
       logoView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
       [self addSubview:logoView];
@@ -117,20 +118,21 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   WKPreferences *preferences = [[WKPreferences alloc] init];
   preferences.javaScriptCanOpenWindowsAutomatically = NO;
   configuration.preferences = preferences;
-  
+
   WKWebView *webView = [[WKWebView alloc] initWithFrame:frame configuration:configuration];
   webView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-  
+
   NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:1.0];
   webView.layer.backgroundColor = color.CGColor;
-  [webView setValue:@(YES) forKey:@"drawsTransparentBackground"];  // Deprecated and internal but works
-  
+  [webView setValue:@(YES)
+             forKey:@"drawsTransparentBackground"];  // Deprecated and internal but works
+
   return webView;
 }
 
 - (void)startAnimation {
   [super startAnimation];
-  
+
   if (_isPreview) return;
 
   // Create the webview for the screensaver.
@@ -138,7 +140,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   _webView.UIDelegate = self;
   _webView.navigationDelegate = self;
   // Sonoma ScreenSaverEngine view hierarchy occludes webview pausing animations and JS.
-  [_webView wvss_setWindowOcclusionDetectionEnabled: NO];
+  [_webView wvss_setWindowOcclusionDetectionEnabled:NO];
   [self addSubview:_webView];
 
   if (_currentIndex < [[self selectedURLs] count]) {
@@ -148,9 +150,9 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 
 - (void)stopAnimation {
   [super stopAnimation];
-  
+
   if (!_isPreview) return;
-  
+
   [_timer invalidate];
   _timer = nil;
   [_webView removeFromSuperview];
@@ -181,7 +183,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   }
   [self.class loadAddress:address target:_webView];
   [_timer invalidate];
-  
+
   if (address.duration < 0) return;  // Infinite
   _timer = [NSTimer scheduledTimerWithTimeInterval:address.duration
                                             target:self
@@ -196,8 +198,9 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   NSURL *url = [NSURL URLWithString:urlString];
 
   if (url.scheme == nil) {
-    NSString *escapedUrlString =
-        [urlString stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
+    NSString *escapedUrlString = [urlString
+        stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet
+                                                               .URLPathAllowedCharacterSet];
     url = [NSURL URLWithString:[@"file://" stringByAppendingString:escapedUrlString]];
   }
 

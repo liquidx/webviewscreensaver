@@ -32,9 +32,7 @@ extern NSExceptionName const WVSSInvalidArgumentException;
 @end
 
 @protocol WVSSAddressListFetcherDelegate <NSObject>
-- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher
-          didFailWithError:(NSError *)error;
+- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher didFailWithError:(NSError *)error;
 
-- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher
-        didFinishWithArray:(NSArray *)response;
+- (void)addressListFetcher:(WVSSAddressListFetcher *)fetcher didFinishWithArray:(NSArray *)response;
 @end

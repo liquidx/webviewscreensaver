@@ -25,7 +25,7 @@
 
 @interface AppDelegate () <WVSSConfigControllerDelegate>
 
-@property (weak) IBOutlet NSWindow *window;
+@property(weak) IBOutlet NSWindow *window;
 @property(strong) WVSSConfigController *configController;
 @end
 
@@ -46,7 +46,8 @@
   // Insert code here to tear down your application
 }
 
-- (void)configController:(WVSSConfigController *)configController dismissConfigSheet:(NSWindow *)sheet {
+- (void)configController:(WVSSConfigController *)configController
+      dismissConfigSheet:(NSWindow *)sheet {
   [self reloadWebView];
   [sheet close];
 }

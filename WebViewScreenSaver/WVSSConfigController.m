@@ -277,10 +277,11 @@ static NSString *const kTableColumnPreview = @"preview";
 #pragma mark -
 
 - (IBAction)tableViewCellDidEdit:(NSTextField *)textField {
-  NSTableColumn *column = [self.urlTable.tableColumns objectAtIndex:[self.urlTable columnForView:textField]];
+  NSTableColumn *column =
+      [self.urlTable.tableColumns objectAtIndex:[self.urlTable columnForView:textField]];
   NSString *identifier = column.identifier;
   NSInteger row = [self.urlTable selectedRow];
-  
+
   if ([identifier isEqual:kTableColumnURL]) {
     WVSSAddress *address = [self.config.addresses objectAtIndex:row];
     address.url = textField.stringValue;
@@ -302,7 +303,7 @@ static NSString *const kTableColumnPreview = @"preview";
 
 - (IBAction)previewButtonClicked:(NSButton *)sender {
   NSInteger row = [self.urlTable rowForView:sender.superview];
-  
+
   WVSSAddress *address = [self.config.addresses objectAtIndex:row];
   [self openAddress:address];
 }
@@ -310,14 +311,18 @@ static NSString *const kTableColumnPreview = @"preview";
 - (void)openAddress:(WVSSAddress *)address {
   NSPoint mouse = NSEvent.mouseLocation;
   NSRect bounds = NSMakeRect(0, 0, 1024, 768);
-  NSRect frame = NSOffsetRect(bounds, mouse.x - bounds.size.width / 2, mouse.y - bounds.size.height / 2);
-  NSWindow *window = [[NSWindow alloc] initWithContentRect:NSIntegralRect(frame)
-                                                 styleMask:NSWindowStyleMaskClosable|NSWindowStyleMaskTitled|NSWindowStyleMaskResizable
-                                                   backing:NSBackingStoreBuffered defer:YES];
+  NSRect frame =
+      NSOffsetRect(bounds, mouse.x - bounds.size.width / 2, mouse.y - bounds.size.height / 2);
+  NSWindow *window =
+      [[NSWindow alloc] initWithContentRect:NSIntegralRect(frame)
+                                  styleMask:NSWindowStyleMaskClosable | NSWindowStyleMaskTitled |
+                                            NSWindowStyleMaskResizable
+                                    backing:NSBackingStoreBuffered
+                                      defer:YES];
 
   WKWebView *webView = [WebViewScreenSaverView makeWebView:bounds];
   [window.contentView addSubview:webView];
-  
+
   [[[NSWindowController alloc] initWithWindow:window] showWindow:window];
   [WebViewScreenSaverView loadAddress:address target:webView];
 }

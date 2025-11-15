@@ -19,8 +19,8 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
+#import <Foundation/Foundation.h>
 
 @protocol WVSSConfigControllerDelegate;
 
@@ -58,6 +58,7 @@
 
 @protocol WVSSConfigControllerDelegate <NSObject>
 
-- (void)configController:(WVSSConfigController *)configController dismissConfigSheet:(NSWindow *)sheet;
+- (void)configController:(WVSSConfigController *)configController
+      dismissConfigSheet:(NSWindow *)sheet;
 
 @end
