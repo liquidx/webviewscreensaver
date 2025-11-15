@@ -26,6 +26,9 @@
 // ScreenSaverDefaults module name.
 static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 
+NSNotificationName const WVSSConfigDismissed = @"webviewscreensaver.config.dismissed";
+NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopped";
+
 @interface WebViewScreenSaverView () <WVSSConfigControllerDelegate,
                                       WKUIDelegate,
                                       WKNavigationDelegate>
@@ -43,18 +46,13 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 }
 
 + (BOOL)performGammaFade {
-  return YES;
+  return NO;
 }
 
 // Called by System Preferences/ScreenSaverEngine
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
   NSUserDefaults *prefs = [ScreenSaverDefaults defaultsForModuleWithName:kScreenSaverName];
   self = [self initWithFrame:frame isPreview:isPreview prefsStore:prefs];
-
-  [NSDistributedNotificationCenter.defaultCenter addObserver:self
-                                                    selector:@selector(screensaverWillStop:)
-                                                        name:@"com.apple.screensaver.willstop"
-                                                      object:nil];
 
   return self;
 }
@@ -83,7 +81,14 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 }
 
 - (void)dealloc {
+}
+
+- (void)teardown {
   [NSDistributedNotificationCenter.defaultCenter removeObserver:self];
+
+  [_webView removeFromSuperview];
+  _webView = nil;
+
   [_timer invalidate];
   _timer = nil;
 }
@@ -105,12 +110,61 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   if (self.isPreview) {
     [self loadFromStart];
   }
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-  [[NSApplication sharedApplication] endSheet:sheet];
-#pragma GCC diagnostic pop
 
+  [[NSApplication sharedApplication] endSheet:sheet];
   self.configController = nil;
+
+  [self postNotification:WVSSConfigDismissed];
+}
+
+#pragma mark - Notification Support
+
+- (void)postNotification:(NSString *)notification {
+  [NSDistributedNotificationCenter.defaultCenter
+      postNotification:[[NSNotification alloc] initWithName:notification object:nil userInfo:nil]];
+}
+
+- (void)subscribeForNotifications {
+  NSDistributedNotificationCenter *notifCenter = NSDistributedNotificationCenter.defaultCenter;
+
+  [notifCenter addObserver:self
+                  selector:@selector(screensaverDidStart:)
+                      name:@"com.apple.screensaver.didstart"
+                    object:nil];
+  [notifCenter addObserver:self
+                  selector:@selector(screensaverWillStop:)
+                      name:@"com.apple.screensaver.willstop"
+                    object:nil];
+  [notifCenter addObserver:self
+                  selector:@selector(screenIsLocked:)
+                      name:@"com.apple.screenIsLocked"
+                    object:nil];
+  [notifCenter addObserver:self
+                  selector:@selector(screenIsUnlocked:)
+                      name:@"com.apple.screenIsUnlocked"
+                    object:nil];
+  [notifCenter addObserver:self
+                  selector:@selector(screensaverDidStop:)
+                      name:@"com.apple.screensaver.didstop"
+                    object:nil];
+
+  [notifCenter addObserver:self
+                  selector:@selector(configDismissed:)
+                      name:WVSSConfigDismissed
+                    object:nil];
+  [notifCenter addObserver:self
+                  selector:@selector(previewStopped:)
+                      name:WVSSPreviewStopped
+                    object:nil];
+}
+
+// Tearing down other instances only happens under macOS 26 which uses multiple
+- (void)configDismissed:(NSNotification *)notification {
+  [self teardown];
+}
+
+- (void)previewStopped:(NSNotification *)notification {
+  [self teardown];
 }
 
 #pragma mark ScreenSaverView
@@ -135,7 +189,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
 - (void)startAnimation {
   [super startAnimation];
 
-  if (self.isPreview) return;
+  if (self.isPreview || _webView) return;
 
   // Create the webview for the screensaver.
   _webView = [self.class makeWebView:self.bounds];
@@ -148,25 +202,27 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   if (_currentIndex < [self numberOfAddresses]) {
     [self loadFromStart];
   }
+
+  [self subscribeForNotifications];
 }
 
 - (void)stopAnimation {
   [super stopAnimation];
-  if (!self.isPreview) return;
+  
+  if (self.isPreview) {
+    [self postNotification:WVSSPreviewStopped];
+  }
 
-
-  [_timer invalidate];
-  _timer = nil;
-  [_webView removeFromSuperview];
-  //  [_webView close];
-  _webView = nil;
+  [self teardown];
 }
 
 #pragma mark Loading URLs
 
 - (void)loadFromStart {
-  _currentIndex = -1;
-  [self loadNext:nil];
+  if (self.isAnimating) {
+    _currentIndex = -1;
+    [self loadNext:nil];
+  }
 }
 
 - (void)loadNext:(NSTimer *)timer {
@@ -185,6 +241,7 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   }
   [self.class loadAddress:address target:_webView];
   [_timer invalidate];
+  _timer = nil;
 
   if (address.duration < 0) return;  // Infinite
   _timer = [NSTimer scheduledTimerWithTimeInterval:address.duration
@@ -258,12 +315,24 @@ static NSString *const kScreenSaverName = @"WebViewScreenSaver";
   decisionHandler(WKNavigationActionPolicyAllow);
 }
 
+#pragma mark - System Screensaver Notifications
+
+- (void)screensaverDidStart:(NSNotification *)notification {
+}
+
+- (void)screensaverDidStop:(NSNotification *)notification {
+}
+
+- (void)screenIsLocked:(NSNotification *)notification {
+}
+
+- (void)screenIsUnlocked:(NSNotification *)notification {
+}
+
 // Inspired by: https://github.com/JohnCoates/Aerial/commit/8c78e7cc4f77f4417371966ae7666125d87496d1
 - (void)screensaverWillStop:(NSNotification *)notification {
   if (@available(macOS 14.0, *)) {
-    if (!self.isPreview) {
-      exit(0);
-    }
+    [self teardown];
   }
 }
 
