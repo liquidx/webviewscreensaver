@@ -194,6 +194,10 @@ NSNotificationName const WVSSPreviewStopped = @"webviewscreensaver.preview.stopp
   preferences.javaScriptCanOpenWindowsAutomatically = NO;
   configuration.preferences = preferences;
 
+  // Use the default persistent data store so passkeys/WebAuthn credentials
+  // and cookies are preserved across sessions.
+  configuration.websiteDataStore = [WKWebsiteDataStore defaultDataStore];
+
   WKWebView *webView = [[WKWebView alloc] initWithFrame:frame configuration:configuration];
   webView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 

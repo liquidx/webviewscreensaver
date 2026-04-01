@@ -21,6 +21,7 @@
 
 #import "WVSSConfigController.h"
 #import "WVSSAddress.h"
+#import "WVSSBiometricAuthHandler.h"
 #import "WVSSConfig.h"
 #import "WVSSLog.h"
 #import "WebViewScreenSaverView.h"
@@ -35,6 +36,8 @@ static NSString *const kTableColumnPreview = @"preview";
 
 @interface WVSSConfigController ()
 @property(nonatomic, strong) WVSSConfig *config;
+// Retains auth handlers for the lifetime of each preview window.
+@property(nonatomic, strong) NSMutableArray<WVSSBiometricAuthHandler *> *authHandlers;
 @end
 
 @implementation WVSSConfigController
@@ -44,6 +47,7 @@ static NSString *const kTableColumnPreview = @"preview";
   if (self) {
     WVSSTrace();
     self.config = config;
+    self.authHandlers = [NSMutableArray array];
     [self configureSheet];
   }
   return self;
@@ -293,6 +297,13 @@ static NSString *const kTableColumnPreview = @"preview";
 
   WKWebView *webView = [WebViewScreenSaverView makeWebView:bounds];
   [window.contentView addSubview:webView];
+
+  // Set up biometric auth handler for passkey/WebAuthn and HTTP auth support.
+  WVSSBiometricAuthHandler *authHandler =
+      [[WVSSBiometricAuthHandler alloc] initWithWindow:window];
+  webView.navigationDelegate = authHandler;
+  webView.UIDelegate = authHandler;
+  [self.authHandlers addObject:authHandler];
 
   [[[NSWindowController alloc] initWithWindow:window] showWindow:window];
   [WebViewScreenSaverView loadAddress:address target:webView];

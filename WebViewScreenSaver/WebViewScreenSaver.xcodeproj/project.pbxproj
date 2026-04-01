@@ -44,6 +44,11 @@
 		F95905AB2EC8D419002430A3 /* WVSSFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = F95905A82EC8D419002430A3 /* WVSSFileLogger.h */; };
 		F95905AC2EC8D419002430A3 /* WVSSFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F95905A92EC8D419002430A3 /* WVSSFileLogger.m */; };
 		F95905AE2EC90872002430A3 /* WVSSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = F95905AD2EC9086E002430A3 /* WVSSLog.h */; };
+		FA0B10012F0C000000000001 /* WVSSBiometricAuthHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000001 /* WVSSBiometricAuthHandler.h */; };
+		FA0B10022F0C000000000002 /* WVSSBiometricAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000002 /* WVSSBiometricAuthHandler.m */; };
+		FA0B10032F0C000000000003 /* WVSSBiometricAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000002 /* WVSSBiometricAuthHandler.m */; };
+		FA0B10042F0C000000000004 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000004 /* LocalAuthentication.framework */; };
+		FA0B10052F0C000000000005 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000005 /* AuthenticationServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +86,10 @@
 		F95905A82EC8D419002430A3 /* WVSSFileLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WVSSFileLogger.h; sourceTree = "<group>"; };
 		F95905A92EC8D419002430A3 /* WVSSFileLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WVSSFileLogger.m; sourceTree = "<group>"; };
 		F95905AD2EC9086E002430A3 /* WVSSLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WVSSLog.h; sourceTree = "<group>"; };
+		FA0B10002F0C000000000001 /* WVSSBiometricAuthHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WVSSBiometricAuthHandler.h; sourceTree = "<group>"; };
+		FA0B10002F0C000000000002 /* WVSSBiometricAuthHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WVSSBiometricAuthHandler.m; sourceTree = "<group>"; };
+		FA0B10002F0C000000000004 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		FA0B10002F0C000000000005 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +107,8 @@
 				8D255ACE0486D3F9007BF209 /* Cocoa.framework in Frameworks */,
 				8D255ACF0486D3F9007BF209 /* ScreenSaver.framework in Frameworks */,
 				64EED329120EC1B40048A830 /* WebKit.framework in Frameworks */,
+				FA0B10042F0C000000000004 /* LocalAuthentication.framework in Frameworks */,
+				FA0B10052F0C000000000005 /* AuthenticationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +136,8 @@
 				089C167FFE841241C02AAC07 /* AppKit.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */,
+				FA0B10002F0C000000000004 /* LocalAuthentication.framework */,
+				FA0B10002F0C000000000005 /* AuthenticationServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,6 +172,8 @@
 				F95905A92EC8D419002430A3 /* WVSSFileLogger.m */,
 				F931A6812B8A8F6D00418701 /* WKWebViewPrivate.h */,
 				F931A6822B8A8F6D00418701 /* WKWebViewPrivate.m */,
+				FA0B10002F0C000000000001 /* WVSSBiometricAuthHandler.h */,
+				FA0B10002F0C000000000002 /* WVSSBiometricAuthHandler.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -217,6 +232,7 @@
 				641457381AEDD51900FB6CDF /* WVSSAddressListFetcher.h in Headers */,
 				F931A6832B8A8F6D00418701 /* WKWebViewPrivate.h in Headers */,
 				6414572E1AEDCBD900FB6CDF /* WVSSConfig.h in Headers */,
+				FA0B10012F0C000000000001 /* WVSSBiometricAuthHandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +350,7 @@
 				641457351AEDCCAB00FB6CDF /* WVSSAddress.m in Sources */,
 				6414570D1AEDC92100FB6CDF /* AppDelegate.m in Sources */,
 				6414573A1AEDD51900FB6CDF /* WVSSAddressListFetcher.m in Sources */,
+				FA0B10032F0C000000000003 /* WVSSBiometricAuthHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +365,7 @@
 				F931A6842B8A8F6D00418701 /* WKWebViewPrivate.m in Sources */,
 				8D255ACC0486D3F9007BF209 /* WebViewScreenSaverView.m in Sources */,
 				6414572F1AEDCBD900FB6CDF /* WVSSConfig.m in Sources */,
+				FA0B10022F0C000000000002 /* WVSSBiometricAuthHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
