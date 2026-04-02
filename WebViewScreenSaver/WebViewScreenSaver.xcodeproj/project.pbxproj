@@ -47,7 +47,6 @@
 		FA0B10012F0C000000000001 /* WVSSBiometricAuthHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000001 /* WVSSBiometricAuthHandler.h */; };
 		FA0B10022F0C000000000002 /* WVSSBiometricAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000002 /* WVSSBiometricAuthHandler.m */; };
 		FA0B10032F0C000000000003 /* WVSSBiometricAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000002 /* WVSSBiometricAuthHandler.m */; };
-		FA0B10042F0C000000000004 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000004 /* LocalAuthentication.framework */; };
 		FA0B10052F0C000000000005 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0B10002F0C000000000005 /* AuthenticationServices.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,7 +87,6 @@
 		F95905AD2EC9086E002430A3 /* WVSSLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WVSSLog.h; sourceTree = "<group>"; };
 		FA0B10002F0C000000000001 /* WVSSBiometricAuthHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WVSSBiometricAuthHandler.h; sourceTree = "<group>"; };
 		FA0B10002F0C000000000002 /* WVSSBiometricAuthHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WVSSBiometricAuthHandler.m; sourceTree = "<group>"; };
-		FA0B10002F0C000000000004 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FA0B10002F0C000000000005 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -107,7 +105,6 @@
 				8D255ACE0486D3F9007BF209 /* Cocoa.framework in Frameworks */,
 				8D255ACF0486D3F9007BF209 /* ScreenSaver.framework in Frameworks */,
 				64EED329120EC1B40048A830 /* WebKit.framework in Frameworks */,
-				FA0B10042F0C000000000004 /* LocalAuthentication.framework in Frameworks */,
 				FA0B10052F0C000000000005 /* AuthenticationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,7 +133,6 @@
 				089C167FFE841241C02AAC07 /* AppKit.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */,
-				FA0B10002F0C000000000004 /* LocalAuthentication.framework */,
 				FA0B10002F0C000000000005 /* AuthenticationServices.framework */,
 			);
 			name = Frameworks;

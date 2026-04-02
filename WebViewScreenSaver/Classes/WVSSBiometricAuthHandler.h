@@ -18,9 +18,8 @@
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 
-// Handles WKWebView navigation delegate callbacks for the preview window,
-// enabling biometric (Touch ID) authentication for website logins via
-// passkeys/WebAuthn and HTTP basic/digest auth challenges.
+// Handles WKWebView delegates for the preview window, enabling passkey/WebAuthn
+// login by providing a presentation anchor and allowing auth-related navigations.
 @interface WVSSBiometricAuthHandler : NSObject <WKNavigationDelegate, WKUIDelegate>
 
 @property(nonatomic, weak) NSWindow *presentingWindow;
