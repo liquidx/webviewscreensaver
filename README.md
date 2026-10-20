@@ -9,12 +9,6 @@ A macOS screen saver that displays a web page or a series of web pages.
 
 ## Installation
 
-* Using [brew](https://brew.sh/).&#42;
-
-``` bash
-brew install --cask webviewscreensaver --no-quarantine
-```
-
 * Directly from the [releases](https://github.com/liquidx/webviewscreensaver/releases) page. Unpack and double click to install.&#42;
 
 * From source (requires [Xcode](https://developer.apple.com/xcode/)):
@@ -24,14 +18,14 @@ brew install --cask webviewscreensaver --no-quarantine
 
 **&#42;Note**: The package is **adhoc signed** (since v2.2.1, previously unsigned).
 
-`--no-quarantine` disables macOS's Gatekeeper during installation.
+Homebrew disabled the `webviewscreensaver` cask on 2026-10-12 because it does not pass the macOS Gatekeeper check, so `brew install --cask webviewscreensaver` no longer works. Installs made with it keep working; for new installs and updates use the releases page.
 
-Otherwise when opening it the first time you will get multiple security prompts about Apple not being able to verify the software. <br />
+When opening it the first time you will get multiple security prompts about Apple not being able to verify the software. <br />
 Hit **ok** (cancel in older macOS) and go to **Privacy & Security** and scroll to bottom.<br />
 You'll find a section explaining that "WebViewScreenSaver.saver" was blocked click **Open Anyway**.<br />
 Upon returning to screensaver options you'll get a second prompt that can be confirmed by clicking **Open**.
 
-**Alternative** if you installed it via direct download run the folllowing command to remove the file from quarantine:
+**Alternative**: run the following command to remove the file from quarantine:
 ``` bash
 xattr -d com.apple.quarantine WebViewScreenSaver.saver
 ```
